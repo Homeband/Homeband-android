@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hb_gradient"
+    tools:context="be.heh.homeband.activities.LoginActivity">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="354dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        app:srcCompat="@drawable/logo_white" />
+
+    <EditText
+        android:id="@+id/etLogin"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/imgLogo"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="40dp"
+        android:paddingHorizontal="10dp"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/login"
+        android:textColorHint="#66FFFFFF"
+        android:background="@drawable/hb_edittext_red_radius"
+        android:textColor="#FFFFFF"
+        />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/etLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/hb_edittext_red_radius"
+        android:hint="@string/password"
+        android:paddingHorizontal="10dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#66FFFFFF" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/etPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:background="#00FFFFFF"
+        android:paddingHorizontal="10dp"
+        android:text="@string/new_account"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/bMotDePasseOublie"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_above="@+id/bCreerCompte"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="55dp"
+        android:background="#00FFFFFF"
+        android:paddingHorizontal="10dp"
+        android:text="@string/password_lost"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/bCreerCompte"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="60dp"
+        android:background="#00FFFFFF"
+        android:paddingHorizontal="10dp"
+        android:text="@string/new_account"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

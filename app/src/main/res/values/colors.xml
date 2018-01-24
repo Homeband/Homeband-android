@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- default colors -->
+    <color name="colorPrimary">#CE2828</color>
+    <color name="colorPrimaryDark">#CE2828</color>
+    <color name="colorAccent">#FFFFFF</color>
+
+    <color name="black_overlay">#66000000</color>
+
+    <!-- Homeband Colors -->
+    <color name="hbRed">#CE2828</color>
+    <color name="hbRedDark">#A80300</color>
+</resources>
