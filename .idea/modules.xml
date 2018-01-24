@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Homeband-droid.iml" filepath="$PROJECT_DIR$/Homeband-droid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/homeband-android.iml" filepath="$PROJECT_DIR$/homeband-android.iml" />
     </modules>
   </component>
 </project>
