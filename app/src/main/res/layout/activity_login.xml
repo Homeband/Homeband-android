@@ -57,10 +57,12 @@
         android:layout_marginTop="20dp"
         android:background="#00FFFFFF"
         android:paddingHorizontal="10dp"
-        android:text="@string/new_account"
+        android:text="@string/connect"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:onClick="onClickConnexion"
+        />
 
     <Button
         android:id="@+id/bMotDePasseOublie"
