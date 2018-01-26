@@ -4,22 +4,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
 import android.widget.Toast;
 
 import be.heh.homeband.R;
-import be.heh.homeband.app.HomebandApi;
-import okhttp3.ResponseBody;
+import be.heh.homeband.app.HomebandApiInterface;
+import be.heh.homeband.app.HomebandApiReponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.Converter.Factory.*;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import com.google.gson.*;
-
 public class LoginActivity extends AppCompatActivity {
+
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,41 +34,34 @@ public class LoginActivity extends AppCompatActivity {
         // Set ContentView
         setContentView(R.layout.activity_login);
 
-
+        this.retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2/homeband-api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     public void onClickConnexion(View v){
 
         try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2/homeband-api/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
             // Création d'une instance du service avec Retrofit
-            HomebandApi service = retrofit.create(HomebandApi.class);
+            HomebandApiInterface serviceApi = this.retrofit.create(HomebandApiInterface.class);
 
-            // Appel de la méthode connexion de HomebandApi avec un callback
-            service.connexion("Nicola", "Test123*", 1).enqueue(new Callback<JsonObject>() {
-
-                // En cas de réussite pour joindre l'API
+            // Requête vers l'API
+            serviceApi.connexion("Nicolas", "Test123*",1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
                     // En fonction du code HTTP de Retour (2** = Successful)
                     if (response.isSuccessful()) {
                         // Récupération de la réponse
-                        JsonObject res = response.body();
-
-                        // Récupération du status de la requête et du message
-                        boolean status = res.get("status").getAsBoolean();
-                        String message = res.get("message").getAsString();
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
 
                         CharSequence messageToast;
-                        if (status == true) {
-                            messageToast = message;
+                        if (res.isOperationReussie() == true) {
+                            messageToast = res.getMessage();
                         } else {
-                            messageToast = "Échec de la connexion\r\n" + message;
+                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
                         }
 
                         // Affichage d'un toast pour indiquer le résultat
@@ -81,19 +72,18 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         int statusCode = response.code();
 
-                         String res = response.toString();
-                            CharSequence message = res;//"Erreur lors de l'appel à l'API (" + statusCode +")";
-                            Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
+                        String res = response.toString();
+                        CharSequence message = res;//"Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
 
                     }
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    // showErrorMessage();
-                    Log.d("MainActivity", "Erreur : " + t.getMessage());
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+                    Log.d("LoginActivity", t.getMessage());
                 }
             });
         } catch (Exception e){
