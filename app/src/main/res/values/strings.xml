@@ -7,4 +7,9 @@
     <string name="connect">Connexion</string>
     <string name="password_lost">Mot de passe oublié ?</string>
     <string name="new_account">Créer un compte</string>
+    <string name="title_activity_home">Homeband</string>
+    <string name="title_home">Home</string>
+    <string name="title_place">Localisation</string>
+    <string name="title_favorite">favoris</string>
+    <string name="title_settings">paramètre</string>
 </resources>
