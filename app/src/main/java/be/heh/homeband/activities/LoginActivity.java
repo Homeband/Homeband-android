@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import be.heh.homeband.R;
@@ -16,6 +17,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private EditText etLogin;
+    private EditText etPassword;
+
+    private boolean estConnecte = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +38,27 @@ public class LoginActivity extends AppCompatActivity {
         // Set ContentView
         setContentView(R.layout.activity_login);
 
+        initialisation();
 
     }
 
+    private void initialisation(){
+        this.etLogin = findViewById(R.id.etLogin);
+        this.etPassword = findViewById(R.id.etPassword);
+    }
+
     public void onClickConnexion(View v){
+        String login = this.etLogin.getText().toString();
+        String pass = this.etPassword.getText().toString();
+
+        connect(login,pass);
+        if(this.estConnecte == true){
+            // Connexion réussie, Changement de fenêtre
+            Toast.makeText(this, "Connexion réussie !", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void connect(String login, String password){
 
         try {
             Retrofit retrofit = new Retrofit.Builder()
@@ -46,8 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-
-            serviceApi.connexion("Nicolas", "Test123*",1).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.connexion(login, password,1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -59,16 +81,15 @@ public class LoginActivity extends AppCompatActivity {
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
-                            messageToast = res.getMessage();
+                            estConnecte = true;
                         } else {
                             messageToast = "Échec de la connexion\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
                         }
-
-                        // Affichage d'un toast pour indiquer le résultat
-                        Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-
                     } else {
                         int statusCode = response.code();
 
@@ -77,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
-
                     }
                 }
 
@@ -87,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         } catch (Exception e){
+            Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
