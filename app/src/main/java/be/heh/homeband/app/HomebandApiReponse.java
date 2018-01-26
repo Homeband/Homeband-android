@@ -12,12 +12,10 @@ import java.util.Map;
 
 public class HomebandApiReponse extends HashMap {
 
-    @SerializedName("status")
-    @Expose
+
     private boolean operationReussie;
 
-    @SerializedName("message")
-    @Expose
+
     private String message;
 
     public HomebandApiReponse(int initialCapacity, float loadFactor) {

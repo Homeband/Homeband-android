@@ -17,8 +17,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Retrofit retrofit;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,19 +32,21 @@ public class LoginActivity extends AppCompatActivity {
         // Set ContentView
         setContentView(R.layout.activity_login);
 
-        this.retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2/homeband-api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+
     }
 
     public void onClickConnexion(View v){
 
         try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://10.0.2.2/homeband-api/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
             // Création d'une instance du service avec Retrofit
-            HomebandApiInterface serviceApi = this.retrofit.create(HomebandApiInterface.class);
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
+
             serviceApi.connexion("Nicolas", "Test123*",1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                         int statusCode = response.code();
 
                         String res = response.toString();
-                        CharSequence message = res;//"Erreur lors de l'appel à l'API (" + statusCode +")";
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
                         Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
