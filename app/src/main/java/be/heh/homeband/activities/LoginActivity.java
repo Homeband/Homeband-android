@@ -1,5 +1,6 @@
 package be.heh.homeband.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         if(this.estConnecte == true){
             // Connexion réussie, Changement de fenêtre
             Toast.makeText(this, "Connexion réussie !", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent (getApplicationContext(),HomeActivity.class);
+            startActivity(intent);
         }
     }
 
