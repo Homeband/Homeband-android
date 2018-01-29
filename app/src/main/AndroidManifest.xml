@@ -22,8 +22,10 @@
         </activity>
         <activity
             android:name=".activities.HomeActivity"
-            android:label="@string/title_activity_home"
-            ></activity>
+            android:label="@string/title_activity_home" />
+        <activity
+            android:name=".activities.SearchGroupeActivity"
+            android:label="@string/title_activity_search"></activity>
     </application>
 
 </manifest>

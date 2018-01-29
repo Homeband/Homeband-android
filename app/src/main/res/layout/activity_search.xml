@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="be.heh.homeband.activities.SearchGroupeActivity">
+
+
+
+
+<LinearLayout
+    android:id="@+id/linear1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Groupe"
+        />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Evenements"
+        />
+
+</LinearLayout>
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintBottom_toBottomOf="@id/linear1"
+       app:layout_constraintLeft_toLeftOf="@id/linear1"
+       app:layout_constraintRight_toRightOf="@id/linear1">
+
+       <TextView
+           android:id="@+id/textView2"
+           android:layout_width="119dp"
+           android:layout_height="66dp"
+           android:text="Style"
+           android:layout_weight="1"/>
+
+       <Spinner
+           android:id="@+id/spinner1"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_weight="1" />
+
+   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/linear1"
+        app:layout_constraintLeft_toLeftOf="@id/linear1"
+        app:layout_constraintRight_toRightOf="@id/linear1">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="119dp"
+            android:layout_height="66dp"
+            android:text="Ville"
+           />
+
+       <EditText
+           android:layout_width="120dp"
+           android:layout_height="wrap_content"
+           />
+
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
+       >
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="119dp"
+            android:layout_height="66dp"
+            android:text="Distance"
+            />
+
+        <EditText
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="119dp"
+            android:layout_height="66dp"
+            android:text="KM"
+            />
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Rechercher"
+        android:gravity="center"/>
+</LinearLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:background="@color/hbRed"
+            app:itemIconTint="@color/color_navigation"
+            app:itemTextColor="@color/color_navigation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:menu="@menu/navigation" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
