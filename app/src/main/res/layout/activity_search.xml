@@ -1,89 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="be.heh.homeband.activities.SearchGroupeActivity">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/container"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context="be.heh.homeband.activities.SearchGroupeActivity">
 
-    <RelativeLayout
-        android:id="@+id/rl1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp">
-        <Button
-            android:id="@+id/btnGroupe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-
-            android:text="Groupe"
-            />
-
-        <Button
-            android:id="@+id/btnEvenement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/btnGroupe"
-            android:layout_marginLeft="15dp"
-            android:text="Evenements"
-            />
-
-
-    </RelativeLayout>
-
-
-
-    <RelativeLayout
-        android:id="@+id/rl2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/rl1"
-        android:layout_marginTop="15dp">
-       <TextView
-           android:id="@+id/textView2"
-           android:layout_width="119dp"
-           android:layout_height="66dp"
-           android:text="Style"
-           android:layout_marginLeft="15dp"/>
-
-       <Spinner
-           android:id="@+id/spinner1"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           />
-    </RelativeLayout>
 <RelativeLayout
+    android:id="@+id/rl1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/rl3"
-    android:layout_below="@+id/rl2"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="15dp">
+    <Button
+        android:id="@+id/btnGroupe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+
+        android:text="Groupe"
+        />
+
+    <Button
+        android:id="@+id/btnEvenement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/btnGroupe"
+        android:layout_marginLeft="15dp"
+        android:text="Evenements"
+        />
+
+
+</RelativeLayout>
+
+
+
+<RelativeLayout
+    android:id="@+id/rl2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_below="@+id/rl1"
     android:layout_marginTop="15dp">
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="Ville"
-
+        android:id="@+id/textView2"
+        android:layout_width="119dp"
+        android:layout_height="66dp"
+        android:text="Style"
+        android:layout_marginLeft="35dp"
         />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="75dp"
+        />
+
+</RelativeLayout>
+
+<RelativeLayout
+    android:id="@+id/rl3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/rl2">
 
     <EditText
         android:id="@+id/etVille"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_marginLeft="117dp"
+        android:layout_marginStart="117dp" />
 
-    <SearchView
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="150dp"
+        android:layout_height="66dp"
+        android:layout_alignBaseline="@+id/etVille"
+        android:layout_alignBottom="@+id/etVille"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="34dp"
+        android:layout_marginStart="34dp"
+        android:text="Ville" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/etVille"
+        android:layout_toRightOf="@+id/etVille"
+        app:srcCompat="@drawable/ic_place_black_24dp" />
+
 
 </RelativeLayout>
 
@@ -96,18 +115,22 @@
 
     android:layout_below="@+id/rl3"
     android:layout_marginTop="15dp">
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Distance en KM"
-        android:layout_alignParentLeft="true"
+        android:layout_alignBaseline="@+id/etKilometre"
+        android:layout_alignBottom="@+id/etKilometre"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
         android:layout_toLeftOf="@+id/etKilometre"
-        />
+        android:layout_toStartOf="@+id/etKilometre"
+        android:text="Distance en KM" />
 
     <EditText
         android:id="@+id/etKilometre"
-        android:layout_width="wrap_content"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
@@ -122,25 +145,32 @@
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_below="@+id/rl4">
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rechercher"
-        android:gravity="center"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="Rechercher" />
 
 </RelativeLayout>
 
 
 
-    <include
-android:id="@+id/navigation"
-        layout="@layout/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        >
+<include
+    android:id="@+id/navigation"
+    layout="@layout/bottom_navigation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    >
 
-    </include>
-</>
+</include>
 
+
+
+</RelativeLayout>
 

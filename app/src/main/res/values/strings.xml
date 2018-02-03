@@ -12,7 +12,8 @@
     <string name="title_place">Localisation</string>
     <string name="title_favorite">favoris</string>
     <string name="title_settings">paramètre</string>
-    <string name="title_activity_search">activity_search</string>
+    <string name="title_activity_search">Recherche groupe</string>
+    <string name="title_activity_searchevents">Recherche evenements</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 </resources>
