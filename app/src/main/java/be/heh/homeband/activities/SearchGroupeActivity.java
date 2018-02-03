@@ -24,10 +24,16 @@ public class SearchGroupeActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 
-                    setContentView(R.layout.activity_home);
+
+                    Intent intent = new Intent (getApplicationContext(),HomeActivity.class);
+                    startActivity(intent);
+                    break;
                 case R.id.navigation_place:
 
-                    setContentView(R.layout.activity_search);
+
+                    Intent intent2 = new Intent (getApplicationContext(),SearchGroupeActivity.class);
+                    startActivity(intent2);
+                    break;
                 case R.id.navigation_favorite:
 
                     return true;
