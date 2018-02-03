@@ -8,12 +8,25 @@
     <string name="password_lost">Mot de passe oublié ?</string>
     <string name="new_account">Créer un compte</string>
     <string name="title_activity_home">Homeband</string>
+    <!-- Menu bottom -->
     <string name="title_home">Home</string>
     <string name="title_place">Localisation</string>
     <string name="title_favorite">favoris</string>
     <string name="title_settings">paramètre</string>
+    <!-- Activité recherche groupe -->
     <string name="title_activity_search">Recherche groupe</string>
+    <string name="title_activity_search_band">Groupe</string>
+    <string name="title_activity_search_events">Evenements</string>
+    <string name="title_activity_search_style">Style</string>
+    <string name="title_activity_search_distance">Distance (km)</string>
+    <string name="title_activity_search_button">Rechercher</string>
+    <string name="title_activity_search_city">Ville</string>
+    <!-- Activité recherche évènements -->
     <string name="title_activity_searchevents">Recherche evenements</string>
+    <string name="title_activity_search_date">Date</string>
+    <string name="title_activity_search_from">Du</string>
+    <string name="title_activity_search_to">Au</string>
+    <!-- Autres -->
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 </resources>

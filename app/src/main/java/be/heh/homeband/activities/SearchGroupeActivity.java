@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,12 +29,14 @@ public class SearchGroupeActivity extends AppCompatActivity {
 
                     Intent intent = new Intent (getApplicationContext(),HomeActivity.class);
                     startActivity(intent);
+
                     break;
                 case R.id.navigation_place:
 
 
                     Intent intent2 = new Intent (getApplicationContext(),SearchGroupeActivity.class);
                     startActivity(intent2);
+
                     break;
                 case R.id.navigation_favorite:
 
@@ -46,10 +50,18 @@ public class SearchGroupeActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        Button next = (Button) findViewById(R.id.btnEvenement);
+        next.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), SearchEventsActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+
+        });
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

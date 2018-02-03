@@ -31,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     Intent intent2 = new Intent (getApplicationContext(),SearchGroupeActivity.class);
                     startActivity(intent2);
+
                     break;
                 case R.id.navigation_favorite:
 
