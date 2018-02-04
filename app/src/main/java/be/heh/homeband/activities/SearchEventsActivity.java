@@ -9,7 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import be.heh.homeband.R;
 
@@ -62,6 +69,34 @@ public class SearchEventsActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        Switch s = (Switch) findViewById(R.id.switch1);
+
+        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    EditText Du = (EditText) findViewById(R.id.etDu);
+                    EditText Au = (EditText) findViewById(R.id.etAu);
+                    TextView Dut = (TextView) findViewById(R.id.textView);
+                    TextView Aut = (TextView) findViewById(R.id.textView5);
+                    Du.setVisibility(View.VISIBLE);
+                    Au.setVisibility(View.VISIBLE);
+                    Dut.setVisibility(View.VISIBLE);
+                    Aut.setVisibility(View.VISIBLE);
+                }
+                else   {
+                    EditText Du = (EditText) findViewById(R.id.etDu);
+                    EditText Au = (EditText) findViewById(R.id.etAu);
+                    TextView Dut = (TextView) findViewById(R.id.textView);
+                    TextView Aut = (TextView) findViewById(R.id.textView5);
+                    Du.setVisibility(View.INVISIBLE);
+                    Au.setVisibility(View.INVISIBLE);
+                    Dut.setVisibility(View.INVISIBLE);
+                    Aut.setVisibility(View.INVISIBLE);
+                }
+
+
+            }
+        });
         Spinner spinner = (Spinner) findViewById(R.id.spinner1);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -72,4 +107,5 @@ public class SearchEventsActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
     }
+
 }
