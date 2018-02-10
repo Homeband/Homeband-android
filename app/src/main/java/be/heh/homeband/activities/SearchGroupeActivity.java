@@ -17,9 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +40,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SearchGroupeActivity extends AppCompatActivity {
 
         ArrayAdapter<Style> adapterStyle;
+        Spinner spinStyle;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -46,15 +49,11 @@ public class SearchGroupeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-
-
                     Intent intent = new Intent (getApplicationContext(),HomeActivity.class);
                     startActivity(intent);
 
                     break;
                 case R.id.navigation_place:
-
-
                     Intent intent2 = new Intent (getApplicationContext(),SearchGroupeActivity.class);
                     startActivity(intent2);
 
@@ -75,6 +74,9 @@ public class SearchGroupeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        initialisation();
+        initStyles();
+
         Button next = (Button) findViewById(R.id.btnEvenement);
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -84,21 +86,12 @@ public class SearchGroupeActivity extends AppCompatActivity {
 
         });
 
-        initStyles();
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.planets_array, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-
-
+    public void initialisation(){
+        this.spinStyle = (Spinner)findViewById(R.id.spinner1);
     }
 
     public void initStyles(){
@@ -107,6 +100,7 @@ public class SearchGroupeActivity extends AppCompatActivity {
                     .baseUrl("http://10.0.2.2/homeband-api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
+
             // Création d'une instance du service avec Retrofit
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
@@ -117,19 +111,29 @@ public class SearchGroupeActivity extends AppCompatActivity {
 
                     // En fonction du code HTTP de Retour (2** = Successful)
                     if (response.isSuccessful()) {
+
                         // Récupération de la réponse de l'API
                         HomebandApiReponse res = response.body();
                         res.mapResultat();
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
+                            // Type de liste de retour
+                            Type typeListe = new TypeToken<List<Style>>(){}.getType();
+
+                            // Désérialisation du tableau JSON (JsonArray) en liste d'objets Style
                             Gson gson = new Gson();
-                            ArrayList<Style> listStyle = new ArrayList<Style>();
-                            Log.d("test",res.get("styles").toString() );
-                            Style[] styleArray = gson.fromJson(res.get("styles").toString(), Style[].class);
-                             //Log.d("Styles", styleArray + " elements");
-                            listStyle = new ArrayList<>(Arrays.asList(styleArray));
-                            Log.d("Styles", listStyle.size() + " elements");
+                            List<Style> listeStyles = gson.fromJson(res.get("styles").getAsJsonArray(), typeListe);
+
+                            // Initialisation de l'adapter
+                            adapterStyle = new ArrayAdapter<Style>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item);
+                            adapterStyle.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                            // Ajout de la liste des styles à l'adapter
+                            adapterStyle.addAll(listeStyles);
+
+                            // Application de l'adapter au spinner
+                            spinStyle.setAdapter(adapterStyle);
                         } else {
                             messageToast = "Échec de la connexion\r\n" + res.getMessage();
 
