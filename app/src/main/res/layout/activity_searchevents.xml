@@ -29,7 +29,8 @@
             android:layout_toRightOf="@id/btnGroupe"
             android:layout_marginLeft="15dp"
             android:text="@string/title_activity_search_events"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@color/hbRed"
+            android:textColor="@color/colorAccent"
             />
 
 
@@ -181,7 +182,9 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="@string/title_activity_search_button"
-        android:id="@+id/button2" />
+        android:id="@+id/button2"
+        android:background="@color/hbRed"
+        android:textColor="@color/colorAccent"/>
 
 
     <EditText

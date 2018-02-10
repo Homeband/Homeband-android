@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
+        <item>Rock</item>
+        <item>Pop</item>
+        <item>Classique</item>
+        <item>Jump</item>
         <item>Jupiter</item>
         <item>Saturn</item>
         <item>Uranus</item>

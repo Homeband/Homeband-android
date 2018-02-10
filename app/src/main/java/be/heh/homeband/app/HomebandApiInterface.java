@@ -11,4 +11,8 @@ public interface HomebandApiInterface {
     @POST("api/sessions")
     @FormUrlEncoded
     Call<HomebandApiReponse> connexion(@Field("login") String login, @Field("mot_de_passe") String mot_de_passe, @Field("type") int type );
+
+    @GET("api/styles")
+    Call<HomebandApiReponse> getStyles() ;
 }
+
