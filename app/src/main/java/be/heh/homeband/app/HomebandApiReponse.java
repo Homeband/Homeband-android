@@ -1,5 +1,6 @@
 package be.heh.homeband.app;
 
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,12 +11,9 @@ import java.util.Map;
  * Created by Nicolas on 26-01-18.
  */
 
-public class HomebandApiReponse extends HashMap {
-
-
+public class HomebandApiReponse extends HashMap<String, JsonElement> {
+    
     private boolean operationReussie;
-
-
     private String message;
 
     public HomebandApiReponse(int initialCapacity, float loadFactor) {
@@ -33,7 +31,7 @@ public class HomebandApiReponse extends HashMap {
         this.mapResultat();
     }
 
-    public HomebandApiReponse(Map<? extends String, ? extends Object> map) {
+    public HomebandApiReponse(Map<? extends String, ? extends JsonElement> map) {
         super(map);
         this.mapResultat();
     }
@@ -48,11 +46,11 @@ public class HomebandApiReponse extends HashMap {
 
     public void mapResultat(){
         if(this.containsKey("status")) {
-            this.operationReussie = (Boolean) (this.get("status"));
+            this.operationReussie = this.get("status").getAsBoolean();
         }
 
         if(this.containsKey("message")) {
-            this.message = this.get("message").toString();
+            this.message = this.get("message").getAsString();
         }
     }
 }
