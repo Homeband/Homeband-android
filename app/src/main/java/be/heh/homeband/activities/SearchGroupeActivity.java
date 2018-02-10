@@ -30,6 +30,7 @@ import java.util.function.Function;
 import be.heh.homeband.R;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
+import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Style;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,6 +91,7 @@ public class SearchGroupeActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    //Comme ça dispo dans toute les fonctions
     public void initialisation(){
         this.spinStyle = (Spinner)findViewById(R.id.spinner1);
     }
@@ -97,7 +99,7 @@ public class SearchGroupeActivity extends AppCompatActivity {
     public void initStyles(){
         try {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2/homeband-api/")
+                    .baseUrl(HomebandRetrofit.API_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
@@ -118,16 +120,19 @@ public class SearchGroupeActivity extends AppCompatActivity {
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
-                            // Type de liste de retour
+                            // Element de retour sera de type List<style>
                             Type typeListe = new TypeToken<List<Style>>(){}.getType();
 
                             // Désérialisation du tableau JSON (JsonArray) en liste d'objets Style
+
+                            //gson.fromJson prend 2 paramètres
+                            //Premier paramètre c'est l'élément Json qu'il va falloir récupérer
+                            //Deuxième paramètre c'est le type d'élément à récupérer
                             Gson gson = new Gson();
                             List<Style> listeStyles = gson.fromJson(res.get("styles").getAsJsonArray(), typeListe);
 
                             // Initialisation de l'adapter
                             adapterStyle = new ArrayAdapter<Style>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item);
-                            adapterStyle.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                             // Ajout de la liste des styles à l'adapter
                             adapterStyle.addAll(listeStyles);
