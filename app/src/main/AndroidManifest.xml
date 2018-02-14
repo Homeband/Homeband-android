@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.HomeActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/title_activity_home" />
         <activity
             android:name=".activities.SearchGroupeActivity"

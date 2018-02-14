@@ -11,21 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 import be.heh.homeband.R;
 import be.heh.homeband.app.HomebandApiInterface;
@@ -50,7 +43,7 @@ public class SearchGroupeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    Intent intent = new Intent (getApplicationContext(),HomeActivity.class);
+                    Intent intent = new Intent (getApplicationContext(),MainActivity.class);
                     startActivity(intent);
 
                     break;

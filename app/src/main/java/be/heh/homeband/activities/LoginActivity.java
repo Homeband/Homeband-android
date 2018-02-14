@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         if(this.estConnecte == true){
             // Connexion réussie, Changement de fenêtre
             Toast.makeText(this, "Connexion réussie !", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent (getApplicationContext(),HomeActivity.class);
+            Intent intent = new Intent (getApplicationContext(),MainActivity.class);
             startActivity(intent);
         }
     }

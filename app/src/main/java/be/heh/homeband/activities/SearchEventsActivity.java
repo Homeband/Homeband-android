@@ -21,8 +21,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.w3c.dom.Text;
-
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -53,7 +51,7 @@ public class SearchEventsActivity extends AppCompatActivity {
                 case R.id.navigation_home:
 
 
-                    Intent intent = new Intent (getApplicationContext(),HomeActivity.class);
+                    Intent intent = new Intent (getApplicationContext(),MainActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.navigation_place:

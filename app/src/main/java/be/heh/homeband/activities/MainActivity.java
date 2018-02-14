@@ -17,15 +17,19 @@ import be.heh.homeband.activities.SearchGroupeFrag;
 import be.heh.homeband.activities.HomeFrag;
 
 
-public class HomeActivity extends AppCompatActivity implements HomeFrag.OnFragmentInteractionListener,SearchGroupeFrag.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements  HomeFrag.OnFragmentInteractionListener,
+                                                                SearchGroupeFrag.OnFragmentInteractionListener {
 
     private ActionBar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_home);
+        setContentView(R.layout.activity_main);
         toolbar = getSupportActionBar();
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // load the store fragment by default
         toolbar.setTitle("Home");
