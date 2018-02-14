@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="be.heh.homeband.activities.HomeActivity">
+    tools:context="be.heh.homeband.activities.HomeFrag">
 
     <FrameLayout
         android:id="@+id/frame_container"

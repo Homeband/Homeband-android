@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         this.etPassword = findViewById(R.id.etPassword);
 
         this.etLogin.setText("carole");
-        this.etPassword.setText("testtest");
+        this.etPassword.setText("test");
     }
 
     public void onClickConnexion(View v){
