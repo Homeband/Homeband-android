@@ -1,6 +1,7 @@
 package be.heh.homeband.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,7 +17,7 @@ import be.heh.homeband.activities.SearchGroupeFrag;
 import be.heh.homeband.activities.HomeFrag;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements HomeFrag.OnFragmentInteractionListener,SearchGroupeFrag.OnFragmentInteractionListener {
 
     private ActionBar toolbar;
 
@@ -73,4 +74,8 @@ public class HomeActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
