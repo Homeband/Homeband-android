@@ -8,20 +8,41 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import  android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.support.v7.app.ActionBar;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import be.heh.homeband.R;
 import be.heh.homeband.activities.SearchGroupeFrag;
 import be.heh.homeband.activities.HomeFrag;
+import be.heh.homeband.app.HomebandApiInterface;
+import be.heh.homeband.app.HomebandApiReponse;
+import be.heh.homeband.app.HomebandRetrofit;
+import be.heh.homeband.entities.Style;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity implements  HomeFrag.OnFragmentInteractionListener,
                                                                 SearchGroupeFrag.OnFragmentInteractionListener {
 
     private ActionBar toolbar;
-
+    ArrayAdapter<Style> adapterStyle;
+    Spinner spinStyle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
