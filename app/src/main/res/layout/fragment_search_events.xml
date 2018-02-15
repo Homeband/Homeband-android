@@ -14,36 +14,6 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rl1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp">
-            <Button
-                android:id="@+id/btnGroupe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/hbRed"
-                android:textColor="@color/colorAccent"
-                android:text="@string/title_activity_search_band"
-                />
-
-            <Button
-                android:id="@+id/btnEvenement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/btnGroupe"
-                android:layout_marginLeft="15dp"
-                android:text="@string/title_activity_search_events"
-                />
-
-
-        </RelativeLayout>
-
-
-
-        <RelativeLayout
             android:id="@+id/rl2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

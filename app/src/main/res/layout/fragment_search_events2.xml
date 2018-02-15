@@ -12,35 +12,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/rl1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp">
-            <Button
-                android:id="@+id/btnGroupe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_activity_search_band"
-                />
-
-            <Button
-                android:id="@+id/btnEvenement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/btnGroupe"
-                android:layout_marginLeft="15dp"
-                android:text="@string/title_activity_search_events"
-                android:background="@color/hbRed"
-                android:textColor="@color/colorAccent"
-                />
-
-
-        </RelativeLayout>
-
-
 
         <RelativeLayout
             android:id="@+id/rl2"
@@ -168,15 +139,16 @@
         </RelativeLayout>
 
         <Button
+            android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/navigation"
+            android:layout_below="@+id/etAu"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp"
+            android:background="@color/hbRed"
             android:gravity="center"
             android:text="@string/title_activity_search_button"
-            android:id="@+id/button2"
-            android:background="@color/hbRed"
-            android:textColor="@color/colorAccent"/>
+            android:textColor="@color/colorAccent" />
 
 
         <EditText

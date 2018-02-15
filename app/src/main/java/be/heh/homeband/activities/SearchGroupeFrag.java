@@ -44,7 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     ArrayAdapter<Style> adapterStyle;
     Spinner spinStyle;
-    Button myButton;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -85,19 +85,22 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        /*
-        myButton = (Button) myView.findViewById(R.id.btnEvenement);
-        myButton.setOnClickListener(this);
-        return myView;
-        */
-       initialisation();
+
+
+
+
+
+
+        View myview = inflater.inflate(R.layout.fragment_search_events, container, false);
+        initialisation(myview);
         initStyles();
-        return inflater.inflate(R.layout.fragment_search_events, container, false);
+        return myview;
 
     }
 
@@ -144,10 +147,11 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void initialisation(){
+    public void initialisation(View myview){
 
-        spinStyle = (Spinner) getView().findViewById(R.id.spinner1);
+        spinStyle = (Spinner) myview.findViewById(R.id.spinner1);
     }
+
     public void initStyles(){
         try {
             Retrofit retrofit = new Retrofit.Builder()

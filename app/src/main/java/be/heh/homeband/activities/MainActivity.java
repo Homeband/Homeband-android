@@ -38,7 +38,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity implements  HomeFrag.OnFragmentInteractionListener,
-                                                                SearchGroupeFrag.OnFragmentInteractionListener {
+                                                                SearchFrag.OnFragmentInteractionListener,
+                                                                SearchGroupeFrag.OnFragmentInteractionListener, SearchEventsFrag.OnFragmentInteractionListener{
 
     private ActionBar toolbar;
     ArrayAdapter<Style> adapterStyle;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements  HomeFrag.OnFragm
                     return true;
                 case R.id.navigation_place:
                     toolbar.setTitle("Recherche");
-                    fragment = new SearchGroupeFrag();
+                    fragment = new SearchFrag();
                     loadFragment(fragment);
 
                     return true;
