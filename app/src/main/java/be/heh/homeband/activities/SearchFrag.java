@@ -1,6 +1,7 @@
 package be.heh.homeband.activities;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -123,6 +124,8 @@ public class SearchFrag extends Fragment implements SearchGroupeFrag.OnFragmentI
         btnEvents.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 loadFragment(new SearchEventsFrag());
+                btnEvents.setBackgroundColor(Color.RED);
+                btnGroupe.setBackgroundColor(Color.WHITE);
             }
 
         });
@@ -131,6 +134,8 @@ public class SearchFrag extends Fragment implements SearchGroupeFrag.OnFragmentI
         btnGroupe.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 loadFragment(new SearchGroupeFrag());
+                btnGroupe.setBackgroundColor(Color.RED);
+                btnEvents.setBackgroundColor(Color.WHITE);
             }
 
         });

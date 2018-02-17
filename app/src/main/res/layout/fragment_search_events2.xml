@@ -142,9 +142,9 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etAu"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="33dp"
+            android:layout_marginBottom="68dp"
             android:background="@color/hbRed"
             android:gravity="center"
             android:text="@string/title_activity_search_button"
@@ -152,42 +152,39 @@
 
 
         <EditText
-            android:visibility="invisible"
             android:id="@+id/etDu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_alignEnd="@+id/rl1"
             android:layout_alignLeft="@+id/button2"
-            android:layout_alignRight="@+id/rl1"
+
             android:layout_alignStart="@+id/button2"
-            android:layout_below="@+id/rl4"
-            android:layout_marginTop="15dp"
+            android:layout_centerVertical="true"
             android:ems="10"
-            android:inputType="date" />
+            android:inputType="date"
+            android:visibility="invisible" />
 
         <TextView
-            android:visibility="invisible"
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView"
 
+            android:layout_alignStart="@+id/textView"
             android:layout_below="@+id/etDu"
-            android:layout_marginTop="17dp"
-            android:layout_toLeftOf="@+id/rl1"
-            android:layout_toStartOf="@+id/rl1"
-            android:text="@string/title_activity_search_to" />
+            android:layout_marginTop="16dp"
+            android:text="@string/title_activity_search_to"
+            android:visibility="invisible" />
 
         <TextView
-            android:visibility="invisible"
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_above="@+id/etAu"
-            android:layout_alignLeft="@+id/textView5"
-            android:layout_alignStart="@+id/textView5"
-            android:text="@string/title_activity_search_from" />
+
+            android:layout_toEndOf="@+id/relativeLayout"
+            android:layout_toRightOf="@+id/relativeLayout"
+            android:text="@string/title_activity_search_from"
+            android:visibility="invisible" />
 
         <EditText
             android:visibility="invisible"

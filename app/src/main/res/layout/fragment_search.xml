@@ -17,6 +17,7 @@
             android:id="@+id/btnGroupe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/hbRed"
             android:text="@string/title_activity_search_band"
             />
 

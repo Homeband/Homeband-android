@@ -11,7 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -134,6 +138,34 @@ public class SearchEventsFrag extends Fragment {
     public void initialisation(View myview){
 
         spinStyle = (Spinner) myview.findViewById(R.id.spinner1);
+        Switch s = (Switch) myview.findViewById(R.id.switch1);
+
+        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    EditText Du = (EditText) getView().findViewById(R.id.etDu);
+                    EditText Au = (EditText) getView().findViewById(R.id.etAu);
+                    TextView Dut = (TextView) getView().findViewById(R.id.textView);
+                    TextView Aut = (TextView) getView().findViewById(R.id.textView5);
+                    Du.setVisibility(View.VISIBLE);
+                    Au.setVisibility(View.VISIBLE);
+                    Dut.setVisibility(View.VISIBLE);
+                    Aut.setVisibility(View.VISIBLE);
+                }
+                else   {
+                    EditText Du = (EditText) getView().findViewById(R.id.etDu);
+                    EditText Au = (EditText) getView().findViewById(R.id.etAu);
+                    TextView Dut = (TextView) getView().findViewById(R.id.textView);
+                    TextView Aut = (TextView) getView().findViewById(R.id.textView5);
+                    Du.setVisibility(View.INVISIBLE);
+                    Au.setVisibility(View.INVISIBLE);
+                    Dut.setVisibility(View.INVISIBLE);
+                    Aut.setVisibility(View.INVISIBLE);
+                }
+
+
+            }
+        });
     }
 
     public void initStyles(){

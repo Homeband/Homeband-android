@@ -10,7 +10,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -117,26 +117,17 @@
         </RelativeLayout>
 
 
-
-        <RelativeLayout
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/rl4">
+            android:layout_marginBottom="68dp"
+            android:background="@color/hbRed"
+            android:gravity="center"
+            android:text="@string/title_activity_search_button"
+            android:textColor="@color/colorAccent" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:text="@string/title_activity_search_button"
-                android:background="@color/hbRed"
-                android:textColor="@color/colorAccent"/>
-
-        </RelativeLayout>
     </RelativeLayout>
 
 </FrameLayout>
