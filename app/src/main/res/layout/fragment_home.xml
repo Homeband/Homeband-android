@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingTop="10dp"
-            android:text="Evenements à proximités"
+            android:text="Evenements des groupes en favoris"
             android:textColor="#111"
             android:textSize="16dp" />
 
