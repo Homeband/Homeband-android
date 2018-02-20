@@ -15,6 +15,9 @@ public interface HomebandApiInterface {
     @GET("api/styles")
     Call<HomebandApiReponse> getStyles() ;
 
+    @GET("api/groupes")
+    Call<HomebandApiReponse> getGroupes(@Field("styles")String styles);
+
     @GET("api/evenements")
     Call<HomebandApiReponse> getEvenements() ;
 }
