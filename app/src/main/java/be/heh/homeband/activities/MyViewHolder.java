@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import be.heh.homeband.R;
 import be.heh.homeband.entities.Groupe;
 
@@ -27,8 +29,8 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     }
 
     //puis ajouter une fonction pour remplir la cellule en fonction d'un MyObject
-    public void bind(Groupe myObject){
-        textViewView.setText(myObject.getText());
-        Picasso.with(imageView.getContext()).load(myObject.getImageUrl()).centerCrop().fit().into(imageView);
+    public void bind(Groupe monGroupe){
+        textViewView.setText(monGroupe.getNom());
+        Picasso.with(imageView.getContext()).load("http://www.tate.org.uk/art/images/work/T/T05/T05010_10.jpg").centerCrop().fit().into(imageView);
     }
 }

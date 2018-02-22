@@ -45,6 +45,8 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     ArrayAdapter<Style> adapterStyle;
     Spinner spinStyle;
 
+    Button btnRecherche;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -106,8 +108,12 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
+        //if(v == btnRecherche){
+            Intent intent = new Intent (getView().getContext(),MainListGroupe.class);
+            startActivity(intent);
+        //}
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -148,8 +154,10 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     }
 
     public void initialisation(View myview){
-
         spinStyle = (Spinner) myview.findViewById(R.id.spinner1);
+        btnRecherche = (Button) myview.findViewById(R.id.btnRechercheGroupe);
+
+        btnRecherche.setOnClickListener(this);
     }
 
     public void initStyles(){

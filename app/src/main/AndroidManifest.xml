@@ -23,6 +23,13 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_home" />
+        <activity
+            android:name=".activities.MainListGroupe"
+            android:label="Liste des groupes">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="be.heh.homeband.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
