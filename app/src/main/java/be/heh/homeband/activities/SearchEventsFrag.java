@@ -91,7 +91,7 @@ public class SearchEventsFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View myview = inflater.inflate(R.layout.fragment_search_events2, container, false);
+        View myview = inflater.inflate(R.layout.fragment_search_events, container, false);
         initialisation(myview);
         initStyles();
         return myview;

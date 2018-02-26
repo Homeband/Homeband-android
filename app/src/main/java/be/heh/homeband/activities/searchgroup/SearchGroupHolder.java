@@ -1,4 +1,4 @@
-package be.heh.homeband.activities;
+package be.heh.homeband.activities.searchgroup;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,12 +14,12 @@ import be.heh.homeband.entities.Groupe;
  * Created by christopher on 20-02-18.
  */
 
-public class MyViewHolder extends RecyclerView.ViewHolder {
+public class SearchGroupHolder extends RecyclerView.ViewHolder {
     private TextView textViewView;
     private ImageView imageView;
 
     //itemView est la vue correspondante à 1 cellule
-    public MyViewHolder(View itemView) {
+    public SearchGroupHolder(View itemView) {
         super(itemView);
 
         //c'est ici que l'on fait nos findView

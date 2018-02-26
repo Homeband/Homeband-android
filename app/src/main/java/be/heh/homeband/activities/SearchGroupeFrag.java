@@ -20,12 +20,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.R;
+import be.heh.homeband.activities.searchgroup.SearchGroupResultActivity;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
+import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Style;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -99,7 +102,7 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
 
 
 
-        View myview = inflater.inflate(R.layout.fragment_search_events, container, false);
+        View myview = inflater.inflate(R.layout.fragment_search_groupe, container, false);
         initialisation(myview);
         initStyles();
         return myview;
@@ -109,7 +112,14 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         //if(v == btnRecherche){
-            Intent intent = new Intent (getView().getContext(),MainListGroupe.class);
+        //TODO appel api
+        List<Groupe> groupes = new ArrayList<Groupe>();
+        groupes.add(new Groupe(1, "Groupe 1"));
+        groupes.add(new Groupe(2, "Groupe 2"));
+        groupes.add(new Groupe(3, "Groupe 3"));
+        groupes.add(new Groupe(4, "Groupe 4"));
+            Intent intent = new Intent (getView().getContext(),SearchGroupResultActivity.class);
+            intent.putExtra("groupes",(ArrayList<Groupe>)groupes);
             startActivity(intent);
         //}
     }
