@@ -1,16 +1,19 @@
 package be.heh.homeband.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.EventLog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,12 +25,17 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.R;
+import be.heh.homeband.activities.searchevents.SearchEventsResultActivity;
+import be.heh.homeband.activities.searchgroup.SearchGroupResultActivity;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
+import be.heh.homeband.entities.Evenement;
+import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Style;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,9 +51,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Use the {@link SearchEventsFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SearchEventsFrag extends Fragment {
+public class SearchEventsFrag extends Fragment implements View.OnClickListener {
     ArrayAdapter<Style> adapterStyle;
     Spinner spinStyle;
+    Button btnRecherche;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -104,6 +113,23 @@ public class SearchEventsFrag extends Fragment {
         }
     }
 
+
+    @Override
+    public void onClick(View v) {
+        //if(v == btnRecherche){
+        //TODO appel api
+        List<Evenement> events = new ArrayList<Evenement>();
+        events.add(new Evenement(1, "Groupe 1"));
+        events.add(new Evenement(2, "Groupe 2"));
+        events.add(new Evenement(3, "Groupe 3"));
+        events.add(new Evenement(4, "Groupe 4"));
+        Intent intent = new Intent (getView().getContext(),SearchEventsResultActivity.class);
+        intent.putExtra("events",(ArrayList<Evenement>)events);
+        startActivity(intent);
+        //}
+    }
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -136,6 +162,9 @@ public class SearchEventsFrag extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
     public void initialisation(View myview){
+        btnRecherche = (Button) myview.findViewById(R.id.btnRechercheEvents);
+
+        btnRecherche.setOnClickListener(this);
 
         spinStyle = (Spinner) myview.findViewById(R.id.spinner1);
         Switch s = (Switch) myview.findViewById(R.id.switch1);
