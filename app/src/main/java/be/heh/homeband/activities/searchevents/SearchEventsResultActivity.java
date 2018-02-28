@@ -1,4 +1,4 @@
-package be.heh.homeband.activities.searchgroup;
+package be.heh.homeband.activities.searchevents;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,28 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.R;
+import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
 
 /**
- * Created by christopher on 20-02-18.
+ * Created by christopher on 27-02-18.
  */
 
-public class SearchGroupResultActivity extends AppCompatActivity{
-
+public class SearchEventsResultActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
-    private List<Groupe> groupes = new ArrayList<Groupe>();
-
-
+    private List<Evenement> events = new ArrayList<Evenement>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listgroup);
+        setContentView(R.layout.activity_listevents);
 
-       groupes = (ArrayList<Groupe>) getIntent().getSerializableExtra("groupes");
+        events = (ArrayList<Evenement>) getIntent().getSerializableExtra("events");
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewGroup);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewEvents);
 
         //définit l'agencement des cellules, ici de façon verticale, comme une ListView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -40,7 +38,7 @@ public class SearchGroupResultActivity extends AppCompatActivity{
 
         //puis créer un SearchGroupAdapter, lui fournir notre liste de villes.
         //cet adapter servira à remplir notre recyclerview
-        recyclerView.setAdapter(new SearchGroupAdapter(groupes));
+        recyclerView.setAdapter(new SearchEventsAdapter(events));
     }
 
 }

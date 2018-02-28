@@ -139,7 +139,7 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnRechercheEvents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -155,9 +155,9 @@
             android:id="@+id/etDu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/button2"
 
-            android:layout_alignStart="@+id/button2"
+            android:layout_alignLeft="@+id/etAu"
+            android:layout_alignStart="@+id/etAu"
             android:layout_centerVertical="true"
             android:ems="10"
             android:inputType="date"
@@ -187,18 +187,15 @@
             android:visibility="invisible" />
 
         <EditText
-            android:visibility="invisible"
             android:id="@+id/etAu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView5"
-            android:layout_alignBottom="@+id/textView5"
-            android:layout_alignEnd="@+id/rl1"
-            android:layout_alignLeft="@+id/etDu"
-            android:layout_alignRight="@+id/rl1"
-            android:layout_alignStart="@+id/etDu"
+            android:layout_alignLeft="@+id/btnRechercheEvents"
+            android:layout_alignStart="@+id/btnRechercheEvents"
+            android:layout_below="@+id/etDu"
             android:ems="10"
-            android:inputType="date" />
+            android:inputType="date"
+            android:visibility="invisible" />
 
 
     </RelativeLayout>

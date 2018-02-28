@@ -123,8 +123,9 @@ public class SearchFrag extends Fragment implements SearchGroupeFrag.OnFragmentI
         btnEvents = (Button) myview.findViewById(R.id.btnEvenement);
         btnEvents.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                int hbred = Color.parseColor("#CE2828");
                 loadFragment(new SearchEventsFrag());
-                btnEvents.setBackgroundColor(Color.RED);
+                btnEvents.setBackgroundColor(hbred);
                 btnGroupe.setBackgroundColor(Color.WHITE);
             }
 
@@ -133,8 +134,9 @@ public class SearchFrag extends Fragment implements SearchGroupeFrag.OnFragmentI
         btnGroupe = (Button) myview.findViewById(R.id.btnGroupe);
         btnGroupe.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                int hbred = Color.parseColor("#CE2828");
                 loadFragment(new SearchGroupeFrag());
-                btnGroupe.setBackgroundColor(Color.RED);
+                btnGroupe.setBackgroundColor(hbred);
                 btnEvents.setBackgroundColor(Color.WHITE);
             }
 
