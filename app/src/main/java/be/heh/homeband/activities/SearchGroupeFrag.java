@@ -1,11 +1,14 @@
 package be.heh.homeband.activities;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,12 +16,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +36,7 @@ import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Style;
+import okhttp3.Interceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +54,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     ArrayAdapter<Style> adapterStyle;
     Spinner spinStyle;
-
+    EditText etCp;
+    EditText etKilometre;
     Button btnRecherche;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -112,15 +120,8 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         //if(v == btnRecherche){
-        //TODO appel api
-        List<Groupe> groupes = new ArrayList<Groupe>();
-        groupes.add(new Groupe(1, "Groupe 1"));
-        groupes.add(new Groupe(2, "Groupe 2"));
-        groupes.add(new Groupe(3, "Groupe 3"));
-        groupes.add(new Groupe(4, "Groupe 4"));
-            Intent intent = new Intent (getView().getContext(),SearchGroupResultActivity.class);
-            intent.putExtra("groupes",(ArrayList<Groupe>)groupes);
-            startActivity(intent);
+
+        getGroupes();
         //}
     }
 
@@ -164,7 +165,9 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     }
 
     public void initialisation(View myview){
-        spinStyle = (Spinner) myview.findViewById(R.id.spinner1);
+        spinStyle = (Spinner) myview.findViewById(R.id.spinnerStyle);
+        etCp = (EditText) myview.findViewById(R.id.etCp);
+        etKilometre = (EditText) myview.findViewById(R.id.etKilometre);
         btnRecherche = (Button) myview.findViewById(R.id.btnRechercheGroupe);
 
         btnRecherche.setOnClickListener(this);
@@ -249,6 +252,86 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void getGroupes(){
+        int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
+        String var_cp = etCp.getText().toString();
+        int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
+
+        try {
+            Gson gson = new GsonBuilder().setLenient().create();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(HomebandRetrofit.API_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+            // Création d'une instance du service avec Retrofit
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+            Log.d("style",String.valueOf(var_style));
+            Log.d("cp",var_cp);
+            Log.d("kilometre",String.valueOf(var_kilometre));
+            // Requête vers l'API
+            serviceApi.getGroupes(var_style,var_cp,var_kilometre,0,0).enqueue(new Callback<HomebandApiReponse>() {
+                @Override
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
+
+                    // En fonction du code HTTP de Retour (2** = Successful)
+                    if (response.isSuccessful()) {
+
+                        // Récupération de la réponse de l'API
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
+
+                        CharSequence messageToast;
+                        if (res.isOperationReussie() == true) {
+                            // Element de retour sera de type List<style>
+                            Type typeListe = new TypeToken<List<Groupe>>(){}.getType();
+
+                            // Désérialisation du tableau JSON (JsonArray) en liste d'objets Style
+
+                            //gson.fromJson prend 2 paramètres
+                            //Premier paramètre c'est l'élément Json qu'il va falloir récupérer
+                            //Deuxième paramètre c'est le type d'élément à récupérer
+                            Gson gson = new Gson();
+                            List<Groupe> listeGroupe = gson.fromJson(res.get("groups").getAsJsonArray(), typeListe);
+                            Log.d("caca",listeGroupe.toString());
+                            Intent intent = new Intent (getView().getContext(),SearchGroupResultActivity.class);
+                            intent.putExtra("groupes",(ArrayList<Groupe>)listeGroupe);
+                            startActivity(intent);
+
+
+
+
+
+                        } else {
+                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } else {
+                        int statusCode = response.code();
+
+                        String res = response.toString();
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+                    Log.d("LoginActivity", t.getMessage());
+                }
+            });
+        } catch (Exception e){
+            Toast.makeText(getActivity(),(CharSequence)"Exception",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 
 }

@@ -16,7 +16,7 @@ public interface HomebandApiInterface {
     Call<HomebandApiReponse> getStyles() ;
 
     @GET("api/groupes")
-    Call<HomebandApiReponse> getGroupes(@Field("styles")String styles);
+    Call<HomebandApiReponse> getGroupes(@Query("styles")int styles, @Query("cp")String cp, @Query("rayon")int rayon, @Query("lat")int lat,@Query("lon")int lon );
 
     @GET("api/evenements")
     Call<HomebandApiReponse> getEvenements() ;

@@ -29,7 +29,7 @@
                 />
 
             <Spinner
-                android:id="@+id/spinner1"
+                android:id="@+id/spinnerStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/textView2"
@@ -51,34 +51,37 @@
             android:layout_below="@+id/rl2">
 
             <EditText
-                android:id="@+id/etVille"
+                android:id="@+id/etCp"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:layout_alignLeft="@+id/textView3"
-                android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/textView3"
-                android:layout_marginLeft="97dp"
-                android:layout_marginStart="97dp" />
+                android:layout_alignBaseline="@+id/textView3"
+                android:layout_alignBottom="@+id/textView3"
+                android:layout_marginEnd="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_toLeftOf="@+id/imageButton"
+                android:layout_toStartOf="@+id/imageButton" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="150dp"
                 android:layout_height="66dp"
-                android:layout_alignBaseline="@+id/etVille"
-                android:layout_alignBottom="@+id/etVille"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="34dp"
-                android:layout_marginStart="34dp"
-                android:text="@string/title_activity_search_city" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="23dp"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/code_postal" />
 
             <ImageButton
                 android:id="@+id/imageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/etVille"
-                android:layout_toRightOf="@+id/etVille"
+                android:layout_alignBottom="@+id/etCp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="33dp"
+                android:layout_marginRight="33dp"
                 app:srcCompat="@drawable/ic_place_black_24dp" />
 
 

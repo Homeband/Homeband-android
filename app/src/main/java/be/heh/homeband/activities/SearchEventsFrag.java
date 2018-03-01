@@ -166,7 +166,7 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
 
         btnRecherche.setOnClickListener(this);
 
-        spinStyle = (Spinner) myview.findViewById(R.id.spinner1);
+        spinStyle = (Spinner) myview.findViewById(R.id.spinnerStyle);
         Switch s = (Switch) myview.findViewById(R.id.switch1);
 
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

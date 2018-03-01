@@ -26,16 +26,12 @@
         <activity
             android:name=".activities.searchgroup.SearchGroupResultActivity"
             android:label="Liste des groupes">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="be.heh.homeband.activities.MainActivity" />
+
         </activity>
         <activity
             android:name=".activities.searchevents.SearchEventsResultActivity"
             android:label="Liste des évènements">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="be.heh.homeband.activities.MainActivity" />
+
         </activity>
     </application>
 

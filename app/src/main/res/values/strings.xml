@@ -20,7 +20,7 @@
     <string name="title_activity_search_style">Style</string>
     <string name="title_activity_search_distance">Distance (km)</string>
     <string name="title_activity_search_button">Rechercher</string>
-    <string name="title_activity_search_city">Ville</string>
+    <string name="code_postal">Code postal</string>
     <!-- Activité recherche évènements -->
     <string name="title_activity_searchevents">Recherche evenements</string>
     <string name="title_activity_search_date">Date</string>

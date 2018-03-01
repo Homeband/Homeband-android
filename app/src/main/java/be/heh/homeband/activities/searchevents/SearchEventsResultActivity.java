@@ -39,6 +39,14 @@ public class SearchEventsResultActivity extends AppCompatActivity {
         //puis créer un SearchGroupAdapter, lui fournir notre liste de villes.
         //cet adapter servira à remplir notre recyclerview
         recyclerView.setAdapter(new SearchEventsAdapter(events));
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public boolean onSupportNavigateUp(){
+
+        this.finish();
+        return true;
+    }
 }

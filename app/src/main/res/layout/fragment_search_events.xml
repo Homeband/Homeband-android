@@ -29,7 +29,7 @@
                 />
 
             <Spinner
-                android:id="@+id/spinner1"
+                android:id="@+id/spinnerStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/textView2"
@@ -70,7 +70,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="34dp"
                 android:layout_marginStart="34dp"
-                android:text="@string/title_activity_search_city" />
+                android:text="@string/code_postal" />
 
             <ImageButton
                 android:id="@+id/imageButton"
