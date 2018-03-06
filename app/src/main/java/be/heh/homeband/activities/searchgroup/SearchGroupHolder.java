@@ -15,8 +15,9 @@ import be.heh.homeband.entities.Groupe;
  */
 
 public class SearchGroupHolder extends RecyclerView.ViewHolder {
-    private TextView textViewView;
-    private ImageView imageView;
+    private TextView tvGroupName;
+    private TextView tvGroupCity;
+    private ImageView imgGroup;
 
     //itemView est la vue correspondante à 1 cellule
     public SearchGroupHolder(View itemView) {
@@ -24,13 +25,15 @@ public class SearchGroupHolder extends RecyclerView.ViewHolder {
 
         //c'est ici que l'on fait nos findView
 
-        textViewView = (TextView) itemView.findViewById(R.id.text);
-        imageView = (ImageView) itemView.findViewById(R.id.image);
+        tvGroupName = (TextView) itemView.findViewById(R.id.tvGroupName);
+        tvGroupCity = (TextView) itemView.findViewById(R.id.tvGroupCity);
+        imgGroup = (ImageView) itemView.findViewById(R.id.imgGroup);
     }
 
     //puis ajouter une fonction pour remplir la cellule en fonction d'un MyObject
     public void bind(Groupe monGroupe){
-        textViewView.setText(monGroupe.getNom());
-        Picasso.with(imageView.getContext()).load("http://www.tate.org.uk/art/images/work/T/T05/T05010_10.jpg").centerCrop().fit().into(imageView);
+        tvGroupName.setText(monGroupe.getNom());
+        tvGroupCity.setText(("La Louviere"));
+        Picasso.with(imgGroup.getContext()).load("http://www.tate.org.uk/art/images/work/T/T05/T05010_10.jpg").centerCrop().fit().into(imgGroup);
     }
 }

@@ -17,7 +17,7 @@ app:cardElevation="2dp">
      - cardCornerRadius pour arrondir les angles
  -->
 
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -27,32 +27,39 @@ app:cardElevation="2dp">
      donc rajouter un LinearLayout -->
 
     <ImageView
-        android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:id="@+id/imgGroup"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="10dp"
         android:scaleType="centerCrop"
         tools:src="@drawable/royalblood" />
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/tvGroupName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
         android:background="?android:selectableItemBackground"
-        android:padding="10dp"
-        tools:text="Royal Blood"
+        android:layout_toRightOf="@id/imgGroup"
         android:fontFamily="sans-serif"
+
         android:textColor="#333"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="Royal Blood" />
     <TextView
-        android:id="@+id/text2"
+        android:id="@+id/tvGroupCity"
         android:layout_width="match_parent"
+        android:layout_toRightOf="@id/imgGroup"
+        android:layout_below="@id/tvGroupName"
+        android:layout_marginRight="5dp"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
-        android:padding="10dp"
         tools:text="Brighton, UK"
         android:fontFamily="sans-serif"
         android:textColor="#333"
         android:textSize="14sp" />
-</LinearLayout>
+    
+</RelativeLayout>
 
 </android.support.v7.widget.CardView>
