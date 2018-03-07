@@ -8,9 +8,17 @@ import android.view.*;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import be.heh.homeband.R;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
+import be.heh.homeband.app.HomebandTools;
+import be.heh.homeband.entities.Utilisateur;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,7 +46,13 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set ContentView
         setContentView(R.layout.activity_login);
+        Realm.init(this);
+       Utilisateur user = HomebandTools.getConnectedUser();
 
+        if (user!=null){
+            Intent intent = new Intent (getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+        }
         initialisation();
 
     }
@@ -48,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         this.etPassword = findViewById(R.id.etPassword);
 
         this.etLogin.setText("carole");
-        this.etPassword.setText("test");
+        this.etPassword.setText("testtest");
     }
 
     public void onClickConnexion(View v){
@@ -87,7 +101,19 @@ public class LoginActivity extends AppCompatActivity {
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
+                            Gson gson = new Gson();
+                            final Utilisateur user = gson.fromJson(res.get("user").getAsJsonObject(), Utilisateur.class);
+                            user.setEst_connecte(true);
                             estConnecte = true;
+                            Realm realm = Realm.getDefaultInstance();
+                            realm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+
+                                    realm.copyToRealmOrUpdate(user);
+                                }
+                            });
+
                         } else {
                             messageToast = "Échec de la connexion\r\n" + res.getMessage();
 
