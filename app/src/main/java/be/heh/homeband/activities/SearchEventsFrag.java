@@ -1,12 +1,12 @@
 package be.heh.homeband.activities;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.EventLog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -22,15 +23,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import be.heh.homeband.R;
 import be.heh.homeband.activities.searchevents.SearchEventsResultActivity;
-import be.heh.homeband.activities.searchgroup.SearchGroupResultActivity;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
@@ -55,6 +59,13 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
     ArrayAdapter<Style> adapterStyle;
     Spinner spinStyle;
     Button btnRecherche;
+    EditText etCp;
+    EditText etKilometre;
+    EditText etDu;
+    EditText etAu;
+    Calendar myCalendarDu = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener date;
+    Calendar myCalendarAu = Calendar.getInstance();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -116,17 +127,14 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        //if(v == btnRecherche){
-        //TODO appel api
-        List<Evenement> events = new ArrayList<Evenement>();
-        events.add(new Evenement(1, "Groupe 1"));
-        events.add(new Evenement(2, "Groupe 2"));
-        events.add(new Evenement(3, "Groupe 3"));
-        events.add(new Evenement(4, "Groupe 4"));
-        Intent intent = new Intent (getView().getContext(),SearchEventsResultActivity.class);
-        intent.putExtra("events",(ArrayList<Evenement>)events);
-        startActivity(intent);
-        //}
+        if(v == btnRecherche){
+        getEvents();
+        }
+        else if (v == etDu) {
+            new DatePickerDialog(getContext(), date, myCalendarDu
+                    .get(Calendar.YEAR), myCalendarDu.get(Calendar.MONTH),
+                    myCalendarDu.get(Calendar.DAY_OF_MONTH)).show();
+        }
     }
 
 
@@ -163,10 +171,12 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
     }
     public void initialisation(View myview){
         btnRecherche = (Button) myview.findViewById(R.id.btnRechercheEvents);
-
         btnRecherche.setOnClickListener(this);
-
+        etCp = (EditText) myview.findViewById(R.id.etVille);
+        etKilometre = (EditText) myview.findViewById(R.id.etKilometre);
         spinStyle = (Spinner) myview.findViewById(R.id.spinnerStyle);
+        etDu = (EditText)  myview.findViewById(R.id.etAu);
+        etAu = (EditText)  myview.findViewById(R.id.etDu);
         Switch s = (Switch) myview.findViewById(R.id.switch1);
 
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -195,6 +205,7 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
 
             }
         });
+       initDate();
     }
 
     public void initStyles(){
@@ -276,5 +287,115 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void getEvents(){
+        int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
+        String var_cp = etCp.getText().toString();
+        int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
+        int var_du = Integer.parseInt(etDu.getText().toString());
+        int var_au = Integer.parseInt(etAu.getText().toString());
+        try {
+            Gson gson = new GsonBuilder().setLenient().create();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(HomebandRetrofit.API_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+            // Création d'une instance du service avec Retrofit
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+            Log.d("style",String.valueOf(var_style));
+            Log.d("cp",var_cp);
+            Log.d("kilometre",String.valueOf(var_kilometre));
+            // Requête vers l'API
+            serviceApi.getEvenements(var_style,var_cp,var_kilometre,0,0,var_du,var_au).enqueue(new Callback<HomebandApiReponse>() {
+                @Override
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
+
+                    // En fonction du code HTTP de Retour (2** = Successful)
+                    if (response.isSuccessful()) {
+
+                        // Récupération de la réponse de l'API
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
+
+                        CharSequence messageToast;
+                        if (res.isOperationReussie() == true) {
+                            // Element de retour sera de type List<style>
+                            Type typeListe = new TypeToken<List<Groupe>>(){}.getType();
+
+                            // Désérialisation du tableau JSON (JsonArray) en liste d'objets Style
+
+                            //gson.fromJson prend 2 paramètres
+                            //Premier paramètre c'est l'élément Json qu'il va falloir récupérer
+                            //Deuxième paramètre c'est le type d'élément à récupérer
+                            Gson gson = new Gson();
+                            List<Evenement> listeEvents = gson.fromJson(res.get("events").getAsJsonArray(), typeListe);
+                            Log.d("caca",listeEvents.toString());
+                            Intent intent = new Intent (getView().getContext(),SearchEventsResultActivity.class);
+                            intent.putExtra("events",(ArrayList<Evenement>)listeEvents);
+                            startActivity(intent);
+
+
+
+
+
+                        } else {
+                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } else {
+                        int statusCode = response.code();
+
+                        String res = response.toString();
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+                    Log.d("LoginActivity", t.getMessage());
+                }
+            });
+        } catch (Exception e){
+            Toast.makeText(getActivity(),(CharSequence)"Exception",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+   public void initDate (){
+
+
+       date = new DatePickerDialog.OnDateSetListener() {
+
+           @Override
+           public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                 int dayOfMonth) {
+               // TODO Auto-generated method stub
+               myCalendarDu.set(Calendar.YEAR, year);
+               myCalendarDu.set(Calendar.MONTH, monthOfYear);
+               myCalendarDu.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+               updateLabel();
+           }
+
+       };
+
+       etDu.setOnClickListener(this);
+
+
+   }
+
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        etDu.setText(sdf.format(myCalendarDu.getTime()));
     }
 }

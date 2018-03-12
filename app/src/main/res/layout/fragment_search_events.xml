@@ -160,8 +160,8 @@
             android:layout_alignStart="@+id/etAu"
             android:layout_centerVertical="true"
             android:ems="10"
-            android:inputType="date"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:focusable="false"/>
 
         <TextView
             android:id="@+id/textView5"
@@ -194,8 +194,8 @@
             android:layout_alignStart="@+id/btnRechercheEvents"
             android:layout_below="@+id/etDu"
             android:ems="10"
-            android:inputType="date"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:focusable="false"/>
 
 
     </RelativeLayout>

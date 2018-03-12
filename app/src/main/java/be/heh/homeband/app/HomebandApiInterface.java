@@ -19,6 +19,8 @@ public interface HomebandApiInterface {
     Call<HomebandApiReponse> getGroupes(@Query("styles")int styles, @Query("cp")String cp, @Query("rayon")int rayon, @Query("lat")int lat,@Query("lon")int lon );
 
     @GET("api/evenements")
-    Call<HomebandApiReponse> getEvenements() ;
+    Call<HomebandApiReponse> getEvenements(@Query("styles")int styles, @Query("cp")String cp, @Query("rayon")int rayon, @Query("lat")int lat,@Query("lon")int lon,@Query("date_debut")int du,@Query("fate_fin")int au ) ;
+
+
 }
 

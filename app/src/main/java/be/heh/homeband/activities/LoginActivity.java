@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import be.heh.homeband.R;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
+import be.heh.homeband.app.HomebandConnectivity;
 import be.heh.homeband.app.HomebandTools;
 import be.heh.homeband.entities.Utilisateur;
 import io.realm.Realm;
@@ -68,14 +69,19 @@ public class LoginActivity extends AppCompatActivity {
     public void onClickConnexion(View v){
         String login = this.etLogin.getText().toString();
         String pass = this.etPassword.getText().toString();
-
-        connect(login,pass);
-        if(this.estConnecte == true){
-            // Connexion réussie, Changement de fenêtre
-            Toast.makeText(this, "Connexion réussie !", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent (getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+        if (HomebandConnectivity.isConnectedToInternet(this)==true){
+            connect(login,pass);
+            if(this.estConnecte == true){
+                // Connexion réussie, Changement de fenêtre
+                Toast.makeText(this, "Connexion réussie !", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent (getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+            }
         }
+        else{
+            Toast.makeText(this, "Vous devez être connecté à internet", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void connect(String login, String password){
