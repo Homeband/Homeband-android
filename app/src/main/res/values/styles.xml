@@ -7,4 +7,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="ThemeDatePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/hbRed</item>
+        <item name="colorControlActivated">@color/hbRed</item>
+        <item name="colorControlHighlight">@color/hbRed</item>
+    </style>
 </resources>

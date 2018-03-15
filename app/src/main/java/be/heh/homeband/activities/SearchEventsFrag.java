@@ -58,14 +58,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SearchEventsFrag extends Fragment implements View.OnClickListener {
     ArrayAdapter<Style> adapterStyle;
     Spinner spinStyle;
+
     Button btnRecherche;
+
     EditText etCp;
     EditText etKilometre;
     EditText etDu;
     EditText etAu;
-    Calendar myCalendarDu = Calendar.getInstance();
-    DatePickerDialog.OnDateSetListener date;
-    Calendar myCalendarAu = Calendar.getInstance();
+
+    TextView tvDateDu;
+    TextView tvDateAu;
+
+    Switch swAfficherDate;
+
+    Calendar calendarDateDu;
+    Calendar calendarDateAu;
+
+    DatePickerDialog pickerDateDu;
+    DatePickerDialog pickerDateAu;
+
+    SimpleDateFormat dateFormatter;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -128,12 +141,11 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v == btnRecherche){
-        getEvents();
-        }
-        else if (v == etDu) {
-            new DatePickerDialog(getContext(), date, myCalendarDu
-                    .get(Calendar.YEAR), myCalendarDu.get(Calendar.MONTH),
-                    myCalendarDu.get(Calendar.DAY_OF_MONTH)).show();
+            getEvents();
+        } else if (v == etDu) {
+            pickerDateDu.show();
+        } else if (v == etAu) {
+            pickerDateAu.show();
         }
     }
 
@@ -170,42 +182,43 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
         void onFragmentInteraction(Uri uri);
     }
     public void initialisation(View myview){
+        // Bouton rechercher
         btnRecherche = (Button) myview.findViewById(R.id.btnRechercheEvents);
         btnRecherche.setOnClickListener(this);
+
+        // Spinner Style
+        spinStyle = (Spinner) myview.findViewById(R.id.spinnerStyle);
+
+        // Localisation
         etCp = (EditText) myview.findViewById(R.id.etVille);
         etKilometre = (EditText) myview.findViewById(R.id.etKilometre);
-        spinStyle = (Spinner) myview.findViewById(R.id.spinnerStyle);
+
+        // Dates
         etDu = (EditText)  myview.findViewById(R.id.etAu);
         etAu = (EditText)  myview.findViewById(R.id.etDu);
-        Switch s = (Switch) myview.findViewById(R.id.switch1);
+        tvDateDu = (TextView) myview.findViewById(R.id.textView);
+        tvDateAu = (TextView) myview.findViewById(R.id.textView5);
+        swAfficherDate = (Switch) myview.findViewById(R.id.switch1);
 
-        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        // Switch Affichage Date
+        swAfficherDate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    EditText Du = (EditText) getView().findViewById(R.id.etDu);
-                    EditText Au = (EditText) getView().findViewById(R.id.etAu);
-                    TextView Dut = (TextView) getView().findViewById(R.id.textView);
-                    TextView Aut = (TextView) getView().findViewById(R.id.textView5);
-                    Du.setVisibility(View.VISIBLE);
-                    Au.setVisibility(View.VISIBLE);
-                    Dut.setVisibility(View.VISIBLE);
-                    Aut.setVisibility(View.VISIBLE);
-                }
-                else   {
-                    EditText Du = (EditText) getView().findViewById(R.id.etDu);
-                    EditText Au = (EditText) getView().findViewById(R.id.etAu);
-                    TextView Dut = (TextView) getView().findViewById(R.id.textView);
-                    TextView Aut = (TextView) getView().findViewById(R.id.textView5);
-                    Du.setVisibility(View.INVISIBLE);
-                    Au.setVisibility(View.INVISIBLE);
-                    Dut.setVisibility(View.INVISIBLE);
-                    Aut.setVisibility(View.INVISIBLE);
-                }
-
-
+            if (isChecked){
+                etDu.setVisibility(View.VISIBLE);
+                etAu.setVisibility(View.VISIBLE);
+                tvDateDu.setVisibility(View.VISIBLE);
+                tvDateAu.setVisibility(View.VISIBLE);
+            } else {
+                etDu.setVisibility(View.INVISIBLE);
+                etAu.setVisibility(View.INVISIBLE);
+                tvDateDu.setVisibility(View.INVISIBLE);
+                tvDateAu.setVisibility(View.INVISIBLE);
+            }
             }
         });
-       initDate();
+
+        initDate();
     }
 
     public void initStyles(){
@@ -372,30 +385,33 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
 
    public void initDate (){
 
+        // Initialisation des calendriers
+       calendarDateDu = Calendar.getInstance();
+       calendarDateAu = Calendar.getInstance();
 
-       date = new DatePickerDialog.OnDateSetListener() {
-
-           @Override
-           public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                 int dayOfMonth) {
-               // TODO Auto-generated method stub
-               myCalendarDu.set(Calendar.YEAR, year);
-               myCalendarDu.set(Calendar.MONTH, monthOfYear);
-               myCalendarDu.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-               updateLabel();
-           }
-
-       };
-
+       // Ajout des listeners sur les EditText
        etDu.setOnClickListener(this);
+       etAu.setOnClickListener(this);
 
+       // Initialisation du formateur de date
+       dateFormatter = new SimpleDateFormat("dd/MM/YYYY");
 
+       // Initialisation du DatePickerDialog de la première date (et définition du comportement lors de la sélection)
+       pickerDateDu = new DatePickerDialog(getContext(), R.style.ThemeDatePicker, new DatePickerDialog.OnDateSetListener() {
+           public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+               Calendar newDate = Calendar.getInstance();
+               newDate.set(year, monthOfYear, dayOfMonth);
+               etDu.setText(dateFormatter.format(newDate.getTime()));
+           }
+       }, calendarDateDu.get(Calendar.YEAR), calendarDateDu.get(Calendar.MONTH), calendarDateDu.get(Calendar.DAY_OF_MONTH));
+
+       // Initialisation du DatePickerDialog de la deuxième date (et définition du comportement lors de la sélection)
+       pickerDateAu = new DatePickerDialog(getContext(), R.style.ThemeDatePicker, new DatePickerDialog.OnDateSetListener() {
+           public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+               Calendar newDate = Calendar.getInstance();
+               newDate.set(year, monthOfYear, dayOfMonth);
+               etAu.setText(dateFormatter.format(newDate.getTime()));
+           }
+       }, calendarDateAu.get(Calendar.YEAR), calendarDateAu.get(Calendar.MONTH), calendarDateAu.get(Calendar.DAY_OF_MONTH));
    }
-
-    private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        etDu.setText(sdf.format(myCalendarDu.getTime()));
-    }
 }
