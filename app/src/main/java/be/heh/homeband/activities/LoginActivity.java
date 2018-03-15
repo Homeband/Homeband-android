@@ -14,6 +14,7 @@ import be.heh.homeband.R;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandConnectivity;
+import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.app.HomebandTools;
 import be.heh.homeband.entities.Utilisateur;
 import io.realm.Realm;
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2/homeband-api/")
+                    .baseUrl(HomebandRetrofit.API_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             // Création d'une instance du service avec Retrofit

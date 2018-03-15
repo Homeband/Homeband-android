@@ -402,6 +402,8 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
                Calendar newDate = Calendar.getInstance();
                newDate.set(year, monthOfYear, dayOfMonth);
                etDu.setText(dateFormatter.format(newDate.getTime()));
+               // Si datedu > dateau ou dateau vide => dateAu = dateDu
+
            }
        }, calendarDateDu.get(Calendar.YEAR), calendarDateDu.get(Calendar.MONTH), calendarDateDu.get(Calendar.DAY_OF_MONTH));
 
@@ -411,6 +413,7 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
                Calendar newDate = Calendar.getInstance();
                newDate.set(year, monthOfYear, dayOfMonth);
                etAu.setText(dateFormatter.format(newDate.getTime()));
+               //DateAu < DateDu alors dateAu = DateDu
            }
        }, calendarDateAu.get(Calendar.YEAR), calendarDateAu.get(Calendar.MONTH), calendarDateAu.get(Calendar.DAY_OF_MONTH));
    }
