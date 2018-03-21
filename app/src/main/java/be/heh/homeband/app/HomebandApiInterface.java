@@ -21,6 +21,12 @@ public interface HomebandApiInterface {
     @GET("api/evenements")
     Call<HomebandApiReponse> getEvenements(@Query("styles")int styles, @Query("cp")String cp, @Query("rayon")int rayon, @Query("lat")int lat,@Query("lon")int lon,@Query("date_debut")int du,@Query("fate_fin")int au ) ;
 
+    @GET("api/versions")
+    Call<HomebandApiReponse> getVersions(@Query("nomtable")String nomtable );
+
+    @GET("api/villes")
+    Call<HomebandApiReponse> getVilles() ;
+
 
 }
 

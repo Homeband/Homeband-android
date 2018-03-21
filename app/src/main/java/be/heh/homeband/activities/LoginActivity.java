@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set ContentView
         setContentView(R.layout.activity_login);
-        Realm.init(this);
        Utilisateur user = HomebandTools.getConnectedUser();
 
         if (user!=null){
