@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import  android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import be.heh.homeband.activities.HomeFrag;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
+import be.heh.homeband.app.HomebandTools;
 import be.heh.homeband.entities.Style;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +42,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements  HomeFrag.OnFragmentInteractionListener,
                                                                 SearchFrag.OnFragmentInteractionListener,
                                                                 SearchGroupeFrag.OnFragmentInteractionListener, SearchEventsFrag.OnFragmentInteractionListener,
-                                                                SettingsFrag.OnFragmentInteractionListener{
+                                                                SettingsFrag.OnFragmentInteractionListener {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        HomebandTools.checkUpdateVille(this);
+    }
 
     private ActionBar toolbar;
     ArrayAdapter<Style> adapterStyle;

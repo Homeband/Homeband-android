@@ -69,27 +69,6 @@ public class HomeFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final Context context = inflater.getContext();
-        if (HomebandTools.checkUpdateVille(context)== true){
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.alert_update_title);
-            builder.setMessage(R.string.alert_update_message)
-                    .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            HomebandTools.updateVilles(context);
-                        }
-                    })
-                    .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User cancelled the dialog
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-
-
-        }
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
