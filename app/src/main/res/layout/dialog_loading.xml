@@ -2,28 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_centerInParent="true">
-
+    android:layout_centerInParent="true"
+    android:theme="@style/ThemeYesNo"
+    >
 
     <ProgressBar
         android:id="@+id/pbChargement"
-        style="?android:attr/progressBarStyle"
+        android:theme="@style/ThemeYesNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/tvChargement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/pbChargement"
         android:layout_marginTop="29dp"
-        android:text="Chargement en cours"
+        android:text="@string/alert_loading"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         />
+
 </RelativeLayout>

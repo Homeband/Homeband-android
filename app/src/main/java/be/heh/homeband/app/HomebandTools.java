@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.ArrayAdapter;
@@ -74,7 +75,8 @@ public abstract class HomebandTools {
         loading.show(frag,"LoadingDialog");
 
         try {
-            Thread.sleep(5500);
+
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(HomebandRetrofit.API_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -112,8 +114,11 @@ public abstract class HomebandTools {
                             if (versionDB == null)
                             {
                                 toUpdate=true;
+                                Log.d("test", "NO EXIST !");
                             }
                             else{
+                                Log.d("test", versionAPI.getDate_maj().toString());
+                                Log.d("test", versionDB.getDate_maj().toString());
                                 if ( versionAPI.getDate_maj().after(versionDB.getDate_maj()) ){
                                     toUpdate=true;
                                 }
@@ -139,8 +144,6 @@ public abstract class HomebandTools {
                                         });
                                 AlertDialog alert = builder.create();
                                 alert.show();
-
-
                             }
 
                         } else {
@@ -178,6 +181,12 @@ public abstract class HomebandTools {
         }
     }
 
+    public static int getIdAuto(Class classe, String primaryKey){
+        Realm realm = Realm.getDefaultInstance();
+        Number maxID = realm.where(classe).max(primaryKey);
+        return (maxID == null) ? 1 : maxID.intValue() + 1;
+    }
+
     public static void updateVilles(final Context context){
 
         final DialogFragment loading = new LoadingDialog();
@@ -192,8 +201,6 @@ public abstract class HomebandTools {
 
             // Création d'une instance du service avec Retrofit
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
-
-
 
             // Requête vers l'API
             serviceApi.getVilles().enqueue(new Callback<HomebandApiReponse>() {
@@ -227,19 +234,24 @@ public abstract class HomebandTools {
 
                                 }
                             });
-                            RealmQuery<Version> query = realm.where(Version.class);
-                            query.equalTo("nom_table", "VILLES");
-                            Version versionDB = query.findFirst();
-                            if (versionDB==null){
-                                versionDB = new Version() ;
-                                versionDB.setNom_table("VILLES");
-                                versionDB.setNum_table(2);
-                            }
 
+                            realm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    RealmQuery<Version> query = realm.where(Version.class);
+                                    query.equalTo("nom_table", "VILLES");
+                                    Version versionDB = query.findFirst();
+                                    if (versionDB==null){
+                                        versionDB = new Version() ;
+                                        versionDB.setId_versions(getIdAuto(Version.class, "id_versions"));
+                                        versionDB.setNom_table("VILLES");
+                                        versionDB.setNum_table(2);
+                                    }
 
-
-                            versionDB.setDate_maj(new Date());
-
+                                    versionDB.setDate_maj(new Date());
+                                    realm.copyToRealmOrUpdate(versionDB);
+                                }
+                            });
 
                             loading.dismiss();
                         } else {

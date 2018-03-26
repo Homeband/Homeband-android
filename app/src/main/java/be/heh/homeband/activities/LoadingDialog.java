@@ -17,7 +17,7 @@ public class LoadingDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ThemeYesNo);
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
