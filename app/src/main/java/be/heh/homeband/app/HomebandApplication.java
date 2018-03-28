@@ -16,7 +16,7 @@ public class HomebandApplication extends Application {
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("MyRealm.realm")
-                .schemaVersion(2)
+                .schemaVersion(4)
                 .build();
         Realm.setDefaultConfiguration(config);
     }

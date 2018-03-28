@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements  HomeFrag.OnFragm
     protected void onStart() {
         super.onStart();
         HomebandTools.checkUpdateVille(this);
+        HomebandTools.checkUpdateStyles(this);
     }
 
     private ActionBar toolbar;
