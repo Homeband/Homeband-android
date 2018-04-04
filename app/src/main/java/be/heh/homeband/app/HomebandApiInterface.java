@@ -27,6 +27,8 @@ public interface HomebandApiInterface {
     @GET("api/villes")
     Call<HomebandApiReponse> getVilles() ;
 
+    @GET("api/localisations")
+    Call<HomebandApiReponse> getLocalisations(@Query("type")int type, @Query("address")String address, @Query("lat")double lat, @Query("lon")double lon) ;
 
 }
 

@@ -70,10 +70,10 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="34dp"
                 android:layout_marginStart="34dp"
-                android:text="@string/code_postal" />
+                android:text="Adresse" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/btnLocalisationGroupe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
