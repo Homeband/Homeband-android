@@ -2,8 +2,10 @@ package be.heh.homeband.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -30,6 +32,7 @@ import be.heh.homeband.R;
 import be.heh.homeband.activities.searchgroup.SearchGroupResultActivity;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
+import be.heh.homeband.app.HomebandGPSTracker;
 import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Style;
@@ -168,7 +171,7 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
         etAdresse = (EditText) myview.findViewById(R.id.etCp);
         etKilometre = (EditText) myview.findViewById(R.id.etKilometre);
         btnRecherche = (Button) myview.findViewById(R.id.btnRechercheGroupe);
-        btnLocalisationGroupe = (ImageButton) myview.findViewById(R.id.btnLocalisationGroupe);
+        btnLocalisationGroupe = (ImageButton) myview.findViewById(R.id.btnLocalisationEvents);
         btnLocalisationGroupe.setOnClickListener(this);
         btnRecherche.setOnClickListener(this);
     }
@@ -335,9 +338,18 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     }
 
     public void getLocalisations(){
-        double lat=50.427572;
-        double lon=4.488645;
+        double lat;
+        double lon;
 
+        HomebandGPSTracker gps = new HomebandGPSTracker(getContext(),this);
+        if(gps.canGetLocation()){
+            lat = gps.getLatitude();
+            lon=gps.getLongitude();
+        }
+        else{
+            gps.showSettingsAlert(2);
+            return;
+        }
         try {
             Gson gson = new GsonBuilder().setLenient().create();
             Retrofit retrofit = new Retrofit.Builder()
@@ -398,6 +410,25 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
         } catch (Exception e){
             Toast.makeText(getActivity(),(CharSequence)"Exception",Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d("requestcode",String.valueOf(requestCode));
+        Log.d("Permission",String.valueOf(permissions.length));
+        Log.d("grantResult",String.valueOf(grantResults.length));
+        if (grantResults.length>0){
+            switch (requestCode){
+                case 15 :
+                    if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                        getLocalisations();
+                    }
+                    break;
+            }
+
+
         }
     }
 }

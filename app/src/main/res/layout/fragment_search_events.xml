@@ -51,21 +51,21 @@
             android:layout_below="@+id/rl2">
 
             <EditText
-                android:id="@+id/etVille"
+                android:id="@+id/etAdresse"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:layout_alignLeft="@+id/textView3"
+                android:layout_alignLeft="@+id/tvAdresse"
                 android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/textView3"
+                android:layout_alignStart="@+id/tvAdresse"
                 android:layout_marginLeft="98dp"
                 android:layout_marginStart="98dp" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvAdresse"
                 android:layout_width="150dp"
                 android:layout_height="66dp"
-                android:layout_alignBaseline="@+id/etVille"
-                android:layout_alignBottom="@+id/etVille"
+                android:layout_alignBaseline="@+id/etAdresse"
+                android:layout_alignBottom="@+id/etAdresse"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="34dp"
@@ -73,12 +73,12 @@
                 android:text="Adresse" />
 
             <ImageButton
-                android:id="@+id/btnLocalisationGroupe"
+                android:id="@+id/btnLocalisationEvents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/etVille"
-                android:layout_toRightOf="@+id/etVille"
+                android:layout_toEndOf="@+id/etAdresse"
+                android:layout_toRightOf="@+id/etAdresse"
                 app:srcCompat="@drawable/ic_place_black_24dp" />
 
 

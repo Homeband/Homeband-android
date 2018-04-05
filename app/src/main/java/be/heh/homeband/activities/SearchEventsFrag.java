@@ -3,8 +3,10 @@ package be.heh.homeband.activities;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -31,12 +34,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import be.heh.homeband.R;
 import be.heh.homeband.activities.searchevents.SearchEventsResultActivity;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
+import be.heh.homeband.app.HomebandGPSTracker;
 import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
@@ -60,11 +63,12 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
     Spinner spinStyle;
 
     Button btnRecherche;
+    ImageButton btnLocalisationEvents;
 
-    EditText etCp;
     EditText etKilometre;
     EditText etDu;
     EditText etAu;
+    EditText etAdresse;
 
     TextView tvDateDu;
     TextView tvDateAu;
@@ -147,6 +151,9 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
         } else if (v == etAu) {
             pickerDateAu.show();
         }
+        else if (v == btnLocalisationEvents){
+            getLocalisations();
+        }
     }
 
 
@@ -185,17 +192,18 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
         // Bouton rechercher
         btnRecherche = (Button) myview.findViewById(R.id.btnRechercheEvents);
         btnRecherche.setOnClickListener(this);
-
+        btnLocalisationEvents = (ImageButton) myview.findViewById((R.id.btnLocalisationEvents)) ;
+        btnLocalisationEvents.setOnClickListener(this);
         // Spinner Style
         spinStyle = (Spinner) myview.findViewById(R.id.spinnerStyle);
 
         // Localisation
-        etCp = (EditText) myview.findViewById(R.id.etVille);
         etKilometre = (EditText) myview.findViewById(R.id.etKilometre);
 
         // Dates
         etDu = (EditText)  myview.findViewById(R.id.etAu);
         etAu = (EditText)  myview.findViewById(R.id.etDu);
+        etAdresse = (EditText)  myview.findViewById(R.id.etAdresse);
         tvDateDu = (TextView) myview.findViewById(R.id.textView);
         tvDateAu = (TextView) myview.findViewById(R.id.textView5);
         swAfficherDate = (Switch) myview.findViewById(R.id.switch1);
@@ -304,7 +312,7 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
 
     public void getEvents(){
         int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
-        String var_cp = etCp.getText().toString();
+        String adresse = etAdresse.getText().toString();
         int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
         int var_du = Integer.parseInt(etDu.getText().toString());
         int var_au = Integer.parseInt(etAu.getText().toString());
@@ -318,10 +326,10 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
             // Création d'une instance du service avec Retrofit
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
             Log.d("style",String.valueOf(var_style));
-            Log.d("cp",var_cp);
+            Log.d("cp",adresse);
             Log.d("kilometre",String.valueOf(var_kilometre));
             // Requête vers l'API
-            serviceApi.getEvenements(var_style,var_cp,var_kilometre,0,0,var_du,var_au).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getEvenements(var_style,adresse,var_kilometre,0,0,var_du,var_au).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -417,4 +425,99 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
            }
        }, calendarDateAu.get(Calendar.YEAR), calendarDateAu.get(Calendar.MONTH), calendarDateAu.get(Calendar.DAY_OF_MONTH));
    }
+
+    public void getLocalisations(){
+        double lat;
+        double lon;
+
+        HomebandGPSTracker gps = new HomebandGPSTracker(getContext(),this);
+        if(gps.canGetLocation()){
+            lat = gps.getLatitude();
+            lon=gps.getLongitude();
+        }
+        else{
+            gps.showSettingsAlert(2);
+            return;
+        }
+        try {
+            Gson gson = new GsonBuilder().setLenient().create();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(HomebandRetrofit.API_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+            // Création d'une instance du service avec Retrofit
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+
+            // Requête vers l'API
+            serviceApi.getLocalisations(1,null,lat,lon).enqueue(new Callback<HomebandApiReponse>() {
+                @Override
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
+
+                    // En fonction du code HTTP de Retour (2** = Successful)
+                    if (response.isSuccessful()) {
+
+                        // Récupération de la réponse de l'API
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
+
+                        CharSequence messageToast;
+                        if (res.isOperationReussie() == true) {
+                            // Désérialisation du tableau JSON (JsonArray) en liste d'objets Style
+
+                            //gson.fromJson prend 2 paramètres
+                            //Premier paramètre c'est l'élément Json qu'il va falloir récupérer
+                            //Deuxième paramètre c'est le type d'élément à récupérer
+                            Gson gson = new Gson();
+                            String address = res.get("address").getAsString();
+                            etAdresse.setText(address);
+
+                        } else {
+                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } else {
+                        int statusCode = response.code();
+
+                        String res = response.toString();
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+                    Log.d("LoginActivity", t.getMessage());
+                }
+            });
+        } catch (Exception e){
+            Toast.makeText(getActivity(),(CharSequence)"Exception",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d("requestcode",String.valueOf(requestCode));
+        Log.d("Permission",String.valueOf(permissions.length));
+        Log.d("grantResult",String.valueOf(grantResults.length));
+        if (grantResults.length>0){
+            switch (requestCode){
+                case 15 :
+                    if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                        getLocalisations();
+                    }
+                    break;
+            }
+
+
+        }
+    }
 }
