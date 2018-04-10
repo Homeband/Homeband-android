@@ -11,6 +11,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -19,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginVertical="@dimen/layout_distance"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
 
             <TextView
@@ -44,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginVertical="@dimen/layout_distance"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
 
             <TextView
@@ -75,45 +78,51 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rl4"
-
+            android:id="@+id/rlDistance"
             android:layout_below="@+id/rlAdresse"
-            android:layout_marginTop="15dp">
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="@dimen/layout_distance">
 
             <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvDistance"
+                android:layout_width="@dimen/search_label_width"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/etKilometre"
-                android:layout_alignBottom="@+id/etKilometre"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="38dp"
-                android:layout_marginStart="38dp"
+                android:layout_centerVertical="true"
                 android:text="@string/title_activity_search_distance" />
 
             <EditText
                 android:id="@+id/etKilometre"
-                android:layout_width="55dp"
+                android:layout_width="@dimen/search_distance_width"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tvDistance"
                 android:ems="10"
                 android:inputType="number"
                 android:layout_centerInParent="true"/>
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rlDistance"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="@dimen/layout_distance">
 
-        <Button
-            android:id="@+id/btnRechercheGroupe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="68dp"
-            android:background="@color/hbRed"
-            android:gravity="center"
-            android:text="@string/title_activity_search_button"
-            android:textColor="@color/colorAccent" />
+            <Button
+                android:id="@+id/btnRechercheGroupe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@color/hbRed"
+                android:text="@string/title_activity_search_button"
+                android:textColor="@color/colorAccent"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/search_button_marginBottom"
+                android:padding="@dimen/search_button_padding"/>
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
