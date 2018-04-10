@@ -1,38 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="be.heh.homeband.activities.MainActivity">
+<RelativeLayout
+android:id="@+id/activity_main"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/navigation"
+        android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/frame_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </FrameLayout>
 
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/navigation"
-                android:layout_below="@id/frame_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="0dp"
-                android:layout_marginStart="0dp"
-                android:background="@color/hbRed"
-                app:itemTextColor="@color/color_navigation"
-                app:itemIconTint="@color/color_navigation"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:menu="@menu/navigation" />
-    </RelativeLayout>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/hbRed"
+        app:itemTextColor="@color/color_navigation"
+        app:itemIconTint="@color/color_navigation"
+        app:menu="@menu/navigation"/>
 
-
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
