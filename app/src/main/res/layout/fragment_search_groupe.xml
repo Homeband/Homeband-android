@@ -14,76 +14,59 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rl2"
-            android:layout_width="wrap_content"
+            android:id="@+id/rlStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/rl1"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="119dp"
-                android:layout_height="66dp"
+                android:id="@+id/tvStyle"
+                android:layout_width="@dimen/search_label_width"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:text="@string/title_activity_search_style"
-                android:layout_marginLeft="35dp"
                 />
 
             <Spinner
-                android:id="@+id/spinnerStyle"
+                android:id="@+id/spinStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView2"
-                android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/textView2"
-                android:layout_marginLeft="46dp"
-                android:layout_marginStart="46dp" />
+                android:layout_toRightOf="@id/tvStyle"
+                android:layout_centerVertical="true"/>
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl3"
-            android:layout_width="wrap_content"
+            android:id="@+id/rlAdresse"
+            android:layout_below="@id/rlStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/rl2">
-
-            <EditText
-                android:id="@+id/etCp"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_alignBaseline="@+id/tvAdresse"
-                android:layout_alignBottom="@+id/tvAdresse"
-                android:layout_marginEnd="22dp"
-                android:layout_marginRight="22dp"
-                android:layout_toLeftOf="@+id/btnLocalisationEvents"
-                android:layout_toStartOf="@+id/btnLocalisationEvents" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
 
             <TextView
                 android:id="@+id/tvAdresse"
-                android:layout_width="150dp"
-                android:layout_height="66dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="23dp"
-                android:layout_marginStart="23dp"
-                android:layout_marginTop="12dp"
+                android:layout_width="@dimen/search_label_width"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:text="Adresse" />
+
+            <EditText
+                android:id="@+id/etAdresse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/btnLocalisationEvents"
+                android:layout_toRightOf="@id/tvAdresse"
+                android:layout_toLeftOf="@id/btnLocalisationEvents" />
 
             <ImageButton
                 android:id="@+id/btnLocalisationEvents"
+                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/etCp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="33dp"
-                android:layout_marginRight="33dp"
                 app:srcCompat="@drawable/ic_place_black_24dp" />
-
 
         </RelativeLayout>
 
@@ -94,7 +77,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/rl4"
 
-            android:layout_below="@+id/rl3"
+            android:layout_below="@+id/rlAdresse"
             android:layout_marginTop="15dp">
 
             <TextView

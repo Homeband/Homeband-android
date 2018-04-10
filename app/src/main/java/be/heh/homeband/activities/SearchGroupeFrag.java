@@ -36,6 +36,7 @@ import be.heh.homeband.app.HomebandGPSTracker;
 import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Style;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -105,16 +106,12 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
-
-
-
         View myview = inflater.inflate(R.layout.fragment_search_groupe, container, false);
         initialisation(myview);
-        initStyles();
-        return myview;
 
+        initStyles();
+
+        return myview;
     }
 
     @Override
@@ -167,8 +164,8 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     }
 
     public void initialisation(View myview){
-        spinStyle = (Spinner) myview.findViewById(R.id.spinnerStyle);
-        etAdresse = (EditText) myview.findViewById(R.id.etCp);
+        spinStyle = (Spinner) myview.findViewById(R.id.spinStyle);
+        etAdresse = (EditText) myview.findViewById(R.id.etAdresse);
         etKilometre = (EditText) myview.findViewById(R.id.etKilometre);
         btnRecherche = (Button) myview.findViewById(R.id.btnRechercheGroupe);
         btnLocalisationGroupe = (ImageButton) myview.findViewById(R.id.btnLocalisationEvents);

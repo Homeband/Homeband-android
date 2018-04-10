@@ -14,14 +14,14 @@
 
 
         <RelativeLayout
-            android:id="@+id/rl2"
+            android:id="@+id/rlStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/rl1"
             android:layout_marginTop="15dp">
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tvStyle"
                 android:layout_width="119dp"
                 android:layout_height="66dp"
                 android:text="@string/title_activity_search_style"
@@ -29,26 +29,26 @@
                 />
 
             <Spinner
-                android:id="@+id/spinnerStyle"
+                android:id="@+id/spinStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView2"
+                android:layout_alignLeft="@+id/tvStyle"
                 android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/textView2"
+                android:layout_alignStart="@+id/tvStyle"
                 android:layout_marginLeft="52dp"
                 android:layout_marginStart="52dp" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl3"
+            android:id="@+id/rlAdresse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/rl2">
+            android:layout_below="@+id/rlStyle">
 
             <EditText
                 android:id="@+id/etAdresse"
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/rl4"
 
-            android:layout_below="@+id/rl3"
+            android:layout_below="@+id/rlAdresse"
             android:layout_marginTop="15dp">
 
             <TextView

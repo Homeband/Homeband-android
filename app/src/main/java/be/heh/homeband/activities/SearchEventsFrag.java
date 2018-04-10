@@ -195,7 +195,7 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
         btnLocalisationEvents = (ImageButton) myview.findViewById((R.id.btnLocalisationEvents)) ;
         btnLocalisationEvents.setOnClickListener(this);
         // Spinner Style
-        spinStyle = (Spinner) myview.findViewById(R.id.spinnerStyle);
+        spinStyle = (Spinner) myview.findViewById(R.id.spinStyle);
 
         // Localisation
         etKilometre = (EditText) myview.findViewById(R.id.etKilometre);
