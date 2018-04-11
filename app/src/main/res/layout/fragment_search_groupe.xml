@@ -35,8 +35,9 @@
                 android:id="@+id/spinStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/tvStyle"
-                android:layout_centerVertical="true"/>
+                 />
 
         </RelativeLayout>
 
@@ -60,6 +61,7 @@
                 android:id="@+id/etAdresse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_dark"
                 android:layout_alignBottom="@id/btnLocalisationEvents"
                 android:layout_toRightOf="@id/tvAdresse"
                 android:layout_toLeftOf="@id/btnLocalisationEvents" />
@@ -95,6 +97,7 @@
                 android:id="@+id/etKilometre"
                 android:layout_width="@dimen/search_distance_width"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_dark"
                 android:layout_toRightOf="@id/tvDistance"
                 android:ems="10"
                 android:inputType="number"

@@ -10,75 +10,65 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
 
         <RelativeLayout
             android:id="@+id/rlStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/rl1"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginVertical="@dimen/layout_distance"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+
             <TextView
                 android:id="@+id/tvStyle"
-                android:layout_width="119dp"
-                android:layout_height="66dp"
-                android:text="@string/title_activity_search_style"
-                android:layout_marginLeft="35dp"
-                />
+                android:layout_width="@dimen/search_label_width"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/title_activity_search_style" />
 
             <Spinner
                 android:id="@+id/spinStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tvStyle"
-                android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/tvStyle"
-                android:layout_marginLeft="52dp"
-                android:layout_marginStart="52dp" />
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tvStyle"/>
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rlAdresse"
-            android:layout_width="wrap_content"
+            android:layout_below="@id/rlStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/rlStyle">
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="@dimen/layout_distance"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
 
             <EditText
                 android:id="@+id/etAdresse"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_alignLeft="@+id/tvAdresse"
-                android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/tvAdresse"
-                android:layout_marginLeft="98dp"
-                android:layout_marginStart="98dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:layout_alignBottom="@id/btnLocalisationEvents"
+                android:layout_toRightOf="@id/tvAdresse"
+                android:layout_toLeftOf="@id/btnLocalisationEvents" />
 
             <TextView
                 android:id="@+id/tvAdresse"
-                android:layout_width="150dp"
-                android:layout_height="66dp"
-                android:layout_alignBaseline="@+id/etAdresse"
-                android:layout_alignBottom="@+id/etAdresse"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="34dp"
-                android:layout_marginStart="34dp"
+                android:layout_width="@dimen/search_label_width"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:text="Adresse" />
 
             <ImageButton
                 android:id="@+id/btnLocalisationEvents"
+                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/etAdresse"
-                android:layout_toRightOf="@+id/etAdresse"
                 app:srcCompat="@drawable/ic_place_black_24dp" />
 
 
@@ -87,29 +77,27 @@
 
 
         <RelativeLayout
+            android:id="@+id/rlDistance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rlDistance"
-
             android:layout_below="@+id/rlAdresse"
-            android:layout_marginTop="15dp">
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="@dimen/layout_distance">
 
             <TextView
                 android:id="@+id/tvDistance"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/search_label_width"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/etKilometre"
-                android:layout_alignBottom="@+id/etKilometre"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="36dp"
-                android:layout_marginStart="36dp"
+                android:layout_centerVertical="true"
                 android:text="@string/title_activity_search_distance" />
 
             <EditText
                 android:id="@+id/etKilometre"
-                android:layout_width="55dp"
+                android:layout_width="@dimen/search_distance_width"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:layout_toRightOf="@id/tvDistance"
                 android:ems="10"
                 android:inputType="number"
                 android:layout_centerInParent="true"/>
@@ -118,17 +106,15 @@
 
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/rlDistance"
-            android:layout_marginLeft="36dp"
-            android:layout_marginStart="36dp"
-            android:id="@+id/relativeLayout">
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="@dimen/layout_distance"
+            android:id="@+id/rlDate">
 
             <Switch
-                android:id="@+id/switch1"
+                android:id="@+id/swDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -136,69 +122,66 @@
                 android:layout_centerVertical="true"
                 android:text="@string/title_activity_search_date" />
 
+            <TextView
+                android:id="@+id/tvAu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/swDate"
+                android:layout_marginTop="60dp"
+                android:text="@string/title_activity_search_to"
+                android:visibility="invisible"  />
+
+            <EditText
+                android:id="@+id/etDu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/tvAu"
+                android:ems="10"
+                android:visibility="invisible"
+                android:focusable="false"/>
+
+            <TextView
+                android:id="@+id/tvDu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvAu"
+                android:text="@string/title_activity_search_from"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/etAu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tvDu"
+                android:layout_marginTop="80dp"
+                android:layout_marginLeft="15dp"
+                android:ems="10"
+                android:visibility="invisible"
+                android:focusable="false"/>
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btnRechercheEvents"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="68dp"
-            android:background="@color/hbRed"
-            android:gravity="center"
-            android:text="@string/title_activity_search_button"
-            android:textColor="@color/colorAccent" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rlDistance"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="@dimen/layout_distance">
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView"
-
-            android:layout_alignStart="@+id/textView"
-            android:layout_below="@+id/etDu"
-            android:layout_marginTop="16dp"
-            android:text="@string/title_activity_search_to"
-            android:visibility="invisible" />
-
-        <EditText
-            android:id="@+id/etDu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_alignLeft="@+id/etAu"
-            android:layout_alignStart="@+id/etAu"
-            android:layout_centerVertical="true"
-            android:ems="10"
-            android:visibility="invisible"
-            android:focusable="false"/>
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/etAu"
-
-            android:layout_toEndOf="@+id/relativeLayout"
-            android:layout_toRightOf="@+id/relativeLayout"
-            android:text="@string/title_activity_search_from"
-            android:visibility="invisible" />
-
-        <EditText
-            android:id="@+id/etAu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/btnRechercheEvents"
-            android:layout_alignStart="@+id/btnRechercheEvents"
-            android:layout_below="@+id/etDu"
-            android:ems="10"
-            android:visibility="invisible"
-            android:focusable="false"/>
+            <Button
+                android:id="@+id/btnRechercheEvents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@color/hbRed"
+                android:text="@string/title_activity_search_button"
+                android:textColor="@color/colorAccent"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/search_button_marginBottom"
+                android:padding="@dimen/search_button_padding"/>
 
 
+        </RelativeLayout>
     </RelativeLayout>
-
-
-
 </FrameLayout>

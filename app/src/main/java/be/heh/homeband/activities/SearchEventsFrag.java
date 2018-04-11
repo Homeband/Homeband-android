@@ -204,9 +204,9 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
         etDu = (EditText)  myview.findViewById(R.id.etAu);
         etAu = (EditText)  myview.findViewById(R.id.etDu);
         etAdresse = (EditText)  myview.findViewById(R.id.etAdresse);
-        tvDateDu = (TextView) myview.findViewById(R.id.textView);
-        tvDateAu = (TextView) myview.findViewById(R.id.textView5);
-        swAfficherDate = (Switch) myview.findViewById(R.id.switch1);
+        tvDateDu = (TextView) myview.findViewById(R.id.tvDu);
+        tvDateAu = (TextView) myview.findViewById(R.id.tvAu);
+        swAfficherDate = (Switch) myview.findViewById(R.id.swDate);
 
 
         // Switch Affichage Date
