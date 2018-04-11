@@ -7,7 +7,7 @@
     tools:context="be.heh.homeband.activities.SearchFrag">
 
     <RelativeLayout
-        android:id="@+id/rl1"
+        android:id="@+id/rlButtonMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -32,17 +32,197 @@
             />
     </RelativeLayout>
 
+
+
+
     <RelativeLayout
+        android:id="@+id/rlStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl1">
-        <FrameLayout
-            android:id="@+id/frame_container_search"
+        android:layout_below="@id/rlButtonMain"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginVertical="@dimen/layout_distance"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/tvStyle"
+            android:layout_width="@dimen/search_label_width"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/title_activity_search_style"
+            />
+
+        <Spinner
+            android:id="@+id/spinStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tvStyle"
+            />
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rlAdresse"
+        android:layout_below="@id/rlStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="@dimen/layout_distance"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/tvAdresse"
+            android:layout_width="@dimen/search_label_width"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Adresse" />
+
+        <EditText
+            android:id="@+id/etAdresse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="text"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:layout_alignBottom="@id/btnLocalisationEvents"
+            android:layout_toRightOf="@id/tvAdresse"
+            android:layout_toLeftOf="@id/btnLocalisationEvents" />
+
+        <ImageButton
+            android:id="@+id/btnLocalisationEvents"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_place_black_24dp" />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlDistance"
+        android:layout_below="@+id/rlAdresse"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/layout_distance">
+
+        <TextView
+            android:id="@+id/tvDistance"
+            android:layout_width="@dimen/search_label_width"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/title_activity_search_distance" />
+
+        <EditText
+            android:id="@+id/etKilometre"
+            android:layout_width="@dimen/search_distance_width"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:layout_toRightOf="@id/tvDistance"
+            android:ems="10"
+            android:inputType="number"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlDistance"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/layout_distance"
+        android:visibility="invisible"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/layout_distance"
+            android:id="@+id/rlSwitch">
+            <Switch
+                android:id="@+id/swDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_activity_search_date" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlSwitch"
+            android:layout_marginVertical="@dimen/layout_distance"
+            android:id="@+id/rlDu"
+            >
+            <TextView
+                android:id="@+id/tvAu"
+                android:layout_width="@dimen/search_label_date"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/title_activity_search_to"
+                android:visibility="invisible"
+                />
+
+            <EditText
+                android:id="@+id/etDu"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvAu"
+                android:ems="10"
+                android:focusable="false"
+                android:visibility="invisible"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/layout_distance"
+            android:layout_below="@+id/rlDu">
+            <TextView
+                android:id="@+id/tvDu"
+                android:layout_width="@dimen/search_label_date"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/title_activity_search_from"
+                android:visibility="invisible"
+                />
+
+            <EditText
+                android:id="@+id/etAu"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvDu"
+                android:ems="10"
+                android:focusable="false"
+                android:visibility="invisible"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlDate"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/layout_distance">
+
+        <Button
+            android:id="@+id/btnRechercheGroupe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/hbRed"
+            android:text="@string/title_activity_search_button"
+            android:textColor="@color/colorAccent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/search_button_marginBottom"
+            android:padding="@dimen/search_button_padding"/>
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

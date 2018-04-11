@@ -52,6 +52,8 @@
                 android:id="@+id/etAdresse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="text"
                 android:backgroundTint="@android:color/holo_red_dark"
                 android:layout_alignBottom="@id/btnLocalisationEvents"
                 android:layout_toRightOf="@id/tvAdresse"
@@ -165,7 +167,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rlDistance"
+            android:layout_below="@+id/rlDate"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginVertical="@dimen/layout_distance">
 

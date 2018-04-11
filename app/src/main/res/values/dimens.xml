@@ -9,6 +9,9 @@
     <dimen name="search_distance_width">75dp</dimen>
     <dimen name="search_button_padding">10dp</dimen>
     <dimen name="search_button_marginBottom">30dp</dimen>
+    <dimen name="search_label_date">35dp</dimen>
+
+
 
 
 </resources>
