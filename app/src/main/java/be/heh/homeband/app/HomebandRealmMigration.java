@@ -45,7 +45,10 @@ public class HomebandRealmMigration implements RealmMigration {
                     .addField("id_evenements", int.class, FieldAttribute.PRIMARY_KEY)
                     .addField("nom", String.class)
                     .addField("description", String.class)
+                    .addField("date_heure", Date.class)
+                    .addField("prix", double.class)
                     .addField("id_groupes", int.class)
+                    .addField("id_adresses", int.class)
                     .addField("est_actif",boolean.class);
 
             schema.create("Membre")
