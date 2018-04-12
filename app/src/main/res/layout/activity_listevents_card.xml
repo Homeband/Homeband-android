@@ -47,7 +47,7 @@
             android:textSize="18sp"
             tools:text="Royal Blood" />
         <TextView
-            android:id="@+id/textEvents2"
+            android:id="@+id/tvEventCity"
             android:layout_width="match_parent"
             android:layout_toRightOf="@id/imageEvents"
             android:layout_below="@id/textEvents"

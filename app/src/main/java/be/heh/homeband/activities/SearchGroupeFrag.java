@@ -117,7 +117,7 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v == btnRecherche){
-        getGroupes();
+        //getGroupes();
         }
         else if (v==btnLocalisationGroupe){
             getLocalisations();
@@ -254,7 +254,7 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
         transaction.commit();
     }
 
-    public void getGroupes(){
+    /*public void getGroupes(){
         int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
         String var_cp = etAdresse.getText().toString();
         int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
@@ -333,7 +333,7 @@ public class SearchGroupeFrag extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
     }
-
+*/
     public void getLocalisations(){
         double lat;
         double lon;

@@ -319,7 +319,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
 
     public void getGroupes(){
         int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
-        String var_cp = etAdresse.getText().toString();
+        String var_adresse = etAdresse.getText().toString();
         int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
 
         try {
@@ -331,11 +331,9 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
 
             // Création d'une instance du service avec Retrofit
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
-            Log.d("style",String.valueOf(var_style));
-            Log.d("cp",var_cp);
-            Log.d("kilometre",String.valueOf(var_kilometre));
+
             // Requête vers l'API
-            serviceApi.getGroupes(var_style,var_cp,var_kilometre,0,0).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getGroupes(var_style,var_adresse,var_kilometre).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -358,14 +356,9 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
                             //Deuxième paramètre c'est le type d'élément à récupérer
                             Gson gson = new Gson();
                             List<Groupe> listeGroupe = gson.fromJson(res.get("groups").getAsJsonArray(), typeListe);
-                            Log.d("caca",listeGroupe.toString());
                             Intent intent = new Intent (getView().getContext(),SearchGroupResultActivity.class);
                             intent.putExtra("groupes",(ArrayList<Groupe>)listeGroupe);
                             startActivity(intent);
-
-
-
-
 
                         } else {
                             messageToast = "Échec de la connexion\r\n" + res.getMessage();

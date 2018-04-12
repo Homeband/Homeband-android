@@ -108,61 +108,61 @@
 
 
         <RelativeLayout
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlDistance"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/layout_distance"
+        android:id="@+id/rlDate">
+
+        <Switch
+            android:id="@+id/swDate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rlDistance"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginVertical="@dimen/layout_distance"
-            android:id="@+id/rlDate">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/title_activity_search_date" />
 
-            <Switch
-                android:id="@+id/swDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:text="@string/title_activity_search_date" />
+        <TextView
+            android:id="@+id/tvAu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/swDate"
+            android:layout_marginTop="60dp"
+            android:text="@string/title_activity_search_to"
+            android:visibility="invisible"  />
 
-            <TextView
-                android:id="@+id/tvAu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/swDate"
-                android:layout_marginTop="60dp"
-                android:text="@string/title_activity_search_to"
-                android:visibility="invisible"  />
+        <EditText
+            android:id="@+id/etDu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/tvAu"
+            android:ems="10"
+            android:visibility="invisible"
+            android:focusable="false"/>
 
-            <EditText
-                android:id="@+id/etDu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@id/tvAu"
-                android:ems="10"
-                android:visibility="invisible"
-                android:focusable="false"/>
+        <TextView
+            android:id="@+id/tvDu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvAu"
+            android:text="@string/title_activity_search_from"
+            android:visibility="invisible" />
 
-            <TextView
-                android:id="@+id/tvDu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvAu"
-                android:text="@string/title_activity_search_from"
-                android:visibility="invisible" />
-
-            <EditText
-                android:id="@+id/etAu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tvDu"
-                android:layout_marginTop="80dp"
-                android:layout_marginLeft="15dp"
-                android:ems="10"
-                android:visibility="invisible"
-                android:focusable="false"/>
-        </RelativeLayout>
+        <EditText
+            android:id="@+id/etAu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tvDu"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="15dp"
+            android:ems="10"
+            android:visibility="invisible"
+            android:focusable="false"/>
+    </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"

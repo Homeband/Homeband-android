@@ -1,13 +1,30 @@
 package be.heh.homeband.entities;
 
 import java.io.Serializable;
+import java.util.List;
+
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * @author Nicolas
  * @version 1.0
  * @created 26-janv.-2018 14:38:24
  */
-public class Evenement implements Serializable {
+public class Evenement extends RealmObject implements Serializable {
+
+	@PrimaryKey
+	private int id_evenements;
+	private String nom;
+	private String description;
+	private boolean est_actif;
+	private int id_groupes;
+
+	public Evenement(int id_groupes, String nom){
+		this.id_evenements = id_evenements;
+		this.nom = nom;
+	}
 
 	public int getId_evenements() {
 		return id_evenements;
@@ -47,17 +64,6 @@ public class Evenement implements Serializable {
 
 	public void setId_groupes(int id_groupes) {
 		this.id_groupes = id_groupes;
-	}
-
-	private int id_evenements;
-	private String nom;
-	private String description;
-	private boolean est_actif;
-	private int id_groupes;
-
-	public Evenement(int id_groupes, String nom){
-		this.id_evenements = id_evenements;
-		this.nom = nom;
 	}
 
 }
