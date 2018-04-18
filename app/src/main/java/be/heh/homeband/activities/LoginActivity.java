@@ -18,9 +18,6 @@ import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.app.HomebandTools;
 import be.heh.homeband.entities.Utilisateur;
 import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
        Utilisateur user = HomebandTools.getConnectedUser();
 
         if (user!=null){
+            HomebandTools.writeAutoConnect(this,true);
             Intent intent = new Intent (getApplicationContext(),MainActivity.class);
             startActivity(intent);
         }
@@ -72,8 +70,18 @@ public class LoginActivity extends AppCompatActivity {
         if (HomebandConnectivity.isConnectedToInternet(this)==true){
             connect(login,pass);
             if(this.estConnecte == true){
+                HomebandTools.writeAutoConnect(this,false);
                 // Connexion réussie, Changement de fenêtre
                 Toast.makeText(this, "Connexion réussie !", Toast.LENGTH_LONG).show();
+               if (HomebandTools.readInit(this) == 0) {
+                   //Je force le téléchargement des tables de références
+                   HomebandTools.updateStyles(this);
+                   HomebandTools.updateVilles(this);
+                   HomebandTools.writeInit(this);
+               }
+               else{
+                   HomebandTools.checkReferenceUpdate(this);
+               }
                 Intent intent = new Intent (getApplicationContext(),MainActivity.class);
                 startActivity(intent);
             }

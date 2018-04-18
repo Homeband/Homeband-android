@@ -46,8 +46,10 @@ public class MainActivity extends AppCompatActivity implements  HomeFrag.OnFragm
     @Override
     protected void onStart() {
         super.onStart();
-        HomebandTools.checkUpdateVille(this);
-        HomebandTools.checkUpdateStyles(this);
+        if (HomebandTools.readAutoConnect(this) == 1 ){
+            HomebandTools.checkReferenceUpdate(this);
+        }
+
     }
 
     private ActionBar toolbar;

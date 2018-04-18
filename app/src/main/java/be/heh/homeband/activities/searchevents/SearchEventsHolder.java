@@ -35,7 +35,7 @@ public class SearchEventsHolder extends RecyclerView.ViewHolder {
     //puis ajouter une fonction pour remplir la cellule en fonction d'un MyObject
     public void bind(Evenement monEvent){
         Realm realm = Realm.getDefaultInstance();
-        Ville ville = realm.where(Ville.class).equalTo("id_villes",monEvent.getId_villes()).findFirst();
+        Ville ville = realm.where(Ville.class).equalTo("id_villes",monEvent.getId_adresses()).findFirst();
         tvEvent.setText(monEvent.getNom());
         if (ville != null){
             tvEventCity.setText(ville.getNom());

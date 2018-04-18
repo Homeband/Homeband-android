@@ -3,6 +3,9 @@ package be.heh.homeband.app;
 /**
  * Created by christopher on 25/01/2018.
  */
+import java.util.List;
+
+import be.heh.homeband.entities.Version;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -23,6 +26,10 @@ public interface HomebandApiInterface {
 
     @GET("api/versions")
     Call<HomebandApiReponse> getVersions(@Query("nomtable")String nomtable );
+
+    @POST("api/versions/updates")
+    @FormUrlEncoded
+    Call<HomebandApiReponse> getAllVersions(@Field("versions[]")List<Version> versions );
 
     @GET("api/villes")
     Call<HomebandApiReponse> getVilles() ;
