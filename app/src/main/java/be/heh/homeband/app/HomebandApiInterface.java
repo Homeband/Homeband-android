@@ -3,6 +3,7 @@ package be.heh.homeband.app;
 /**
  * Created by christopher on 25/01/2018.
  */
+import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.entities.Version;
@@ -29,7 +30,7 @@ public interface HomebandApiInterface {
 
     @POST("api/versions/updates")
     @FormUrlEncoded
-    Call<HomebandApiReponse> getAllVersions(@Field("versions[]")List<Version> versions );
+    Call<HomebandApiReponse> getAllVersions(@Field("versions[]")Version[] versions );
 
     @GET("api/villes")
     Call<HomebandApiReponse> getVilles() ;

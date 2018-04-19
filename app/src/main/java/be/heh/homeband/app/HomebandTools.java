@@ -34,6 +34,7 @@ import be.heh.homeband.entities.Version;
 import be.heh.homeband.entities.Ville;
 import io.realm.Realm;
 import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,8 +77,8 @@ public abstract class HomebandTools {
     public static void checkReferenceUpdate(final Context context){
 
         Realm realm = Realm.getDefaultInstance();
-        List<Version> versionsDb = realm.where(Version.class).findAll();
-
+        RealmResults<Version> versionsDb = realm.where(Version.class).findAll();
+        
         try {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(HomebandRetrofit.API_URL)
@@ -87,8 +88,9 @@ public abstract class HomebandTools {
             // Création d'une instance du service avec Retrofit
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
+
             // Requête vers l'API
-            serviceApi.getAllVersions(versionsDb).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getAllVersions((Version [])(versionsDb.toArray())).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
                     boolean toUpdate=false;
@@ -178,8 +180,7 @@ public abstract class HomebandTools {
                         }
                     } else {
                         int statusCode = response.code();
-                        String res = response.toString();
-                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        CharSequence message =response.toString();
                         Toast toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
