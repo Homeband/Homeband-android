@@ -3,6 +3,7 @@
 
     <!-- LoginActivity -->
     <string name="login">Identifiant</string>
+    <string name="mail">Adresse E-mail</string>
     <string name="password">Mot de passe</string>
     <string name="connect">Connexion</string>
     <string name="password_lost">Mot de passe oublié ?</string>

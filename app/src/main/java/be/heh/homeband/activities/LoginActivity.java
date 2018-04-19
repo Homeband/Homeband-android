@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etLogin;
     private EditText etPassword;
 
+    private Button btnMotDePasseOublie;
     private boolean estConnecte = false;
 
     @Override
@@ -59,9 +61,10 @@ public class LoginActivity extends AppCompatActivity {
     private void initialisation(){
         this.etLogin = findViewById(R.id.etLogin);
         this.etPassword = findViewById(R.id.etPassword);
-
         this.etLogin.setText("carole");
         this.etPassword.setText("testtest");
+
+        this.btnMotDePasseOublie=findViewById(R.id.bMotDePasseOublie);
     }
 
     public void onClickConnexion(View v){

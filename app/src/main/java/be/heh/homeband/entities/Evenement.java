@@ -28,6 +28,9 @@ public class Evenement extends RealmObject implements Serializable {
 	@Ignore
 	private int id_villes;
 
+	public Evenement() {
+	}
+
 	public Evenement(int id_groupes, String nom){
 		this.id_evenements = id_evenements;
 		this.nom = nom;
