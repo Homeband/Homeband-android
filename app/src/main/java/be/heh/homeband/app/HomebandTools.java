@@ -16,12 +16,17 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,6 +40,8 @@ import be.heh.homeband.entities.Ville;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,9 +84,10 @@ public abstract class HomebandTools {
     public static void checkReferenceUpdate(final Context context){
 
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<Version> versionsDb = realm.where(Version.class).findAll();
+        List<Version> listeVersionsDB = realm.copyFromRealm(realm.where(Version.class).findAll());
         
         try {
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(HomebandRetrofit.API_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -88,9 +96,11 @@ public abstract class HomebandTools {
             // Création d'une instance du service avec Retrofit
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
+            // Création des paramètres de la requête
+            HashMap<String,Object> params = new HashMap<String,Object>();
+            params.put("versions", listeVersionsDB);
 
-            // Requête vers l'API
-            serviceApi.getAllVersions((Version [])(versionsDb.toArray())).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getAllVersions(params).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
                     boolean toUpdate=false;
@@ -105,7 +115,6 @@ public abstract class HomebandTools {
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
 
-
                             if (res.get("maj_dispo").getAsBoolean() == true){
                                 AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.ThemeYesNo);
                                 builder.setTitle(R.string.alert_update_title);
@@ -116,6 +125,7 @@ public abstract class HomebandTools {
                                                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
                                                 Type typeListe = new TypeToken<List<Version>>(){}.getType();
                                                 final List<Version> versions = gson.fromJson(res.get("version").getAsJsonArray(), typeListe);
+                                                Log.d("Versions API", versions.toString());
                                                 for (Iterator<Version> i = versions.iterator(); i.hasNext();) {
                                                     Version item = i.next();
                                                     switch(item.getNom_table().toUpperCase()){
@@ -189,8 +199,10 @@ public abstract class HomebandTools {
 
                 @Override
                 public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
-                    ;
+
                     Log.d("LoginActivity", t.getMessage());
+                    Log.d("REPONSE-API", "KO");
+                    t.printStackTrace();
                 }
             });
         } catch (Exception e){

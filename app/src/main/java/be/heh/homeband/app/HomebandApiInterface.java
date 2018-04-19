@@ -3,7 +3,10 @@ package be.heh.homeband.app;
 /**
  * Created by christopher on 25/01/2018.
  */
+import com.google.gson.JsonElement;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import be.heh.homeband.entities.Version;
@@ -29,8 +32,7 @@ public interface HomebandApiInterface {
     Call<HomebandApiReponse> getVersions(@Query("nomtable")String nomtable );
 
     @POST("api/versions/updates")
-    @FormUrlEncoded
-    Call<HomebandApiReponse> getAllVersions(@Field("versions[]")Version[] versions );
+    Call<HomebandApiReponse> getAllVersions(@Body HashMap<String, Object> params);
 
     @GET("api/villes")
     Call<HomebandApiReponse> getVilles() ;
