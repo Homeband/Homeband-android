@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/hb_gradient"
-    tools:context="be.heh.homeband.activities.LoginActivity">
+    tools:context="be.heh.homeband.activities.PasswordForgetActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -43,6 +43,15 @@
             android:textColor="#FFFFFF"
             />
 
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="20dp"
+            android:text="Envoyer"
+            android:layout_below="@id/etLogin"
+            />
         <Button
             android:id="@+id/bCreerCompte"
             android:layout_width="match_parent"

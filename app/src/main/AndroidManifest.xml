@@ -37,6 +37,7 @@
             android:label="Liste des évènements">
 
         </activity>
+        <activity android:name=".activities.PasswordForgetActivity" />
     </application>
 
 </manifest>

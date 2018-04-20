@@ -65,7 +65,14 @@ public class LoginActivity extends AppCompatActivity {
         this.etPassword.setText("testtest");
 
         this.btnMotDePasseOublie=findViewById(R.id.bMotDePasseOublie);
+        btnMotDePasseOublie.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent i = new Intent(v.getContext(), PasswordForgetActivity.class);
+                startActivity(i);
+            }
+        });
     }
+
 
     public void onClickConnexion(View v){
         String login = this.etLogin.getText().toString();
