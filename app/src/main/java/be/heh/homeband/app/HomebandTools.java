@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.ArrayAdapter;
@@ -124,7 +125,7 @@ public abstract class HomebandTools {
 
                                                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
                                                 Type typeListe = new TypeToken<List<Version>>(){}.getType();
-                                                final List<Version> versions = gson.fromJson(res.get("version").getAsJsonArray(), typeListe);
+                                                final List<Version> versions = gson.fromJson(res.get("versions").getAsJsonArray(), typeListe);
                                                 Log.d("Versions API", versions.toString());
                                                 for (Iterator<Version> i = versions.iterator(); i.hasNext();) {
                                                     Version item = i.next();
@@ -221,7 +222,7 @@ public abstract class HomebandTools {
     public static void updateVilles(final Context context){
 
         final DialogFragment loading = new LoadingDialog();
-        FragmentManager frag = ((MainActivity) context).getFragmentManager();
+        FragmentManager frag = ((AppCompatActivity) context).getFragmentManager();
         loading.show(frag,"LoadingDialog");
 
         try {
@@ -322,7 +323,7 @@ public abstract class HomebandTools {
     public static void updateStyles(final Context context){
 
         final DialogFragment loading = new LoadingDialog();
-        FragmentManager frag = ((MainActivity) context).getFragmentManager();
+        FragmentManager frag = ((AppCompatActivity) context).getFragmentManager();
         loading.show(frag,"LoadingDialog");
 
         try {
