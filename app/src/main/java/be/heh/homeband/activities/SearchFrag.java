@@ -432,7 +432,6 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
                             //Deuxième paramètre c'est le type d'élément à récupérer
                             Gson gson = new Gson();
                             List<Evenement> listeEvents = gson.fromJson(res.get("events").getAsJsonArray(), typeListe);
-                            Log.d("caca",listeEvents.toString());
                             Intent intent = new Intent (getView().getContext(),SearchEventsResultActivity.class);
                             intent.putExtra("events",(ArrayList<Evenement>)listeEvents);
                             startActivity(intent);
