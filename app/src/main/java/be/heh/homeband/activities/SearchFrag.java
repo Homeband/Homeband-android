@@ -409,7 +409,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
             Log.d("cp",adresse);
             Log.d("kilometre",String.valueOf(var_kilometre));
             // Requête vers l'API
-            serviceApi.getEvenements(var_style,adresse,var_kilometre,0,0,var_du,var_au).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getEvenements(var_style,adresse,var_kilometre,var_du,var_au).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

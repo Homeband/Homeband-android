@@ -145,7 +145,7 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v == btnRecherche){
-            getEvents();
+            //getEvents();
         } else if (v == etDu) {
             pickerDateDu.show();
         } else if (v == etAu) {
@@ -310,7 +310,7 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
         transaction.commit();
     }
 
-    public void getEvents(){
+   /* public void getEvents(){
         int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
         String adresse = etAdresse.getText().toString();
         int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
@@ -390,7 +390,7 @@ public class SearchEventsFrag extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
     }
-
+*/
    public void initDate (){
 
         // Initialisation des calendriers
