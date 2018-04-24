@@ -6,6 +6,7 @@ package be.heh.homeband.app;
 import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface HomebandApiInterface {
     Call<HomebandApiReponse> getGroupes(@Query("styles")int styles, @Query("adresse")String adresse, @Query("rayon")int rayon );
 
     @GET("api/evenements")
-    Call<HomebandApiReponse> getEvenements(@Query("styles")int styles, @Query("adresse")String adresse, @Query("rayon")int rayon,@Query("date_debut")int du,@Query("date_fin")int au ) ;
+    Call<HomebandApiReponse> getEvenements(@Query("styles")int styles, @Query("adresse")String adresse, @Query("rayon")int rayon, @Query("date_debut")String du, @Query("date_fin")String au );
 
     @GET("api/versions")
     Call<HomebandApiReponse> getVersions(@Query("nomtable")String nomtable );

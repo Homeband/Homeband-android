@@ -35,6 +35,7 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import be.heh.homeband.R;
@@ -237,8 +238,8 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
         btnLocalisationGroupe.setOnClickListener(this);
         btnRecherche.setOnClickListener(this);
 
-        etDu = (EditText)  myview.findViewById(R.id.etAu);
-        etAu = (EditText)  myview.findViewById(R.id.etDu);
+        etDu = (EditText)  myview.findViewById(R.id.etDu);
+        etAu = (EditText)  myview.findViewById(R.id.etAu);
         etAdresse = (EditText)  myview.findViewById(R.id.etAdresse);
         tvDateDu = (TextView) myview.findViewById(R.id.tvDu);
         tvDateAu = (TextView) myview.findViewById(R.id.tvAu);
@@ -394,8 +395,28 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
         int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
         String adresse = etAdresse.getText().toString();
         int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
-        int var_du = Integer.parseInt(etDu.getText().toString());
-        int var_au = Integer.parseInt(etAu.getText().toString());
+        Date var_du;
+        Date var_au;
+        String du = "";
+        String au = "";
+        SimpleDateFormat dateFormatAPI = new SimpleDateFormat("YYYY-MM-dd");
+        try{
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dateFormatter.parse(etDu.getText().toString()));
+             //var_du = dateFormatter.parse(etDu.getText().toString());
+            Log.d("var_du",cal.getTime().toString());
+            du = dateFormatAPI.format(cal.getTime());
+            Log.d("du",etDu.getText().toString());
+
+            var_au =  dateFormatter.parse(etAu.getText().toString());
+             au = dateFormatAPI.format(var_au);
+
+        }catch(Exception e){
+            var_du = null;
+            var_au = null;
+        }
+
+
         try {
             Gson gson = new GsonBuilder().setLenient().create();
             Retrofit retrofit = new Retrofit.Builder()
@@ -408,8 +429,11 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
             Log.d("style",String.valueOf(var_style));
             Log.d("cp",adresse);
             Log.d("kilometre",String.valueOf(var_kilometre));
+            Log.d("du",du);
+            Log.d("au",au);
+
             // Requête vers l'API
-            serviceApi.getEvenements(var_style,adresse,var_kilometre,var_du,var_au).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getEvenements(var_style,adresse,var_kilometre,du,au).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -419,11 +443,12 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
                         // Récupération de la réponse de l'API
                         HomebandApiReponse res = response.body();
                         res.mapResultat();
+                        Log.d("response",res.toString());
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
                             // Element de retour sera de type List<style>
-                            Type typeListe = new TypeToken<List<Groupe>>(){}.getType();
+                            Type typeListe = new TypeToken<List<Evenement>>(){}.getType();
 
                             // Désérialisation du tableau JSON (JsonArray) en liste d'objets Style
 
