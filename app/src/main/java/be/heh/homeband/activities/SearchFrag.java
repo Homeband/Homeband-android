@@ -443,7 +443,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
                             //gson.fromJson prend 2 paramètres
                             //Premier paramètre c'est l'élément Json qu'il va falloir récupérer
                             //Deuxième paramètre c'est le type d'élément à récupérer
-                            Gson gson = new Gson();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             List<Evenement> listeEvents = gson.fromJson(res.get("events").getAsJsonArray(), typeListe);
                             Intent intent = new Intent (getView().getContext(),SearchEventsResultActivity.class);
                             intent.putExtra("events",(ArrayList<Evenement>)listeEvents);
