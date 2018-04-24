@@ -96,6 +96,8 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
     DatePickerDialog pickerDateAu;
 
     SimpleDateFormat dateFormatter;
+    SimpleDateFormat dateFormatterAPI;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -294,7 +296,8 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
         etAu.setOnClickListener(this);
 
         // Initialisation du formateur de date
-        dateFormatter = new SimpleDateFormat("dd/MM/YYYY");
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormatterAPI = new SimpleDateFormat("yyyy-MM-dd");
 
         // Initialisation du DatePickerDialog de la première date (et définition du comportement lors de la sélection)
         pickerDateDu = new DatePickerDialog(getContext(), R.style.ThemeDatePicker, new DatePickerDialog.OnDateSetListener() {
@@ -395,27 +398,17 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
         int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
         String adresse = etAdresse.getText().toString();
         int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
-        Date var_du;
-        Date var_au;
-        String du = "";
-        String au = "";
-        SimpleDateFormat dateFormatAPI = new SimpleDateFormat("YYYY-MM-dd");
+
+
+        String dateDu = "";
+        String dateAu = "";
+
         try{
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(dateFormatter.parse(etDu.getText().toString()));
-             //var_du = dateFormatter.parse(etDu.getText().toString());
-            Log.d("var_du",cal.getTime().toString());
-            du = dateFormatAPI.format(cal.getTime());
-            Log.d("du",etDu.getText().toString());
-
-            var_au =  dateFormatter.parse(etAu.getText().toString());
-             au = dateFormatAPI.format(var_au);
-
-        }catch(Exception e){
-            var_du = null;
-            var_au = null;
+            dateDu = dateFormatterAPI.format(dateFormatter.parse(etDu.getText().toString()));
+            dateAu = dateFormatterAPI.format(dateFormatter.parse(etAu.getText().toString()));
+        } catch(Exception e){
+            e.printStackTrace();
         }
-
 
         try {
             Gson gson = new GsonBuilder().setLenient().create();
@@ -426,14 +419,9 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
 
             // Création d'une instance du service avec Retrofit
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
-            Log.d("style",String.valueOf(var_style));
-            Log.d("cp",adresse);
-            Log.d("kilometre",String.valueOf(var_kilometre));
-            Log.d("du",du);
-            Log.d("au",au);
 
             // Requête vers l'API
-            serviceApi.getEvenements(var_style,adresse,var_kilometre,du,au).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getEvenements(var_style,adresse,var_kilometre,dateDu,dateAu).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
