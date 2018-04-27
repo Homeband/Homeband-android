@@ -1,103 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="be.heh.homeband.activities.BandOnClick.BandOnClick"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/ivBand"
-            android:layout_width="190dp"
-            android:layout_height="130dp"
-            android:src="@drawable/royalblood"
-            android:layout_alignParentLeft="true"
-            />
-        <TextView
-            android:id="@+id/tvBandName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Leslie Louise"
-            android:padding="10dp"
-            android:gravity="center"
-            android:layout_toRightOf="@+id/ivBand"
-            />
-        <TextView
-            android:id="@+id/tvBandAdresse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="La Louviere"
-            android:padding="10dp"
-            android:gravity="center"
-            android:layout_toRightOf="@+id/ivBand"
-            android:layout_below="@+id/tvBandName"
-            />
-        <TextView
-            android:id="@+id/tvBandStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Rock"
-            android:padding="10dp"
-            android:gravity="center"
-            android:layout_toRightOf="@+id/ivBand"
-            android:layout_below="@+id/tvBandAdresse"
-            />
-        <TextView
-            android:id="@+id/tvBandFacebook"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ivBand"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="https://facebook.com/leslielouise"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvBandTwitter"
-            android:layout_below="@+id/tvBandFacebook"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="https://twitter.com/leslielouise"
-            />
         <RelativeLayout
-            android:id="@+id/rlAlbums"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBandTwitter"
-           >
+            android:id="@+id/rlCardsView">
+            <ImageView
+                android:id="@+id/ivBand"
+                android:layout_width="230dp"
+                android:layout_height="160dp"
+                android:src="@drawable/royalblood"
+                android:layout_alignParentLeft="true"
+                />
             <TextView
+                android:id="@+id/tvBandName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvBandAlbum"
-                android:text="Albums"
-                android:textColor="@color/colorAccent"
-                android:background="@color/colorPrimary"
+                android:text="Leslie Louise"
                 android:padding="10dp"
+                android:layout_toRightOf="@+id/ivBand"
+                />
+            <TextView
+                android:id="@+id/tvBandAdresse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="La Louviere"
+                android:padding="10dp"
+                android:layout_toRightOf="@+id/ivBand"
+                android:layout_below="@+id/tvBandName"
+                />
+            <TextView
+                android:id="@+id/tvBandStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rock"
+                android:padding="10dp"
+                android:layout_toRightOf="@+id/ivBand"
+                android:layout_below="@+id/tvBandAdresse"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvBandStyle"
+                android:layout_toRightOf="@+id/ivBand"
+
                 android:gravity="center"
                 />
-            <RelativeLayout
+        </RelativeLayout>
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_below="@+id/rlCardsView"
+            android:layout_weight="1">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/pager_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvBandAlbum"
-                android:layout_marginTop="10dp">
-                <TextView
-                    android:id="@+id/tvBandNameAlbum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="Bloodstains"
-                    />
-                <TextView
-                    android:id="@+id/tvBandLinkSpotify"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tvBandNameAlbum"
-                    android:layout_marginLeft="70dp"
-                    android:text="https://Soptify.com/leslielouise"
-                    />
+                android:layout_gravity="center"
+                android:minHeight="60dp"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/black_overlay"
+                />
 
-            </RelativeLayout>
+            <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/pager_header"></android.support.v4.view.ViewPager>
         </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlButtons"
+            android:layout_below="@+id/bottom_layout"
+            android:layout_alignParentBottom="true"
+            android:gravity="bottom"
+            android:layout_marginBottom="15dp"
+            >
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnEvents"
+                android:text="Evenements"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
+                />
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnMusiques"
+                android:text="Musiques"
+              android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
+                />
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAvis"
+                android:text="Avis"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
+                />
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

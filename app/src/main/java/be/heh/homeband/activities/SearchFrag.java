@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 import be.heh.homeband.R;
+import be.heh.homeband.activities.BandOnClick.BandOnClick;
 import be.heh.homeband.activities.searchevents.SearchEventsResultActivity;
 import be.heh.homeband.activities.searchgroup.SearchGroupResultActivity;
 import be.heh.homeband.app.HomebandApiInterface;
@@ -161,11 +162,14 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
         } else if (v == etAu) {
             pickerDateAu.show();
         } else if(v == btnRecherche){
-            if( btnChoice == SEARCH_GROUP ){
+            Intent intent = new Intent (getView().getContext(),BandOnClick.class);
+            startActivity(intent);
+            /*if( btnChoice == SEARCH_GROUP ){
                 getGroupes();
             } else {
                 getEvents();
             }
+            */
         }
     }
 

@@ -38,6 +38,7 @@
 
         </activity>
         <activity android:name=".activities.PasswordForgetActivity" />
+        <activity android:name=".activities.BandOnClick.BandOnClick" />
     </application>
 
 </manifest>
