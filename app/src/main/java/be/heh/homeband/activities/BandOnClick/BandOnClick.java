@@ -1,6 +1,7 @@
 package be.heh.homeband.activities.BandOnClick;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+
 import be.heh.homeband.R;
 
 import be.heh.homeband.activities.BandOnClick.FragmentContacts;
@@ -20,12 +24,21 @@ import java.util.List;
 
 public class BandOnClick extends AppCompatActivity implements FragmentBio.OnFragmentInteractionListener,FragmentContacts.OnFragmentInteractionListener, FragmentMembres.OnFragmentInteractionListener {
 
+    Button btnMusiques;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_band_onclick);
+
+        btnMusiques = (Button) findViewById(R.id.btnMusiques);
+        btnMusiques.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent (getApplicationContext(),BandOnClick.class);
+                startActivity(intent);
+            }
+        });
 
         // Locate the viewpager in activity_main.xml
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -75,4 +88,6 @@ public class BandOnClick extends AppCompatActivity implements FragmentBio.OnFrag
             return mFragmentTitleList.get(position);
         }
     }
+
+
 }

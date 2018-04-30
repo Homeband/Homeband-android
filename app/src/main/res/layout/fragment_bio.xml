@@ -4,13 +4,110 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.BandOnClick.FragmentBio">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Biographie"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:id="@+id/rlSocials">
+        <ImageButton
+            android:id="@+id/ibFacebook"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:background="@drawable/rounfacebook"
+            android:gravity="center"
+            />
+        <ImageButton
+            android:id="@+id/ibTwitter"
+            android:layout_width="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/ibFacebook"
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:background="@drawable/roundtwitter"
+            android:gravity="center"
+            />
+        <ImageButton
+            android:id="@+id/ibInstagram"
+            android:layout_width="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/ibTwitter"
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:background="@drawable/roundinsta"
+            android:gravity="center"
+            />
+        <ImageButton
+            android:id="@+id/ibYoutube"
+            android:layout_width="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/ibInstagram"
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:background="@drawable/roundyoutube"
+            android:gravity="center"
+            />
+        <ImageButton
+            android:id="@+id/ibSpotify"
+            android:layout_width="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/ibYoutube"
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:background="@drawable/roundspotify"
+            android:gravity="center"
+            />
+        <ImageButton
+            android:id="@+id/ibBandcamp"
+            android:layout_width="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/ibSpotify"
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:background="@drawable/roundbandcamp"
+            android:gravity="center"
+            />
+        <ImageButton
+            android:id="@+id/ibSoundcloud"
+            android:layout_width="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/ibBandcamp"
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:background="@drawable/roundsoundcloud"
+            android:gravity="center"
+            />
+        <ImageButton
+            android:id="@+id/ibApple"
+            android:layout_width="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/ibSoundcloud"
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:background="@drawable/roundapple"
+            android:gravity="center"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlSocials"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/rlBio"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edward Christopher Sheeran, dit Ed Sheeran, né le 17 février 1991 à Halifax (Yorkshire de l'Ouest), est un auteur-compositeur-interprète et guitariste britannique. Sa carrière musicale commence en 2011 avec la maison de disques Atlantic Records, qui signe son premier album, +, écoulé à 4 millions de copies1. Suivent les albums x (2014) et ÷ (2017), qui rencontrent également un grand succès international2."/>
+    </RelativeLayout>
 
-        />
+</RelativeLayout>
+
 
 </FrameLayout>

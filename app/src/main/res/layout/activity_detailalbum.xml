@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlCardsView">
+            <ImageView
+                android:id="@+id/ivBand"
+                android:layout_width="230dp"
+                android:layout_height="160dp"
+                android:src="@drawable/royalblood"
+                android:layout_alignParentLeft="true"
+                />
+            <TextView
+                android:id="@+id/tvBandName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bloodstains"
+                android:padding="10dp"
+                android:layout_toRightOf="@+id/ivBand"
+                />
+            <TextView
+                android:id="@+id/tvBandAdresse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2017"
+                android:padding="10dp"
+                android:layout_toRightOf="@+id/ivBand"
+                android:layout_below="@+id/tvBandName"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlList"
+            android:layout_below="@+id/rlCardsView">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvListe"
+                android:text="Listes des morceaux"
+                android:textSize="30sp"
+                />
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lvAlbum"
+                android:layout_below="@+id/tvListe"
+                >
+
+
+            </ListView>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

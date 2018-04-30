@@ -45,12 +45,14 @@
                 android:layout_toRightOf="@+id/ivBand"
                 android:layout_below="@+id/tvBandAdresse"
                 />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_marginLeft="8dp"
+                android:layout_height="40dp"
                 android:layout_below="@+id/tvBandStyle"
                 android:layout_toRightOf="@+id/ivBand"
-
+                android:src="@drawable/ic_star_border_black_24dp"
+                android:background="@drawable/roundcorner"
                 android:gravity="center"
                 />
         </RelativeLayout>
