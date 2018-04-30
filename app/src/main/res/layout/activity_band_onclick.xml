@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="be.heh.homeband.activities.BandOnClick.BandOnClick"
+    tools:context="be.heh.homeband.activities.BandOnClick.GroupeDetailsActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,13 +46,13 @@
                 android:layout_below="@+id/tvEventAdresse"
                 />
             <ImageButton
-                android:layout_width="40dp"
+                android:layout_width="35dp"
                 android:layout_marginLeft="8dp"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_below="@+id/tvEventDate"
                 android:layout_toRightOf="@+id/ivEvent"
-                android:src="@drawable/ic_star_border_black_24dp"
-                android:background="@drawable/roundcorner"
+                android:src="@drawable/ic_star_white_24dp"
+                android:background="@drawable/round_disabled"
                 android:gravity="center"
                 />
         </RelativeLayout>

@@ -40,16 +40,16 @@
         <activity android:name=".activities.PasswordForgetActivity"
 
             />
-        <activity android:name=".activities.BandOnClick.BandOnClick"
+        <activity android:name=".activities.BandOnClick.GroupeDetailsActivity"
             android:label="Details groupe"
             android:parentActivityName=".activities.searchgroup.SearchGroupResultActivity"
             />
-        <activity android:name=".activities.BandOnClick.AlbumOnClick"
+        <activity android:name=".activities.BandOnClick.AlbumDetailsActivity"
             android:label="Détails album"
-            android:parentActivityName=".activities.BandOnClick.BandOnClick"/>
-        <activity android:name=".activities.BandOnClick.EventOnClick"
+            android:parentActivityName=".activities.BandOnClick.GroupeDetailsActivity"/>
+        <activity android:name=".activities.BandOnClick.EventDetailsActivity"
             android:label="Détails Evenements"
-            android:parentActivityName=".activities.BandOnClick.BandOnClick"
+            android:parentActivityName=".activities.BandOnClick.GroupeDetailsActivity"
             />
     </application>
 

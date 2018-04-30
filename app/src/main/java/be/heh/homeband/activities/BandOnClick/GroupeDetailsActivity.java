@@ -14,19 +14,18 @@ import android.view.View;
 import android.widget.Button;
 
 import be.heh.homeband.R;
-
-import be.heh.homeband.activities.BandOnClick.FragmentContacts;
-import be.heh.homeband.activities.BandOnClick.FragmentBio;
-import be.heh.homeband.activities.BandOnClick.FragmentMembres;
+import be.heh.homeband.entities.Groupe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BandOnClick extends AppCompatActivity implements FragmentBio.OnFragmentInteractionListener,FragmentContacts.OnFragmentInteractionListener, FragmentMembres.OnFragmentInteractionListener {
+public class GroupeDetailsActivity extends AppCompatActivity implements FragmentBio.OnFragmentInteractionListener,FragmentContacts.OnFragmentInteractionListener, FragmentMembres.OnFragmentInteractionListener {
 
     Button btnMusiques;
     Button btnEvents;
 
+
+    Groupe groupe;
 
 
     @Override
@@ -34,10 +33,13 @@ public class BandOnClick extends AppCompatActivity implements FragmentBio.OnFrag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_band_onclick);
 
+        groupe = (Groupe) getIntent().getSerializableExtra("groupe");
+
+
         btnMusiques = (Button) findViewById(R.id.btnMusiques);
         btnMusiques.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent (getApplicationContext(),AlbumOnClick.class);
+                Intent intent = new Intent (getApplicationContext(),AlbumDetailsActivity.class);
                 startActivity(intent);
             }
         });
@@ -45,7 +47,7 @@ public class BandOnClick extends AppCompatActivity implements FragmentBio.OnFrag
         btnEvents = (Button) findViewById(R.id.btnEvents);
         btnEvents.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent (getApplicationContext(),EventOnClick.class);
+                Intent intent = new Intent (getApplicationContext(),EventDetailsActivity.class);
                 startActivity(intent);
             }
         });

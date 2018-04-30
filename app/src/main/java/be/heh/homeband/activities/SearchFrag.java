@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,11 +34,10 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import be.heh.homeband.R;
-import be.heh.homeband.activities.BandOnClick.BandOnClick;
+import be.heh.homeband.activities.BandOnClick.GroupeDetailsActivity;
 import be.heh.homeband.activities.searchevents.SearchEventsResultActivity;
 import be.heh.homeband.activities.searchgroup.SearchGroupResultActivity;
 import be.heh.homeband.app.HomebandApiInterface;
@@ -162,14 +160,12 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
         } else if (v == etAu) {
             pickerDateAu.show();
         } else if(v == btnRecherche){
-            Intent intent = new Intent (getView().getContext(),BandOnClick.class);
-            startActivity(intent);
-            /*if( btnChoice == SEARCH_GROUP ){
+            if( btnChoice == SEARCH_GROUP ){
                 getGroupes();
             } else {
                 getEvents();
             }
-            */
+
         }
     }
 

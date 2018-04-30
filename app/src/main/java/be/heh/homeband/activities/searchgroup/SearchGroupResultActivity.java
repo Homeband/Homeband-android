@@ -1,15 +1,35 @@
 package be.heh.homeband.activities.searchgroup;
 
+import android.content.Intent;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.R;
+import be.heh.homeband.activities.BandOnClick.GroupeDetailsActivity;
+import be.heh.homeband.activities.BandOnClick.RecyclerTouchListener;
+import be.heh.homeband.app.HomebandApiInterface;
+import be.heh.homeband.app.HomebandApiReponse;
+import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Groupe;
+import be.heh.homeband.entities.Utilisateur;
+import io.realm.Realm;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by christopher on 20-02-18.
@@ -42,6 +62,21 @@ public class SearchGroupResultActivity extends AppCompatActivity{
         //cet adapter servira à remplir notre recyclerview
         recyclerView.setAdapter(new SearchGroupAdapter(groupes));
 
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Groupe groupe = groupes.get(position);
+                Intent intent = new Intent (getApplicationContext(),GroupeDetailsActivity.class);
+                intent.putExtra("groupe",groupe);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
@@ -51,6 +86,72 @@ public class SearchGroupResultActivity extends AppCompatActivity{
 
         this.finish();
         return true;
+    }
+
+    private void getGroupe(int id){
+
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(HomebandRetrofit.API_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            // Création d'une instance du service avec Retrofit
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+
+            // Requête vers l'API
+            serviceApi.getGroupe(id).enqueue(new Callback<HomebandApiReponse>() {
+                @Override
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
+
+                    // En fonction du code HTTP de Retour (2** = Successful)
+                    if (response.isSuccessful()) {
+                        // Récupération de la réponse
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
+
+                        CharSequence messageToast;
+                        if (res.isOperationReussie() == true) {
+                            Gson gson = new Gson();
+                            final Utilisateur user = gson.fromJson(res.get("user").getAsJsonObject(), Utilisateur.class);
+                            user.setEst_connecte(true);
+                            estConnecte = true;
+                            Realm realm = Realm.getDefaultInstance();
+                            realm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+
+                                    realm.copyToRealmOrUpdate(user);
+                                }
+                            });
+
+                        } else {
+                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } else {
+                        int statusCode = response.code();
+
+                        String res = response.toString();
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+                    Log.d("LoginActivity", t.getMessage());
+                }
+            });
+        } catch (Exception e){
+            Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 
 }

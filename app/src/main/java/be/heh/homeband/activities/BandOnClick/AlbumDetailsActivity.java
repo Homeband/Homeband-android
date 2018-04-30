@@ -6,10 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import be.heh.homeband.R;
 
-public class EventOnClick extends AppCompatActivity {
+public class AlbumDetailsActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details_events);
+        setContentView(R.layout.activity_detailalbum);
     }
 }
