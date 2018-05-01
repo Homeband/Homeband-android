@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import be.heh.homeband.Dao.VersionDao;
+import be.heh.homeband.DaoImpl.VersionDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.LoadingDialog;
 import be.heh.homeband.activities.MainActivity;
@@ -84,9 +86,8 @@ public abstract class HomebandTools {
 
     public static void checkReferenceUpdate(final Context context){
 
-        Realm realm = Realm.getDefaultInstance();
-        List<Version> listeVersionsDB = realm.copyFromRealm(realm.where(Version.class).findAll());
-        
+        final VersionDao versionDao = new VersionDaoImpl();
+        List<Version> listeVersionsDB = versionDao.list();
         try {
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -165,9 +166,8 @@ public abstract class HomebandTools {
                             realm.executeTransaction(new Realm.Transaction() {
                                 @Override
                                 public void execute(Realm realm) {
-                                    RealmQuery<Version> query = realm.where(Version.class);
-                                    query.equalTo("nom_table", "VILLES");
-                                    Version versionDB = query.findFirst();
+
+                                    Version versionDB = versionDao.getByNomTable("VILLES");
                                     if (versionDB==null){
                                         versionDB = new Version() ;
                                         versionDB.setId_versions(getIdAuto(Version.class, "id_versions"));
@@ -176,7 +176,7 @@ public abstract class HomebandTools {
                                     }
 
                                     versionDB.setDate_maj(new Date());
-                                    realm.copyToRealmOrUpdate(versionDB);
+                                    versionDao.write(versionDB);
                                 }
                             });
 

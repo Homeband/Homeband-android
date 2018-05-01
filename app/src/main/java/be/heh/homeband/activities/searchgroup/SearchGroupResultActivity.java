@@ -66,9 +66,7 @@ public class SearchGroupResultActivity extends AppCompatActivity{
             @Override
             public void onClick(View view, int position) {
                 Groupe groupe = groupes.get(position);
-                Intent intent = new Intent (getApplicationContext(),GroupeDetailsActivity.class);
-                intent.putExtra("groupe",groupe);
-                startActivity(intent);
+                getGroupe(groupe.getId_groupes());
             }
 
             @Override
@@ -112,20 +110,14 @@ public class SearchGroupResultActivity extends AppCompatActivity{
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
                             Gson gson = new Gson();
-                            final Utilisateur user = gson.fromJson(res.get("user").getAsJsonObject(), Utilisateur.class);
-                            user.setEst_connecte(true);
-                            estConnecte = true;
-                            Realm realm = Realm.getDefaultInstance();
-                            realm.executeTransaction(new Realm.Transaction() {
-                                @Override
-                                public void execute(Realm realm) {
-
-                                    realm.copyToRealmOrUpdate(user);
-                                }
-                            });
+                            //C'est le groupe que l'on va récupérer en objet json et transforme en objet groupe. Le dernier parametre c'est le type d'objet retourner
+                            Groupe groupe = gson.fromJson(res.get("groups"),Groupe.class);
+                            Intent intent = new Intent (getApplicationContext(),GroupeDetailsActivity.class);
+                            intent.putExtra("groupe",groupe);
+                            startActivity(intent);
 
                         } else {
-                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
+                            messageToast = "Impossible de récupérer les détails du groupe\r\n" + res.getMessage();
 
                             // Affichage d'un toast pour indiquer le résultat
                             Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);

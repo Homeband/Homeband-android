@@ -27,33 +27,18 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
     Groupe groupe;
 
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_band_onclick);
 
+        //C'est l'objet groupe reçu depuis l'API
         groupe = (Groupe) getIntent().getSerializableExtra("groupe");
 
-
-        btnMusiques = (Button) findViewById(R.id.btnMusiques);
-        btnMusiques.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent (getApplicationContext(),AlbumDetailsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btnEvents = (Button) findViewById(R.id.btnEvents);
-        btnEvents.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent (getApplicationContext(),EventDetailsActivity.class);
-                startActivity(intent);
-            }
-        });
-
         // Locate the viewpager in activity_main.xml
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
 
         // Set the ViewPagerAdapter into ViewPager
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -101,5 +86,26 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         }
     }
 
+    public void init(){
+        btnMusiques = (Button) findViewById(R.id.btnMusiques);
+        btnMusiques.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent (getApplicationContext(),AlbumDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnEvents = (Button) findViewById(R.id.btnEvents);
+        btnEvents.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent (getApplicationContext(),EventDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void bindData(){
+
+    }
 
 }
