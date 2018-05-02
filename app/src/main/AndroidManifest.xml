@@ -40,17 +40,9 @@
         <activity android:name=".activities.PasswordForgetActivity"
 
             />
-        <activity android:name=".activities.BandOnClick.GroupeDetailsActivity"
-            android:label="Details groupe"
-            android:parentActivityName=".activities.searchgroup.SearchGroupResultActivity"
-            />
-        <activity android:name=".activities.BandOnClick.AlbumDetailsActivity"
-            android:label="Détails album"
-            android:parentActivityName=".activities.BandOnClick.GroupeDetailsActivity"/>
-        <activity android:name=".activities.BandOnClick.EventDetailsActivity"
-            android:label="Détails Evenements"
-            android:parentActivityName=".activities.BandOnClick.GroupeDetailsActivity"
-            />
+        <activity android:name=".activities.BandOnClick.GroupeDetailsActivity" />
+        <activity android:name=".activities.BandOnClick.AlbumDetailsActivity"/>
+        <activity android:name=".activities.BandOnClick.EventDetailsActivity" />
     </application>
 
 </manifest>

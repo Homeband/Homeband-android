@@ -111,7 +111,7 @@ public class SearchGroupResultActivity extends AppCompatActivity{
                         if (res.isOperationReussie() == true) {
                             Gson gson = new Gson();
                             //C'est le groupe que l'on va récupérer en objet json et transforme en objet groupe. Le dernier parametre c'est le type d'objet retourner
-                            Groupe groupe = gson.fromJson(res.get("groups"),Groupe.class);
+                            Groupe groupe = gson.fromJson(res.get("group"),Groupe.class);
                             Intent intent = new Intent (getApplicationContext(),GroupeDetailsActivity.class);
                             intent.putExtra("groupe",groupe);
                             startActivity(intent);
