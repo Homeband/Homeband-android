@@ -12,6 +12,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import be.heh.homeband.R;
 import be.heh.homeband.entities.Groupe;
@@ -24,6 +27,9 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
     Button btnMusiques;
     Button btnEvents;
 
+    TextView tvBandName;
+    TextView tvBandCity;
+    TextView tvBandStyle;
 
     Groupe groupe;
 
@@ -34,9 +40,13 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_band_onclick);
 
+
         //C'est l'objet groupe reçu depuis l'API
         groupe = (Groupe) getIntent().getSerializableExtra("groupe");
 
+
+        init();
+        bindData(groupe);
         // Locate the viewpager in activity_main.xml
         viewPager = (ViewPager) findViewById(R.id.pager);
 
@@ -102,9 +112,18 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                 startActivity(intent);
             }
         });
+
+        tvBandName = (TextView) findViewById(R.id.tvBandName);
+        tvBandCity = (TextView) findViewById(R.id.tvBandCity);
+        tvBandStyle = (TextView) findViewById(R.id.tvBandStyle);
+
     }
 
-    public void bindData(){
+    public void bindData(Groupe groupe){
+
+        tvBandName.setText(groupe.getNom());
+        tvBandCity.setText(groupe.getId_villes());
+        tvBandStyle.setText(groupe.getId_styles());
 
     }
 

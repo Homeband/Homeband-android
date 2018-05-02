@@ -13,28 +13,28 @@
             android:layout_height="wrap_content"
             android:id="@+id/rlCardsView">
             <ImageView
-                android:id="@+id/ivEvent"
+                android:id="@+id/ivAlbum"
                 android:layout_width="230dp"
                 android:layout_height="160dp"
                 android:src="@drawable/royalblood"
                 android:layout_alignParentLeft="true"
                 />
             <TextView
-                android:id="@+id/tvEventName"
+                android:id="@+id/tvAlbumName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bloodstains"
                 android:padding="10dp"
-                android:layout_toRightOf="@+id/ivEvent"
+                android:layout_toRightOf="@+id/ivAlbum"
                 />
             <TextView
-                android:id="@+id/tvEventAdresse"
+                android:id="@+id/tvAlbumDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2017"
                 android:padding="10dp"
-                android:layout_toRightOf="@+id/ivEvent"
-                android:layout_below="@+id/tvEventName"
+                android:layout_toRightOf="@+id/ivAlbum"
+                android:layout_below="@+id/tvAlbumName"
                 />
         </RelativeLayout>
         <RelativeLayout

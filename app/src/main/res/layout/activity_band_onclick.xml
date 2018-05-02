@@ -13,44 +13,44 @@
             android:layout_height="wrap_content"
             android:id="@+id/rlCardsView">
             <ImageView
-                android:id="@+id/ivEvent"
+                android:id="@+id/ivBand"
                 android:layout_width="230dp"
                 android:layout_height="160dp"
                 android:src="@drawable/royalblood"
                 android:layout_alignParentLeft="true"
                 />
             <TextView
-                android:id="@+id/tvEventName"
+                android:id="@+id/tvBandName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Leslie Louise"
                 android:padding="10dp"
-                android:layout_toRightOf="@+id/ivEvent"
+                android:layout_toRightOf="@+id/ivBand"
                 />
             <TextView
-                android:id="@+id/tvEventAdresse"
+                android:id="@+id/tvBandCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="La Louviere"
                 android:padding="10dp"
-                android:layout_toRightOf="@+id/ivEvent"
-                android:layout_below="@+id/tvEventName"
+                android:layout_toRightOf="@+id/ivBand"
+                android:layout_below="@+id/tvBandName"
                 />
             <TextView
-                android:id="@+id/tvEventDate"
+                android:id="@+id/tvBandStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Rock"
                 android:padding="10dp"
-                android:layout_toRightOf="@+id/ivEvent"
-                android:layout_below="@+id/tvEventAdresse"
+                android:layout_toRightOf="@+id/ivBand"
+                android:layout_below="@+id/tvBandCity"
                 />
             <ImageButton
                 android:layout_width="35dp"
                 android:layout_marginLeft="8dp"
                 android:layout_height="35dp"
-                android:layout_below="@+id/tvEventDate"
-                android:layout_toRightOf="@+id/ivEvent"
+                android:layout_below="@+id/tvBandStyle"
+                android:layout_toRightOf="@+id/ivBand"
                 android:src="@drawable/ic_star_white_24dp"
                 android:background="@drawable/round_disabled"
                 android:gravity="center"
