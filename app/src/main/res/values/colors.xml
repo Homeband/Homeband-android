@@ -10,4 +10,17 @@
     <!-- Homeband Colors -->
     <color name="hbRed">#CE2828</color>
     <color name="hbRedDark">#A80300</color>
+
+    <!-- Rounded Button Colors -->
+    <color name="rbDisabled">#e0e0e0</color>
+    <color name="rbFacebook">#3b5998</color>
+    <color name="rbTwitter">#1da1f2</color>
+    <color name="rbInstagram">#833ab4</color>
+    <color name="rbBandcamp">#629aa9</color>
+    <color name="rbSoundcloud">#ff3300</color>
+    <color name="rbYoutube">#ff0000</color>
+    <color name="rbApple">#ff2d55</color>
+    <color name="rbFavourite">#ffff66</color>
+    <color name="rbSpotify">#1db954</color>
+
 </resources>
