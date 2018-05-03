@@ -6,9 +6,7 @@ import java.util.Date;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by christopher on 21/03/2018.
- */
+
 
 public class Version extends RealmObject {
 

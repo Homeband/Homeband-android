@@ -101,10 +101,17 @@
         android:layout_marginRight="10dp"
         android:id="@+id/rlBio"
         >
-        <TextView
+        <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edward Christopher Sheeran, dit Ed Sheeran, né le 17 février 1991 à Halifax (Yorkshire de l'Ouest), est un auteur-compositeur-interprète et guitariste britannique. Sa carrière musicale commence en 2011 avec la maison de disques Atlantic Records, qui signe son premier album, +, écoulé à 4 millions de copies1. Suivent les albums x (2014) et ÷ (2017), qui rencontrent également un grand succès international2."/>
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvBio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+        </ScrollView>
+
     </RelativeLayout>
 
 </RelativeLayout>

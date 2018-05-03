@@ -7,8 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import be.heh.homeband.R;
+import be.heh.homeband.entities.Groupe;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +27,9 @@ public class FragmentBio extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    TextView tvBio;
+    Groupe groupe;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -65,7 +72,11 @@ public class FragmentBio extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bio, container, false);
+        //C'est l'objet groupe reçu depuis l'API
+        groupe = (Groupe) getActivity().getIntent().getSerializableExtra("groupe");
+        View myview = inflater.inflate(R.layout.fragment_bio, container, false);
+        initialisation(myview);
+        return myview;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,5 +116,10 @@ public class FragmentBio extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void initialisation(View view){
+        tvBio = (TextView) view.findViewById(R.id.tvBio);
+        tvBio.setText(groupe.getBiographie());
     }
 }

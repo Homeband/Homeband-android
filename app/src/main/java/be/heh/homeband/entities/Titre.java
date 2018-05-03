@@ -4,11 +4,7 @@ import java.util.Date;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/**
- * @author Nicolas
- * @version 1.0
- * @created 26-janv.-2018 14:38:24
- */
+
 public class Titre extends RealmObject {
 
 	@PrimaryKey
