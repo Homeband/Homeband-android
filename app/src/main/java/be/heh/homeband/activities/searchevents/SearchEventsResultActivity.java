@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +105,7 @@ public class SearchEventsResultActivity extends AppCompatActivity {
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
-                            Gson gson = new Gson();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             Evenement event = gson.fromJson(res.get("event"),Evenement.class);
                             Intent intent = new Intent (getApplicationContext(),EventDetailsActivity.class);
                             intent.putExtra("event",event);
