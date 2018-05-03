@@ -29,8 +29,8 @@ public interface HomebandApiInterface {
     @GET("api/groupes/{id}")
     Call<HomebandApiReponse> getGroupe(@Path(value="id") int id );
 
-    @GET("api/groupes/{id}/evenements")
-    Call<HomebandApiReponse> getEvent(@Path(value="id") int id );
+    @GET("api/groupes/{id}/evenements/{idEvent}")
+    Call<HomebandApiReponse> getEvent(@Path(value="id") int id,@Path(value="idEvent") int idEvent );
 
     @GET("api/evenements")
     Call<HomebandApiReponse> getEvenements(@Query("styles")int styles, @Query("adresse")String adresse, @Query("rayon")int rayon, @Query("date_debut")String du, @Query("date_fin")String au );

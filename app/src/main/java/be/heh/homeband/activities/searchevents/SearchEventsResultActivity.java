@@ -62,7 +62,7 @@ public class SearchEventsResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 Evenement event = events.get(position);
-                getEvent(event.getId_evenements());
+                getEvent(event.getId_groupes(),event.getId_evenements());
             }
 
             @Override
@@ -81,7 +81,7 @@ public class SearchEventsResultActivity extends AppCompatActivity {
         return true;
     }
 
-    private void getEvent(int id){
+    private void getEvent(int id, int idEvent){
 
         try {
             Retrofit retrofit = new Retrofit.Builder()
@@ -92,7 +92,7 @@ public class SearchEventsResultActivity extends AppCompatActivity {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getEvent(id).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getEvent(id,idEvent).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -105,7 +105,6 @@ public class SearchEventsResultActivity extends AppCompatActivity {
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
                             Gson gson = new Gson();
-                            //C'est le groupe que l'on va récupérer en objet json et transforme en objet groupe. Le dernier parametre c'est le type d'objet retourner
                             Evenement event = gson.fromJson(res.get("event"),Evenement.class);
                             Intent intent = new Intent (getApplicationContext(),EventDetailsActivity.class);
                             intent.putExtra("event",event);
