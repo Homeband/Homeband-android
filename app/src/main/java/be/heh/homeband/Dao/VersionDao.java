@@ -4,5 +4,5 @@ import be.heh.homeband.entities.Version;
 
 public interface VersionDao<K,E> extends Dao<K,E> {
 
-    public Version getByNomTable(String nomtable);
+    Version getByNomTable(String nomtable);
 }

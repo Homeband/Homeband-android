@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,9 @@ import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Groupe;
+import be.heh.homeband.entities.Membre;
 import be.heh.homeband.entities.Utilisateur;
+import be.heh.homeband.entities.Version;
 import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,7 +101,7 @@ public class SearchGroupResultActivity extends AppCompatActivity{
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getGroupe(id).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getGroupe(id,1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -112,8 +116,11 @@ public class SearchGroupResultActivity extends AppCompatActivity{
                             Gson gson = new Gson();
                             //C'est le groupe que l'on va récupérer en objet json et transforme en objet groupe. Le dernier parametre c'est le type d'objet retourner
                             Groupe groupe = gson.fromJson(res.get("group"),Groupe.class);
+                            Type typeListe = new TypeToken<List<Membre>>(){}.getType();
+                            List<Membre> membres = gson.fromJson(res.get("members").getAsJsonArray(), typeListe);
                             Intent intent = new Intent (getApplicationContext(),GroupeDetailsActivity.class);
                             intent.putExtra("groupe",groupe);
+                            intent.putExtra("members",(ArrayList<Membre>) membres);
                             startActivity(intent);
 
                         } else {

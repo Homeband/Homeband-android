@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface Dao<K,E> {
 
-    public E get(K id);
+    E get(K id);
 
-    public List<E> list();
+     List<E> list();
 
-    public void delete(K id);
+     void delete(K id);
 
-    public E write(E obj);
+     E write(E obj);
 }

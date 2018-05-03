@@ -7,10 +7,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import be.heh.homeband.Dao.MembreDao;
+import be.heh.homeband.DaoImpl.MembreDaoImpl;
 import be.heh.homeband.R;
+import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Groupe;
+import be.heh.homeband.entities.Membre;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,8 +35,11 @@ public class FragmentMembres extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    TextView tvMembres;
+   ListView lvMembres;
     Groupe groupe;
+
+    ArrayList<Membre> membres;
+    MembreDao membreDao;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -70,6 +82,7 @@ public class FragmentMembres extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         groupe = (Groupe) getActivity().getIntent().getSerializableExtra("groupe");
+        membres = (ArrayList<Membre>) getActivity().getIntent().getSerializableExtra("members");
         // Inflate the layout for this fragment
         View myview = inflater.inflate(R.layout.fragment_membres, container, false);
         initialisation(myview);
@@ -117,8 +130,9 @@ public class FragmentMembres extends Fragment {
 
     public void initialisation(View view){
 
+        lvMembres = (ListView) view.findViewById(R.id.lvMembres);
 
-        tvMembres = (TextView) view.findViewById(R.id.tvMembres);
-        tvMembres.setText(groupe.getContacts());
+        MembreAdapter adapter = new MembreAdapter(getContext(),membres);
+        lvMembres.setAdapter(adapter);
     }
 }
