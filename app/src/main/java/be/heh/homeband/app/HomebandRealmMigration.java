@@ -71,5 +71,12 @@ public class HomebandRealmMigration implements RealmMigration {
 
             oldVersion++;
         }
+        if (oldVersion == 4) {
+            schema.create("UtilisateursGroupes")
+                    .addField("id_utilisateurs", int.class)
+                    .addField("id_groupes", int.class);
+
+            oldVersion++;
+        }
     }
 }

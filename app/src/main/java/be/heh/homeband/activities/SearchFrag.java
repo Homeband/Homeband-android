@@ -287,7 +287,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
 
 
         // Initialisation de l'adapter
-        adapterStyle = new ArrayAdapter<Style>(getActivity().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item);
+        adapterStyle = new ArrayAdapter<Style>(getActivity().getApplicationContext(), R.layout.list_item_spinner,R.id.tvItem);
 
         // Ajout de la liste des styles à l'adapter
         adapterStyle.addAll(listeStyles);
@@ -335,7 +335,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
 
     public void getGroupes(){
         int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
-        
+
         String var_adresse = etAdresse.getText().toString();
         int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
 
@@ -416,12 +416,14 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
         String dateDu = "";
         String dateAu = "";
 
-        try{
-            dateDu = dateFormatterAPI.format(dateFormatter.parse(etDu.getText().toString()));
-            dateAu = dateFormatterAPI.format(dateFormatter.parse(etAu.getText().toString()));
-        } catch(Exception e){
-            e.printStackTrace();
-        }
+       if(swAfficherDate.isChecked()){
+           try{
+               dateDu = dateFormatterAPI.format(dateFormatter.parse(etDu.getText().toString()));
+               dateAu = dateFormatterAPI.format(dateFormatter.parse(etAu.getText().toString()));
+           } catch(Exception e){
+               e.printStackTrace();
+           }
+       }
 
         try {
             Gson gson = new GsonBuilder().setLenient().create();
@@ -444,7 +446,6 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
                         // Récupération de la réponse de l'API
                         HomebandApiReponse res = response.body();
                         res.mapResultat();
-                        Log.d("response",res.toString());
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
