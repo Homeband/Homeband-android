@@ -1,9 +1,11 @@
 package be.heh.homeband.entities;
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Adresse extends RealmObject {
+public class Adresse extends RealmObject implements Serializable {
 
 	@PrimaryKey
 	private int id_adresses;

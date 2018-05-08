@@ -8,32 +8,41 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+
 import be.heh.homeband.Dao.AdresseDao;
+import be.heh.homeband.Dao.VilleDao;
 import be.heh.homeband.DaoImpl.AdresseDaoImpl;
+import be.heh.homeband.DaoImpl.VilleDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Style;
+import be.heh.homeband.entities.Ville;
 
 public class EventDetailsActivity extends AppCompatActivity {
 
     Evenement event;
+    Adresse adresse;
 
     TextView tvEventName;
     TextView tvEventAdresse;
     TextView tvEventDate;
     TextView tvPrix;
 
-    AdresseDao adresseDao;
+    VilleDao villeDao;
 
     Button btnCalendar;
     Button btnEvents;
+
+    SimpleDateFormat dateFormatter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_events);
         event = (Evenement) getIntent().getSerializableExtra("event");
+        adresse = (Adresse) getIntent().getSerializableExtra("address");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
         bindData(event);
@@ -66,16 +75,24 @@ public class EventDetailsActivity extends AppCompatActivity {
         tvEventDate = (TextView) findViewById(R.id.tvEventDate);
         tvPrix = (TextView) findViewById(R.id.tvPrix);
 
-        adresseDao = new AdresseDaoImpl();
+        villeDao = new VilleDaoImpl();
     }
 
     public void bindData(Evenement event){
 
-        Adresse adresse = adresseDao.get(event.getId_adresses());
+        Ville ville = villeDao.get(adresse.getId_villes());
+        String adresseComplete = adresse.getRue() + " " + adresse.getNumero() + "\n" + ville.getCode_postal() + " " + ville.getNom();
 
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         tvEventName.setText(event.getNom());
-        tvEventAdresse.setText(adresse.getRue()+adresse.getNumero());
-        tvEventDate.setText(event.getDate_heure().toString());
-        //tvPrix.setText(event.getPrix());
+        tvEventAdresse.setText(adresseComplete);
+        tvEventDate.setText(dateFormatter.format(event.getDate_heure()));
+        if (event.getPrix()==0){
+            tvPrix.setText("Gratuit");
+
+        }else{
+            tvPrix.setText(String.format("%.2f",event.getPrix())+" €");
+
+        }
     }
 }

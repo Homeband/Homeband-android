@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import be.heh.homeband.Dao.StyleDao;
+import be.heh.homeband.DaoImpl.StyleDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.BandOnClick.GroupeDetailsActivity;
 import be.heh.homeband.activities.searchevents.SearchEventsResultActivity;
@@ -96,6 +98,8 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
 
     SimpleDateFormat dateFormatter;
     SimpleDateFormat dateFormatterAPI;
+
+    StyleDao styleDao;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -271,8 +275,16 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
     }
 
     public void initStyles(){
-        Realm realm = Realm.getDefaultInstance();
-        List<Style> listeStyles = realm.where(Style.class).findAll();
+
+        styleDao = new StyleDaoImpl();
+        List<Style> listeStyles = styleDao.list();
+
+        Style allStyles = new Style();
+        allStyles.setNom("Tous les styles");
+        allStyles.setId_styles(0);
+        listeStyles.add(0,allStyles);
+
+
 
         // Initialisation de l'adapter
         adapterStyle = new ArrayAdapter<Style>(getActivity().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item);
@@ -323,6 +335,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
 
     public void getGroupes(){
         int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
+        
         String var_adresse = etAdresse.getText().toString();
         int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
 

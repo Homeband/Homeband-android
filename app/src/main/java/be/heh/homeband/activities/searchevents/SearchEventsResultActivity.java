@@ -23,6 +23,7 @@ import be.heh.homeband.activities.BandOnClick.RecyclerTouchListener;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
+import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
 import retrofit2.Call;
@@ -63,7 +64,7 @@ public class SearchEventsResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 Evenement event = events.get(position);
-                getEvent(event.getId_groupes(),event.getId_evenements());
+                getEvent(event.getId_evenements());
             }
 
             @Override
@@ -82,7 +83,7 @@ public class SearchEventsResultActivity extends AppCompatActivity {
         return true;
     }
 
-    private void getEvent(int id, int idEvent){
+    private void getEvent(int id){
 
         try {
             Retrofit retrofit = new Retrofit.Builder()
@@ -93,7 +94,7 @@ public class SearchEventsResultActivity extends AppCompatActivity {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getEvent(id,idEvent).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getEvent(id).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -107,8 +108,10 @@ public class SearchEventsResultActivity extends AppCompatActivity {
                         if (res.isOperationReussie() == true) {
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             Evenement event = gson.fromJson(res.get("event"),Evenement.class);
+                            Adresse adresse = gson.fromJson(res.get("address"),Adresse.class);
                             Intent intent = new Intent (getApplicationContext(),EventDetailsActivity.class);
                             intent.putExtra("event",event);
+                            intent.putExtra("address",adresse);
                             startActivity(intent);
 
                         } else {
