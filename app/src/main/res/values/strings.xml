@@ -27,6 +27,11 @@
     <string name="title_activity_search_date">Date</string>
     <string name="title_activity_search_from">Du</string>
     <string name="title_activity_search_to">Au</string>
+    <!-- Activité detail groupe -->
+    <string name="detail_groupe_events">Evenements</string>
+    <string name="detail_groupe_music">Musique</string>
+    <string name="detail_groupe_avis">Avis</string>
+
     <!-- Autres -->
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>

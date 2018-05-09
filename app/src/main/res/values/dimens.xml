@@ -12,6 +12,10 @@
     <dimen name="search_label_date">35dp</dimen>
 
 
+    <!-- activity detail groupe -->
+    <dimen name="btn_détail_groupe_margin_left">10dp</dimen>
+    <dimen name="btn_détail_groupe_margin_right">10dp</dimen>
+    <dimen name="btn_détail_groupe_width">120dp</dimen>
 
 
 </resources>

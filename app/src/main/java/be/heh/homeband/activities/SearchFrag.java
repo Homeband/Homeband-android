@@ -279,11 +279,11 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
         styleDao = new StyleDaoImpl();
         List<Style> listeStyles = styleDao.list();
 
+        //Ajout de "Tous les styles" en position 0
         Style allStyles = new Style();
         allStyles.setNom("Tous les styles");
         allStyles.setId_styles(0);
         listeStyles.add(0,allStyles);
-
 
 
         // Initialisation de l'adapter
@@ -363,14 +363,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
-                            // Element de retour sera de type List<style>
                             Type typeListe = new TypeToken<List<Groupe>>(){}.getType();
-
-                            // Désérialisation du tableau JSON (JsonArray) en liste d'objets Style
-
-                            //gson.fromJson prend 2 paramètres
-                            //Premier paramètre c'est l'élément Json qu'il va falloir récupérer
-                            //Deuxième paramètre c'est le type d'élément à récupérer
                             Gson gson = new Gson();
                             List<Groupe> listeGroupe = gson.fromJson(res.get("groups").getAsJsonArray(), typeListe);
                             Intent intent = new Intent (getView().getContext(),SearchGroupResultActivity.class);
@@ -449,23 +442,12 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
-                            // Element de retour sera de type List<style>
                             Type typeListe = new TypeToken<List<Evenement>>(){}.getType();
-
-                            // Désérialisation du tableau JSON (JsonArray) en liste d'objets Style
-
-                            //gson.fromJson prend 2 paramètres
-                            //Premier paramètre c'est l'élément Json qu'il va falloir récupérer
-                            //Deuxième paramètre c'est le type d'élément à récupérer
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             List<Evenement> listeEvents = gson.fromJson(res.get("events").getAsJsonArray(), typeListe);
                             Intent intent = new Intent (getView().getContext(),SearchEventsResultActivity.class);
                             intent.putExtra("events",(ArrayList<Evenement>)listeEvents);
                             startActivity(intent);
-
-
-
-
 
                         } else {
                             messageToast = "Échec de la connexion\r\n" + res.getMessage();
@@ -536,11 +518,6 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
-                            // Désérialisation du tableau JSON (JsonArray) en liste d'objets Style
-
-                            //gson.fromJson prend 2 paramètres
-                            //Premier paramètre c'est l'élément Json qu'il va falloir récupérer
-                            //Deuxième paramètre c'est le type d'élément à récupérer
                             Gson gson = new Gson();
                             String address = res.get("address").getAsString();
                             etAdresse.setText(address);
