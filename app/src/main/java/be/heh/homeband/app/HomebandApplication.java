@@ -20,7 +20,7 @@ public class HomebandApplication extends Application {
 
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("MyRealm.realm")
-                .schemaVersion(5)
+                .schemaVersion(6)
                 .migration(new HomebandRealmMigration())
                 .build();
         Realm.setDefaultConfiguration(config);

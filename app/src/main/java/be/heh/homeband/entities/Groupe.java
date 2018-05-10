@@ -2,9 +2,13 @@ package be.heh.homeband.entities;
 
 import java.io.Serializable;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class Groupe implements Serializable {
 
+public class Groupe extends RealmObject implements Serializable {
+
+	@PrimaryKey
 	private int id_groupes;
 	private String nom;
 	private String login;

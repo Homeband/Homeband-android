@@ -77,6 +77,29 @@ public class HomebandRealmMigration implements RealmMigration {
                     .addField("id_groupes", int.class);
 
             oldVersion++;
+        } if (oldVersion == 5) {
+            schema.create("Groupe")
+                    .addField("id_groupes", int.class)
+                    .addField("nom", String.class)
+                    .addField("login", String.class)
+                    .addField("mot_de_passe", String.class)
+                    .addField("email", String.class)
+                    .addField("biographie", String.class)
+                    .addField("contacts", String.class)
+                    .addField("lien_itunes", String.class)
+                    .addField("lien_youtube", String.class)
+                    .addField("lien_spotify", String.class)
+                    .addField("lien_souncloud", String.class)
+                    .addField("lien_bandcamp", String.class)
+                    .addField("lien_twitter", String.class)
+                    .addField("lien_instagram", String.class)
+                    .addField("lien_facebook", String.class)
+                    .addField("api_ck", String.class)
+                    .addField("est_actif", boolean.class)
+                    .addField("id_styles", int.class)
+                    .addField("id_villes", int.class);
+
+            oldVersion++;
         }
     }
 }

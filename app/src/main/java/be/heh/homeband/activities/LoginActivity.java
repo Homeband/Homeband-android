@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import be.heh.homeband.Dao.UtilisateurDao;
+import be.heh.homeband.DaoImpl.UtilisateurDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
@@ -33,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnMotDePasseOublie;
     private boolean estConnecte = false;
 
+    UtilisateurDao utilisateurDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +51,11 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set ContentView
         setContentView(R.layout.activity_login);
-       Utilisateur user = HomebandTools.getConnectedUser();
 
-        if (user!=null){
+        utilisateurDao = new UtilisateurDaoImpl();
+        Utilisateur user = utilisateurDao.getConnectedUser();
+
+        if (user != null){
             HomebandTools.writeAutoConnect(this,true);
             Intent intent = new Intent (getApplicationContext(),MainActivity.class);
             startActivity(intent);

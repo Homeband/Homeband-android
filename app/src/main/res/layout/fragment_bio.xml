@@ -17,7 +17,7 @@
             android:id="@+id/ibFacebook"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_star_border_black_24dp"
+            android:src="@drawable/ic_facebook"
             android:background="@drawable/round_facebook"
             android:gravity="center"
             />
@@ -27,7 +27,7 @@
             android:layout_marginLeft="8dp"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibFacebook"
-            android:src="@drawable/ic_star_border_black_24dp"
+            android:src="@drawable/ic_twitter"
             android:background="@drawable/round_twitter"
             android:gravity="center"
             />
@@ -37,7 +37,7 @@
             android:layout_marginLeft="8dp"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibTwitter"
-            android:src="@drawable/ic_star_border_black_24dp"
+            android:src="@drawable/ic_instagram"
             android:background="@drawable/round_insta"
             android:gravity="center"
             />
@@ -47,7 +47,7 @@
             android:layout_marginLeft="8dp"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibInstagram"
-            android:src="@drawable/ic_star_border_black_24dp"
+            android:src="@drawable/ic_youtube"
             android:background="@drawable/round_youtube"
             android:gravity="center"
             />
@@ -57,7 +57,7 @@
             android:layout_marginLeft="8dp"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibYoutube"
-            android:src="@drawable/ic_star_border_black_24dp"
+            android:src="@drawable/ic_spotify"
             android:background="@drawable/round_spotify"
             android:gravity="center"
             />
@@ -67,7 +67,7 @@
             android:layout_marginLeft="8dp"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibSpotify"
-            android:src="@drawable/ic_star_border_black_24dp"
+            android:src="@drawable/ic_bandcamp"
             android:background="@drawable/round_bandcamp"
             android:gravity="center"
             />
@@ -77,7 +77,7 @@
             android:layout_marginLeft="8dp"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibBandcamp"
-            android:src="@drawable/ic_star_border_black_24dp"
+            android:src="@drawable/ic_soundcloud"
             android:background="@drawable/round_soundcloud"
             android:gravity="center"
             />
@@ -87,7 +87,7 @@
             android:layout_marginLeft="8dp"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibSoundcloud"
-            android:src="@drawable/ic_star_border_black_24dp"
+            android:src="@drawable/ic_apple"
             android:background="@drawable/round_apple"
             android:gravity="center"
             />

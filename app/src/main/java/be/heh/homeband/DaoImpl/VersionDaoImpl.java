@@ -7,7 +7,7 @@ import be.heh.homeband.entities.Version;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
-public class VersionDaoImpl extends DaoImpl implements VersionDao<Integer,Version> {
+public class VersionDaoImpl extends DaoImpl implements VersionDao {
 
     @Override
     public Version getByNomTable(String nomtable) {

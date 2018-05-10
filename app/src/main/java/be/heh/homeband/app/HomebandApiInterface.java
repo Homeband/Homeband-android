@@ -50,5 +50,11 @@ public interface HomebandApiInterface {
     @GET("api/localisations")
     Call<HomebandApiReponse> getLocalisations(@Query("type")int type, @Query("address")String address, @Query("lat")double lat, @Query("lon")double lon) ;
 
+    @GET("api/groupes/{id}/membres")
+    Call<HomebandApiReponse> getMembres(@Path(value="id") int id ) ;
+
+
+    @GET("api/groupes/{id}/albums")
+    Call<HomebandApiReponse> getAlbums(@Path(value="id") int id ) ;
 }
 

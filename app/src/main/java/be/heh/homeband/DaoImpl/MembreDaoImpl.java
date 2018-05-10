@@ -24,7 +24,10 @@ public class MembreDaoImpl extends DaoImpl implements MembreDao {
 
     @Override
     public Membre write(Membre obj) {
-        return null;
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(obj);
+        realm.commitTransaction();
+        return obj;
     }
 
     @Override

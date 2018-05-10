@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import be.heh.homeband.Dao.UtilisateurDao;
+import be.heh.homeband.DaoImpl.UtilisateurDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.app.HomebandTools;
 import be.heh.homeband.entities.Utilisateur;
@@ -29,6 +31,8 @@ public class SettingsFrag extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    UtilisateurDao utilisateurDao;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -115,7 +119,9 @@ public class SettingsFrag extends Fragment implements View.OnClickListener {
         void onFragmentInteraction(Uri uri);
     }
     public void onClick(View v) {
-        HomebandTools.disconnectUser();
+
+        utilisateurDao = new UtilisateurDaoImpl();
+        utilisateurDao.disconnectUser();
         getActivity().finish();
 
         }
