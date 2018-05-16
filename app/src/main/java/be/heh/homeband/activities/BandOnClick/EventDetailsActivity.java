@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import be.heh.homeband.Dao.AdresseDao;
 import be.heh.homeband.Dao.VilleDao;
@@ -59,7 +60,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         btnCalendar = (Button) findViewById(R.id.btnCalendar);
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                addCalendar();
             }
         });
 
@@ -94,5 +95,17 @@ public class EventDetailsActivity extends AppCompatActivity {
             tvPrix.setText(String.format("%.2f",event.getPrix())+" €");
 
         }
+    }
+
+    public void addCalendar(){
+        Calendar cal = Calendar.getInstance();
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime", cal.getTimeInMillis());
+        intent.putExtra("allDay", true);
+        intent.putExtra("rrule", "FREQ=YEARLY");
+        intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+        intent.putExtra("title", "A Test Event from android app");
+        startActivity(intent);
     }
 }

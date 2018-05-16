@@ -79,7 +79,7 @@ public class HomebandRealmMigration implements RealmMigration {
             oldVersion++;
         } if (oldVersion == 5) {
             schema.create("Groupe")
-                    .addField("id_groupes", int.class)
+                    .addField("id_groupes", int.class,FieldAttribute.PRIMARY_KEY)
                     .addField("nom", String.class)
                     .addField("login", String.class)
                     .addField("mot_de_passe", String.class)

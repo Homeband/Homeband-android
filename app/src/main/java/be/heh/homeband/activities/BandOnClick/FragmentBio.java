@@ -1,12 +1,16 @@
 package be.heh.homeband.activities.BandOnClick;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -30,6 +34,19 @@ public class FragmentBio extends Fragment {
 
     TextView tvBio;
     Groupe groupe;
+
+    public static String FACEBOOK_URL = "https://fr-fr.facebook.com/LeslieLouiseOFC/";
+    public static String FACEBOOK_PAGE_ID = "LeslieLouiseOFC";
+
+    ImageButton ibFacebook;
+    ImageButton ibTwitter;
+    ImageButton ibInstagram;
+    ImageButton ibYoutube;
+    ImageButton ibSpotify;
+    ImageButton ibBandcamp;
+    ImageButton ibSoundcloud;
+    ImageButton ibApple;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -121,5 +138,80 @@ public class FragmentBio extends Fragment {
     public void initialisation(View view){
         tvBio = (TextView) view.findViewById(R.id.tvBio);
         tvBio.setText(groupe.getBiographie());
+
+        ibFacebook = (ImageButton) view.findViewById(R.id.ibFacebook);
+        ibFacebook.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+                String facebookUrl = getFacebookPageURL(getContext());
+                facebookIntent.setData(Uri.parse(facebookUrl));
+                startActivity(facebookIntent);
+            }
+        });
+
+        ibApple  = (ImageButton) view.findViewById(R.id.ibApple);
+        ibApple.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+        ibBandcamp  = (ImageButton) view.findViewById(R.id.ibBandcamp);
+        ibBandcamp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+        ibInstagram  = (ImageButton) view.findViewById(R.id.ibInstagram);
+        ibInstagram.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //requiere uniquement l'app
+            }
+        });
+        ibSoundcloud  = (ImageButton) view.findViewById(R.id.ibSoundcloud);
+        ibSoundcloud.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+        ibSpotify  = (ImageButton) view.findViewById(R.id.ibSpotify);
+        ibSpotify.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //requière uniquement l'app
+            }
+        });
+        ibYoutube  = (ImageButton) view.findViewById(R.id.ibYoutube);
+        ibYoutube.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+        ibTwitter  = (ImageButton) view.findViewById(R.id.ibTwitter);
+        ibTwitter.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("twitter://LeslieLouiseOFC"));
+                    startActivity(intent);
+                } catch (Exception e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://twitter.com/LeslieLouiseOFC")));
+                }
+            }
+        });
+    }
+
+    //method to get the right URL to use in the intent
+    public String getFacebookPageURL(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) { //newer versions of fb app
+                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+            } else { //older versions of fb app
+                return "fb://page/" + FACEBOOK_PAGE_ID;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return FACEBOOK_URL; //normal web url
+        }
     }
 }
