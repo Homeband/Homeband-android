@@ -1,5 +1,6 @@
 package be.heh.homeband.activities.BandOnClick;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,7 +37,9 @@ public class FragmentBio extends Fragment {
     TextView tvBio;
     Groupe groupe;
 
-    public static String FACEBOOK_URL = "https://fr-fr.facebook.com/LeslieLouiseOFC/";
+    public static String FACEBOOK_URL;
+    public static String TWITTER_URL;
+    public static String YOUTUBE_URL;
     public static String FACEBOOK_PAGE_ID = "LeslieLouiseOFC";
 
     ImageButton ibFacebook;
@@ -141,6 +144,7 @@ public class FragmentBio extends Fragment {
         tvBio.setText(groupe.getBiographie());
 
         //Facebook
+        FACEBOOK_URL = groupe.getLien_facebook();
         ibFacebook = (ImageButton) view.findViewById(R.id.ibFacebook);
         if(groupe.getLien_facebook() != "") {
             ibFacebook.setBackgroundResource(R.drawable.round_facebook);
@@ -183,7 +187,7 @@ public class FragmentBio extends Fragment {
             ibInstagram.setBackgroundResource(R.drawable.round_insta);
             ibInstagram.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //requiere uniquement l'app
+                    newInstagramProfileIntent(getContext().getPackageManager(),groupe.getLien_instagram());
                 }
             });
         }
@@ -211,17 +215,19 @@ public class FragmentBio extends Fragment {
         }
 
         //Youtube
+        YOUTUBE_URL = groupe.getLien_youtube();
         ibYoutube  = (ImageButton) view.findViewById(R.id.ibYoutube);
         if(groupe.getLien_youtube() != "") {
             ibYoutube.setBackgroundResource(R.drawable.round_youtube);
             ibYoutube.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
+                    watchYoutubeVideo(getContext());
                 }
             });
         }
 
         //Twitter
+        TWITTER_URL = groupe.getLien_twitter();
         ibTwitter  = (ImageButton) view.findViewById(R.id.ibTwitter);
         if(groupe.getLien_twitter() != "") {
             ibTwitter.setBackgroundResource(R.drawable.round_twitter);
@@ -233,7 +239,7 @@ public class FragmentBio extends Fragment {
                         startActivity(intent);
                     } catch (Exception e) {
                         startActivity(new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("https://twitter.com/LeslieLouiseOFC")));
+                                Uri.parse(TWITTER_URL)));
                     }
                 }
             });
@@ -241,7 +247,7 @@ public class FragmentBio extends Fragment {
 
 
     }
-    //method to get the right URL to use in the intent
+    //methode Facebook
     public String getFacebookPageURL(Context context) {
         PackageManager packageManager = context.getPackageManager();
         try {
@@ -253,6 +259,45 @@ public class FragmentBio extends Fragment {
             }
         } catch (PackageManager.NameNotFoundException e) {
             return FACEBOOK_URL; //normal web url
+        }
+    }
+
+    //TODO Don't work
+    //Méthode Instagram
+    public static Intent newInstagramProfileIntent(PackageManager pm, String url) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW);
+        try {
+            if (pm.getPackageInfo("com.instagram.android", 0) != null) {
+                if (url.endsWith("/")) {
+                    url = url.substring(0, url.length() - 1);
+                }
+                final String username = url.substring(url.lastIndexOf("/") + 1);
+                // http://stackoverflow.com/questions/21505941/intent-to-open-instagram-user-profile-on-android
+                intent.setData(Uri.parse("http://instagram.com/_u/" + username));
+                intent.setPackage("com.instagram.android");
+                return intent;
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        intent.setData(Uri.parse(url));
+        return intent;
+    }
+
+    //TODO Don't work
+    //Méthode Youtube
+    public void watchYoutubeVideo(Context context){
+
+        Uri uri = Uri.parse(YOUTUBE_URL);
+
+        Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse(YOUTUBE_URL));
+        try {
+            uri = Uri.parse("vnd.youtube:"  + uri);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            context.startActivity(webIntent);
         }
     }
 
