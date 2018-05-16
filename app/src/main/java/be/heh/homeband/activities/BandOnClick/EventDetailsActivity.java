@@ -1,6 +1,9 @@
 package be.heh.homeband.activities.BandOnClick;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +35,10 @@ public class EventDetailsActivity extends AppCompatActivity {
     TextView tvPrix;
 
     VilleDao villeDao;
+
+    public static String FACEBOOK_URL = "https://fr-fr.facebook.com/LeslieLouiseOFC/";
+    public static String FACEBOOK_PAGE_ID = "LeslieLouiseOFC";
+
 
     Button btnCalendar;
     Button btnEvents;
@@ -67,7 +74,10 @@ public class EventDetailsActivity extends AppCompatActivity {
         btnEvents = (Button) findViewById(R.id.btnEvents);
         btnEvents.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+                String facebookUrl = getFacebookPageURL(getApplicationContext());
+                facebookIntent.setData(Uri.parse(facebookUrl));
+                startActivity(facebookIntent);
             }
         });
 
@@ -107,5 +117,20 @@ public class EventDetailsActivity extends AppCompatActivity {
         intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
         intent.putExtra("title", "A Test Event from android app");
         startActivity(intent);
+    }
+
+    //method to get the right URL to use in the intent
+    public String getFacebookPageURL(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) { //newer versions of fb app
+                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+            } else { //older versions of fb app
+                return "fb://page/" + FACEBOOK_PAGE_ID;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return FACEBOOK_URL; //normal web url
+        }
     }
 }

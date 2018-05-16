@@ -199,7 +199,6 @@ public class FragmentBio extends Fragment {
             }
         });
     }
-
     //method to get the right URL to use in the intent
     public String getFacebookPageURL(Context context) {
         PackageManager packageManager = context.getPackageManager();
@@ -214,4 +213,5 @@ public class FragmentBio extends Fragment {
             return FACEBOOK_URL; //normal web url
         }
     }
+
 }
