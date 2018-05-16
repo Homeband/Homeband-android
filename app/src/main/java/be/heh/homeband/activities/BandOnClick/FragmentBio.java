@@ -40,6 +40,8 @@ public class FragmentBio extends Fragment {
     public static String FACEBOOK_URL;
     public static String TWITTER_URL;
     public static String YOUTUBE_URL;
+    public static String BANDCAMP_URL;
+    public static String SOUNDCLOUD_URL;
     public static String FACEBOOK_PAGE_ID = "LeslieLouiseOFC";
 
     ImageButton ibFacebook;
@@ -171,12 +173,14 @@ public class FragmentBio extends Fragment {
 
 
         //Bandcamp
+        BANDCAMP_URL = groupe.getLien_bandcamp();
         ibBandcamp  = (ImageButton) view.findViewById(R.id.ibBandcamp);
         if(groupe.getLien_bandcamp() != "") {
             ibBandcamp.setBackgroundResource(R.drawable.round_bandcamp);
             ibBandcamp.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BANDCAMP_URL));
+                    startActivity(browserIntent);
                 }
             });
         }
@@ -193,12 +197,14 @@ public class FragmentBio extends Fragment {
         }
 
         //Soundcloud
+        SOUNDCLOUD_URL = groupe.getLien_soundcloud();
         ibSoundcloud  = (ImageButton) view.findViewById(R.id.ibSoundcloud);
         if(groupe.getLien_soundcloud() != "") {
             ibSoundcloud.setBackgroundResource(R.drawable.round_soundcloud);
             ibSoundcloud.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(SOUNDCLOUD_URL));
+                    startActivity(browserIntent);
                 }
             });
         }
