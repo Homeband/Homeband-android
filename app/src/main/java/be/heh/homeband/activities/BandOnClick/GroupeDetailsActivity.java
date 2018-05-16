@@ -210,6 +210,8 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         tvBandCity.setText(ville.getNom());
         tvBandStyle.setText(style.getNom());
 
+
+
     }
 
     public void addFavourite(){

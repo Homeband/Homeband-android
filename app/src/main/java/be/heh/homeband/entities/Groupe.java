@@ -19,7 +19,7 @@ public class Groupe extends RealmObject implements Serializable {
 	private String lien_itunes;
 	private String lien_youtube;
 	private String lien_spotify;
-	private String lien_souncloud;
+	private String lien_soundcloud;
 	private String lien_bandcamp;
 	private String lien_twitter;
 	private String lien_instagram;
@@ -118,12 +118,12 @@ public class Groupe extends RealmObject implements Serializable {
 		this.lien_spotify = lien_spotify;
 	}
 
-	public String getLien_souncloud() {
-		return lien_souncloud;
+	public String getLien_soundcloud() {
+		return lien_soundcloud;
 	}
 
-	public void setLien_souncloud(String lien_souncloud) {
-		this.lien_souncloud = lien_souncloud;
+	public void setLien_soundcloud(String lien_soundcloud) {
+		this.lien_soundcloud = lien_soundcloud;
 	}
 
 	public String getLien_bandcamp() {

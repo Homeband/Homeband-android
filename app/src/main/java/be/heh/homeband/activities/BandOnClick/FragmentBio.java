@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -139,65 +140,106 @@ public class FragmentBio extends Fragment {
         tvBio = (TextView) view.findViewById(R.id.tvBio);
         tvBio.setText(groupe.getBiographie());
 
+        //Facebook
         ibFacebook = (ImageButton) view.findViewById(R.id.ibFacebook);
-        ibFacebook.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
-                String facebookUrl = getFacebookPageURL(getContext());
-                facebookIntent.setData(Uri.parse(facebookUrl));
-                startActivity(facebookIntent);
-            }
-        });
-
-        ibApple  = (ImageButton) view.findViewById(R.id.ibApple);
-        ibApple.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-            }
-        });
-        ibBandcamp  = (ImageButton) view.findViewById(R.id.ibBandcamp);
-        ibBandcamp.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-            }
-        });
-        ibInstagram  = (ImageButton) view.findViewById(R.id.ibInstagram);
-        ibInstagram.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //requiere uniquement l'app
-            }
-        });
-        ibSoundcloud  = (ImageButton) view.findViewById(R.id.ibSoundcloud);
-        ibSoundcloud.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-            }
-        });
-        ibSpotify  = (ImageButton) view.findViewById(R.id.ibSpotify);
-        ibSpotify.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //requière uniquement l'app
-            }
-        });
-        ibYoutube  = (ImageButton) view.findViewById(R.id.ibYoutube);
-        ibYoutube.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-            }
-        });
-        ibTwitter  = (ImageButton) view.findViewById(R.id.ibTwitter);
-        ibTwitter.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("twitter://LeslieLouiseOFC"));
-                    startActivity(intent);
-                } catch (Exception e) {
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://twitter.com/LeslieLouiseOFC")));
+        if(groupe.getLien_facebook() != "") {
+            ibFacebook.setBackgroundResource(R.drawable.round_facebook);
+            ibFacebook.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+                    String facebookUrl = getFacebookPageURL(getContext());
+                    facebookIntent.setData(Uri.parse(facebookUrl));
+                    startActivity(facebookIntent);
                 }
-            }
-        });
+            });
+        }
+
+        //Apple
+        ibApple  = (ImageButton) view.findViewById(R.id.ibApple);
+        if(groupe.getLien_itunes() != "") {
+            ibApple.setBackgroundResource(R.drawable.round_apple);
+            ibApple.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                }
+            });
+        }
+
+
+        //Bandcamp
+        ibBandcamp  = (ImageButton) view.findViewById(R.id.ibBandcamp);
+        if(groupe.getLien_bandcamp() != "") {
+            ibBandcamp.setBackgroundResource(R.drawable.round_bandcamp);
+            ibBandcamp.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                }
+            });
+        }
+
+        //Instagram
+        ibInstagram  = (ImageButton) view.findViewById(R.id.ibInstagram);
+        if(groupe.getLien_instagram() != "") {
+            ibInstagram.setBackgroundResource(R.drawable.round_insta);
+            ibInstagram.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //requiere uniquement l'app
+                }
+            });
+        }
+
+        //Soundcloud
+        ibSoundcloud  = (ImageButton) view.findViewById(R.id.ibSoundcloud);
+        if(groupe.getLien_soundcloud() != "") {
+            ibSoundcloud.setBackgroundResource(R.drawable.round_soundcloud);
+            ibSoundcloud.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                }
+            });
+        }
+
+        //Spotify
+        ibSpotify  = (ImageButton) view.findViewById(R.id.ibSpotify);
+        if(groupe.getLien_spotify() != "") {
+            ibSpotify.setBackgroundResource(R.drawable.round_spotify);
+            ibSpotify.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //requière uniquement l'app
+                }
+            });
+        }
+
+        //Youtube
+        ibYoutube  = (ImageButton) view.findViewById(R.id.ibYoutube);
+        if(groupe.getLien_youtube() != "") {
+            ibYoutube.setBackgroundResource(R.drawable.round_youtube);
+            ibYoutube.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                }
+            });
+        }
+
+        //Twitter
+        ibTwitter  = (ImageButton) view.findViewById(R.id.ibTwitter);
+        if(groupe.getLien_twitter() != "") {
+            ibTwitter.setBackgroundResource(R.drawable.round_twitter);
+            ibTwitter.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("twitter://LeslieLouiseOFC"));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("https://twitter.com/LeslieLouiseOFC")));
+                    }
+                }
+            });
+        }
+
+
     }
     //method to get the right URL to use in the intent
     public String getFacebookPageURL(Context context) {

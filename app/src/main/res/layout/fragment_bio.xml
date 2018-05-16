@@ -18,7 +18,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_facebook"
-            android:background="@drawable/round_facebook"
+            android:background="@drawable/round_disabled"
             android:gravity="center"
             />
         <ImageButton
@@ -28,7 +28,7 @@
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibFacebook"
             android:src="@drawable/ic_twitter"
-            android:background="@drawable/round_twitter"
+            android:background="@drawable/round_disabled"
             android:gravity="center"
             />
         <ImageButton
@@ -38,7 +38,7 @@
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibTwitter"
             android:src="@drawable/ic_instagram"
-            android:background="@drawable/round_insta"
+            android:background="@drawable/round_disabled"
             android:gravity="center"
             />
         <ImageButton
@@ -48,7 +48,7 @@
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibInstagram"
             android:src="@drawable/ic_youtube"
-            android:background="@drawable/round_youtube"
+            android:background="@drawable/round_disabled"
             android:gravity="center"
             />
         <ImageButton
@@ -58,7 +58,7 @@
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibYoutube"
             android:src="@drawable/ic_spotify"
-            android:background="@drawable/round_spotify"
+            android:background="@drawable/round_disabled"
             android:gravity="center"
             />
         <ImageButton
@@ -68,7 +68,7 @@
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibSpotify"
             android:src="@drawable/ic_bandcamp"
-            android:background="@drawable/round_bandcamp"
+            android:background="@drawable/round_disabled"
             android:gravity="center"
             />
         <ImageButton
@@ -78,7 +78,7 @@
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibBandcamp"
             android:src="@drawable/ic_soundcloud"
-            android:background="@drawable/round_soundcloud"
+            android:background="@drawable/round_disabled"
             android:gravity="center"
             />
         <ImageButton
@@ -88,7 +88,7 @@
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/ibSoundcloud"
             android:src="@drawable/ic_apple"
-            android:background="@drawable/round_apple"
+            android:background="@drawable/round_disabled"
             android:gravity="center"
             />
     </RelativeLayout>

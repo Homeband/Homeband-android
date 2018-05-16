@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import be.heh.homeband.R;
@@ -16,6 +17,7 @@ public class MembreAdapter extends ArrayAdapter<Membre> {
 
     private final Context context;
     private final ArrayList<Membre> membresArrayList;
+    SimpleDateFormat dateFormatter;
 
     public MembreAdapter(Context context, ArrayList<Membre> membresArrayList) {
 
@@ -41,9 +43,15 @@ public class MembreAdapter extends ArrayAdapter<Membre> {
         TextView labelView = (TextView) rowView.findViewById(R.id.tvMembre);
         TextView valueView = (TextView) rowView.findViewById(R.id.tvDateMembre);
 
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy ");
         // 4. Set the text for textView 
         labelView.setText(membre.getNom()+" "+membre.getPrenom());
-        //valueView.setText(membre.getDate_debut());
+        if (membre.getDate_debut()==null || membre.getDate_fin()==null){
+            valueView.setText("Pas de date disponible");
+        }else{
+            valueView.setText("Début :"+(dateFormatter.format(membre.getDate_debut())) + " " + "Fin :"+(dateFormatter.format(membre.getDate_fin())));
+
+        }
 
         // 5. retrn rowView
         return rowView;

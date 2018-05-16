@@ -101,5 +101,12 @@ public class HomebandRealmMigration implements RealmMigration {
 
             oldVersion++;
         }
+        if(oldVersion == 6){
+            schema.get("Groupe")
+                    .addField("lien_soundcloud", String.class)
+                    .removeField("lien_souncloud");
+            oldVersion++;
+        }
+
     }
 }
