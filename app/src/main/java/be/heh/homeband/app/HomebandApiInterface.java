@@ -53,6 +53,8 @@ public interface HomebandApiInterface {
     @GET("api/groupes/{id}/membres")
     Call<HomebandApiReponse> getMembres(@Path(value="id") int id ) ;
 
+    @GET("api/groupes/{id}/albums/{idAlbum}")
+    Call<HomebandApiReponse> getAlbumDetails(@Path(value="id") int id,@Path(value="idAlbum") int idAlbum) ;
 
     @GET("api/groupes/{id}/albums")
     Call<HomebandApiReponse> getAlbums(@Path(value="id") int id ) ;

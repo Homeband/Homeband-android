@@ -44,6 +44,7 @@ import be.heh.homeband.DaoImpl.UtilisateursGroupesDaoImpl;
 import be.heh.homeband.DaoImpl.VersionDaoImpl;
 import be.heh.homeband.DaoImpl.VilleDaoImpl;
 import be.heh.homeband.R;
+import be.heh.homeband.activities.ListAlbum.ListAlbumResultActivity;
 import be.heh.homeband.activities.LoadingDialog;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
@@ -166,8 +167,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         btnMusiques = (Button) findViewById(R.id.btnMusiques);
         btnMusiques.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent (getApplicationContext(),AlbumDetailsActivity.class);
-                startActivity(intent);
+                getAlbums(groupe.getId_groupes());
             }
         });
 
@@ -274,9 +274,10 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             Type typeListe = new TypeToken<List<Membre>>(){}.getType();
                             Gson gson = new Gson();
                             List<Membre> listeMembres = gson.fromJson(res.get("members").getAsJsonArray(), typeListe);
-                            for(int i=0;i<listeMembres.size();i++){
-                                membreDao.write(listeMembres.get(i));
-                            }
+
+//                            for(int i=0;i<listeMembres.size();i++){
+//                                membreDao.write(listeMembres.get(i));
+//                            }
 
                         } else {
 
@@ -342,9 +343,12 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             Type typeListe = new TypeToken<List<Album>>(){}.getType();
                             Gson gson = new Gson();
                             List<Album> listeAlbums = gson.fromJson(res.get("albums").getAsJsonArray(), typeListe);
-                            for(int i=0;i<listeAlbums.size();i++){
-                                albumDao.write(listeAlbums.get(i));
-                            }
+                            Intent intent = new Intent (getApplicationContext(),ListAlbumResultActivity.class);
+                            intent.putExtra("albums",(ArrayList<Album>)listeAlbums);
+                            startActivity(intent);
+//                            for(int i=0;i<listeAlbums.size();i++){
+//                                albumDao.write(listeAlbums.get(i));
+//                            }
 
                         } else {
 
