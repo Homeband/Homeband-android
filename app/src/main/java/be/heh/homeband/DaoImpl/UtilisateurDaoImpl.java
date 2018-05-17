@@ -32,7 +32,13 @@ public class UtilisateurDaoImpl extends DaoImpl implements UtilisateurDao {
     public Utilisateur getConnectedUser() {
         RealmQuery<Utilisateur> query = realm.where(Utilisateur.class);
         query.equalTo("est_connecte", true);
-        return realm.copyFromRealm(query.findFirst());
+
+        Utilisateur user = query.findFirst();
+        if(user != null){
+            return realm.copyFromRealm(query.findFirst());
+        } else {
+            return null;
+        }
     }
 
     @Override

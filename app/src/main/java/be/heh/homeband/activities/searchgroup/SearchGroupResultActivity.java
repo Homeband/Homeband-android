@@ -112,13 +112,15 @@ public class SearchGroupResultActivity extends AppCompatActivity{
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
                             GsonBuilder builder = new GsonBuilder();
-                            builder.registerTypeAdapter(Boolean.class, new BooleanTypeAdapter());
+                            builder.registerTypeAdapter(boolean.class, new BooleanTypeAdapter());
                             Gson gson = builder.create();
                             //Gson gson = new Gson();
                             //C'est le groupe que l'on va récupérer en objet json et transforme en objet groupe. Le dernier parametre c'est le type d'objet retourner
                             Groupe groupe = gson.fromJson(res.get("group"),Groupe.class);
                             Type typeListe = new TypeToken<List<Membre>>(){}.getType();
+                            Log.d("Membres", res.toString());
                             List<Membre> membres = gson.fromJson(res.get("members").getAsJsonArray(), typeListe);
+
                             Intent intent = new Intent (getApplicationContext(),GroupeDetailsActivity.class);
                             intent.putExtra("groupe",groupe);
                             intent.putExtra("members",(ArrayList<Membre>) membres);
