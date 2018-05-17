@@ -112,8 +112,8 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         // Set the ViewPagerAdapter into ViewPager
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new FragmentBio(), "Biographie");
-        adapter.addFrag(new FragmentContacts(), "Contacts");
         adapter.addFrag(new FragmentMembres(), "Membres");
+        adapter.addFrag(new FragmentContacts(), "Contacts");
 
         viewPager.setAdapter(adapter);
 
