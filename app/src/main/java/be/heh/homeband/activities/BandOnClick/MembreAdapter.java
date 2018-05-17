@@ -1,6 +1,7 @@
 package be.heh.homeband.activities.BandOnClick;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +47,22 @@ public class MembreAdapter extends ArrayAdapter<Membre> {
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy ");
         // 4. Set the text for textView 
         labelView.setText(membre.getNom()+" "+membre.getPrenom());
-        if (membre.getDate_debut()==null || membre.getDate_fin()==null){
-            valueView.setText("Pas de date disponible");
-        }else{
-            valueView.setText("Début :"+(dateFormatter.format(membre.getDate_debut())) + " " + "Fin :"+(dateFormatter.format(membre.getDate_fin())));
 
+        Log.d("Avant if", String.valueOf(membre.isEst_date())+membre.getNom());
+        if (membre.isEst_date()){
+
+            if(membre.getDate_debut() != null && membre.getDate_fin() != null){
+                valueView.setText("Début :"+(dateFormatter.format(membre.getDate_debut())) + " " + "Fin :"+(dateFormatter.format(membre.getDate_fin())));
+
+            }else if(membre.getDate_debut() != null && membre.getDate_fin() == null){
+                valueView.setText("Début :"+(dateFormatter.format(membre.getDate_debut())));
+
+            }
+            else{
+                valueView.setText( "Fin :"+(dateFormatter.format(membre.getDate_fin())));
+            }
+        }else{
+            valueView.setText("");
         }
 
         // 5. retrn rowView

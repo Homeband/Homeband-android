@@ -1,7 +1,6 @@
 package be.heh.homeband.activities.searchgroup;
 
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -21,14 +21,12 @@ import java.util.List;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.BandOnClick.GroupeDetailsActivity;
 import be.heh.homeband.activities.BandOnClick.RecyclerTouchListener;
+import be.heh.homeband.app.BooleanTypeAdapter;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Membre;
-import be.heh.homeband.entities.Utilisateur;
-import be.heh.homeband.entities.Version;
-import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -113,7 +111,10 @@ public class SearchGroupResultActivity extends AppCompatActivity{
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
-                            Gson gson = new Gson();
+                            GsonBuilder builder = new GsonBuilder();
+                            builder.registerTypeAdapter(Boolean.class, new BooleanTypeAdapter());
+                            Gson gson = builder.create();
+                            //Gson gson = new Gson();
                             //C'est le groupe que l'on va récupérer en objet json et transforme en objet groupe. Le dernier parametre c'est le type d'objet retourner
                             Groupe groupe = gson.fromJson(res.get("group"),Groupe.class);
                             Type typeListe = new TypeToken<List<Membre>>(){}.getType();
