@@ -45,6 +45,7 @@
         <activity android:name=".activities.BandOnClick.GroupeDetailsActivity" />
         <activity android:name=".activities.BandOnClick.AlbumDetailsActivity"/>
         <activity android:name=".activities.BandOnClick.EventDetailsActivity" />
+        <activity android:name=".activities.ListAlbum.ListAlbumResultActivity" />
     </application>
 
 </manifest>

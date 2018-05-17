@@ -341,7 +341,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
                             Type typeListe = new TypeToken<List<Album>>(){}.getType();
-                            Gson gson = new Gson();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             List<Album> listeAlbums = gson.fromJson(res.get("albums").getAsJsonArray(), typeListe);
                             Intent intent = new Intent (getApplicationContext(),ListAlbumResultActivity.class);
                             intent.putExtra("albums",(ArrayList<Album>)listeAlbums);

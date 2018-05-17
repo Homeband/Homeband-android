@@ -1,11 +1,12 @@
 package be.heh.homeband.entities;
+import java.io.Serializable;
 import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
-public class Album extends RealmObject {
+public class Album extends RealmObject implements Serializable {
 
 	@PrimaryKey
 	private int id_albums;

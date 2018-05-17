@@ -1,11 +1,12 @@
 package be.heh.homeband.entities;
+import java.io.Serializable;
 import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
-public class Titre extends RealmObject {
+public class Titre extends RealmObject implements Serializable {
 
 	@PrimaryKey
 	private int id_titres;

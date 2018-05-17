@@ -28,8 +28,10 @@ import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Album;
+import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Membre;
+import be.heh.homeband.entities.Titre;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -101,11 +103,12 @@ public class ListAlbumResultActivity extends AppCompatActivity {
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
 
-                            Gson gson = new Gson();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                            Type typeListe = new TypeToken<List<Titre>>(){}.getType();
                             //C'est le groupe que l'on va récupérer en objet json et transforme en objet groupe. Le dernier parametre c'est le type d'objet retourner
-                            Album album = gson.fromJson(res.get("album"),Album.class);
+                            List<Titre> listeTitre = gson.fromJson(res.get("titres").getAsJsonArray(), typeListe);
                             Intent intent = new Intent (getApplicationContext(),AlbumDetailsActivity.class);
-                            intent.putExtra("album",album);
+                            intent.putExtra("titres",(ArrayList<Titre>) listeTitre);
                             startActivity(intent);
 
                         } else {
@@ -139,4 +142,4 @@ public class ListAlbumResultActivity extends AppCompatActivity {
     }
 
     }
-}
+
