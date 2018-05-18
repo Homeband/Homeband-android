@@ -43,6 +43,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/hb_edittext_red_radius"
         android:hint="@string/password"
+        android:inputType="textPassword"
         android:paddingHorizontal="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#66FFFFFF" />

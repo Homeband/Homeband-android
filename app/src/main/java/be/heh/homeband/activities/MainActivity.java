@@ -19,7 +19,8 @@ import be.heh.homeband.entities.Style;
 
 public class MainActivity extends AppCompatActivity implements  HomeFrag.OnFragmentInteractionListener,
                                                                 SearchFrag.OnFragmentInteractionListener,
-                                                                SettingsFrag.OnFragmentInteractionListener {
+                                                                SettingsFrag.OnFragmentInteractionListener,
+                                                                FavouriteFrag.OnFragmentInteractionListener{
     @Override
     protected void onStart() {
         super.onStart();
@@ -66,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements  HomeFrag.OnFragm
                     return true;
                 case R.id.navigation_favorite:
                     toolbar.setTitle("Favoris");
-
+                    fragment = new FavouriteFrag();
+                    loadFragment(fragment);
 
                     return true;
                 case R.id.navigation_settings:

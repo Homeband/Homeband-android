@@ -1,6 +1,7 @@
 package be.heh.homeband.activities.BandOnClick;
 
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -46,6 +47,7 @@ import be.heh.homeband.DaoImpl.VilleDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.ListAlbum.ListAlbumResultActivity;
 import be.heh.homeband.activities.LoadingDialog;
+import be.heh.homeband.activities.searchevents.SearchEventsResultActivity;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
@@ -174,8 +176,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         btnEvents = (Button) findViewById(R.id.btnEvents);
         btnEvents.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent (getApplicationContext(),EventDetailsActivity.class);
-                startActivity(intent);
+               getGroupeEvents(groupe.getId_groupes());
             }
         });
 
@@ -384,4 +385,71 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         }
     }
 
+    public void getGroupeEvents(int id){
+
+
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(HomebandRetrofit.API_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            // Création d'une instance du service avec Retrofit
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+
+            // Requête vers l'API
+            serviceApi.getGroupEvents(id).enqueue(new Callback<HomebandApiReponse>() {
+                @Override
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
+                    boolean toUpdate=false;
+
+                    // En fonction du code HTTP de Retour (2** = Successful)
+                    if (response.isSuccessful()) {
+
+                        // Récupération de la réponse de l'API
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
+
+                        CharSequence messageToast;
+                        if (res.isOperationReussie() == true) {
+                            Type typeListe = new TypeToken<List<Evenement>>(){}.getType();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                            List<Evenement> listeEvents = gson.fromJson(res.get("events").getAsJsonArray(), typeListe);
+                            Intent intent = new Intent (getApplicationContext(),SearchEventsResultActivity.class);
+                            intent.putExtra("events",(ArrayList<Evenement>)listeEvents);
+                            startActivity(intent);
+
+                        } else {
+
+                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } else {
+
+                        int statusCode = response.code();
+
+                        String res = response.toString();
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+
+                    Log.d("LoginActivity", t.getMessage());
+                }
+            });
+        } catch (Exception e){
+
+            Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
 }

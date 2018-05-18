@@ -79,6 +79,13 @@ public class ListAlbumResultActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp(){
+
+        this.finish();
+        return true;
+    }
+
     public void getAlbumDetails(int id,int idAlbum){
 
         try {
