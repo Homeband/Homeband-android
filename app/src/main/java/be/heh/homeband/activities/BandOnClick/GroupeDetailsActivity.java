@@ -32,6 +32,7 @@ import be.heh.homeband.Dao.AlbumDao;
 import be.heh.homeband.Dao.GroupeDao;
 import be.heh.homeband.Dao.MembreDao;
 import be.heh.homeband.Dao.StyleDao;
+import be.heh.homeband.Dao.TitreDao;
 import be.heh.homeband.Dao.UtilisateurDao;
 import be.heh.homeband.Dao.UtilisateursGroupesDao;
 import be.heh.homeband.Dao.VersionDao;
@@ -40,6 +41,7 @@ import be.heh.homeband.DaoImpl.AlbumDaoImpl;
 import be.heh.homeband.DaoImpl.GroupeDaoImpl;
 import be.heh.homeband.DaoImpl.MembreDaoImpl;
 import be.heh.homeband.DaoImpl.StyleDaoImpl;
+import be.heh.homeband.DaoImpl.TitreDaoImpl;
 import be.heh.homeband.DaoImpl.UtilisateurDaoImpl;
 import be.heh.homeband.DaoImpl.UtilisateursGroupesDaoImpl;
 import be.heh.homeband.DaoImpl.VersionDaoImpl;
@@ -56,6 +58,7 @@ import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Membre;
 import be.heh.homeband.entities.Style;
+import be.heh.homeband.entities.Titre;
 import be.heh.homeband.entities.Utilisateur;
 import be.heh.homeband.entities.UtilisateursGroupes;
 import be.heh.homeband.entities.Version;
@@ -86,6 +89,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
     ImageButton ibFavourite;
 
     Groupe groupe;
+    List<Membre> membres;
 
     ViewPager viewPager;
 
@@ -96,6 +100,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
     GroupeDao groupeDao;
     MembreDao membreDao;
     AlbumDao albumDao;
+    TitreDao titreDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +110,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
         //C'est l'objet groupe reçu depuis l'API
         groupe = (Groupe) getIntent().getSerializableExtra("groupe");
+        membres = (ArrayList<Membre>) getIntent().getSerializableExtra("members");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
@@ -183,7 +189,8 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         ibFavourite = (ImageButton)  findViewById(R.id.ibFavourite);
         ibFavourite.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                Utilisateur user = utilisateurDao.getConnectedUser();
+                add_liaison(user.getId_utilisateurs(),groupe.getId_groupes());
             }
         });
 
@@ -198,6 +205,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         groupeDao = new GroupeDaoImpl();
         membreDao = new MembreDaoImpl();
         albumDao = new AlbumDaoImpl();
+        titreDao = new TitreDaoImpl();
 
     }
 
@@ -206,48 +214,19 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
        Ville ville = villeDao.get(groupe.getId_villes());
        Style style = styleDao.get(groupe.getId_styles());
 
-
         tvBandName.setText(groupe.getNom());
         tvBandCity.setText(ville.getNom());
         tvBandStyle.setText(style.getNom());
+    }
 
+
+
+    public void remove_liaison(){
 
 
     }
 
-    public void addFavourite(){
-        UtilisateursGroupes liaison = new UtilisateursGroupes();
-
-        Utilisateur user = utilisateurDao.getConnectedUser();
-
-        liaison.setId_groupes(groupe.getId_groupes());
-        liaison.setId_utilisateurs(user.getId_utilisateurs());
-
-        utilisateursGroupesDao.write(liaison);
-
-        //Copier dans l'api les liaisons
-
-        //Ajouter le groupe sur le téléphone
-        groupeDao.write(groupe);
-
-        //Ajouter les albums sur le téléphone et les membres
-        getMembre(groupe.getId_groupes());
-        getAlbums(groupe.getId_groupes());
-
-        //Variable qui signale si le groupe est déjà en favoris
-
-        //Arriere plan du bouton à mettre en jaune
-        ibFavourite.setBackgroundColor(getResources().getColor(R.color.rbFavourite));
-    }
-
-    public void removeFavourite(){
-
-
-    }
-
-    public void getMembre(int id){
-
-
+    public void add_liaison(final int id_utilisateur, final int id_groupe){
         try {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(HomebandRetrofit.API_URL)
@@ -258,7 +237,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getMembres(id).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.addUtilisateurGroupe(id_utilisateur,id_groupe,false,false,true,true).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
                     boolean toUpdate=false;
@@ -272,13 +251,38 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
                         CharSequence messageToast;
                         if (res.isOperationReussie() == true) {
-                            Type typeListe = new TypeToken<List<Membre>>(){}.getType();
-                            Gson gson = new Gson();
-                            List<Membre> listeMembres = gson.fromJson(res.get("members").getAsJsonArray(), typeListe);
 
-//                            for(int i=0;i<listeMembres.size();i++){
-//                                membreDao.write(listeMembres.get(i));
-//                            }
+                            //1. Récupération info API
+                            Type typeListe = new TypeToken<List<Album>>(){}.getType();
+                            Type typeListeTitre = new TypeToken<List<Titre>>(){}.getType();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                            List<Album> listeAlbums = gson.fromJson(res.get("albums").getAsJsonArray(), typeListe);
+                            List<Titre> listeTitres = gson.fromJson(res.get("titres").getAsJsonArray(), typeListeTitre);
+
+                            //2. Création liaison locale
+                            UtilisateursGroupes liaison = new UtilisateursGroupes();
+                            liaison.setId_groupes(id_groupe);
+                            liaison.setId_utilisateurs(id_utilisateur);
+                            utilisateursGroupesDao.write(liaison);
+
+                            //3. Ajout groupe local
+                            groupeDao.write(groupe);
+
+                            //4. Ajout Membres
+                            for(int i=0;i<membres.size();i++){
+                                membreDao.write(membres.get(i)); }
+
+                            //5. Ajout Album
+                            for(int i=0;i<listeAlbums.size();i++){
+                                albumDao.write(listeAlbums.get(i)); }
+
+                            //6. Ajout Titres
+                            for(int i=0;i<listeTitres.size();i++){
+                                titreDao.write(listeTitres.get(i)); }
+
+                            //7. Modofication bouton favoris
+                            ibFavourite.setBackgroundColor(getResources().getColor(R.color.rbFavourite));
+
 
                         } else {
 
@@ -347,9 +351,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             Intent intent = new Intent (getApplicationContext(),ListAlbumResultActivity.class);
                             intent.putExtra("albums",(ArrayList<Album>)listeAlbums);
                             startActivity(intent);
-//                            for(int i=0;i<listeAlbums.size();i++){
-//                                albumDao.write(listeAlbums.get(i));
-//                            }
+
 
                         } else {
 

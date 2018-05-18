@@ -406,8 +406,8 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
         int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
 
 
-        String dateDu = "";
-        String dateAu = "";
+        String dateDu = null;
+        String dateAu = null;
 
        if(swAfficherDate.isChecked()){
            try{
