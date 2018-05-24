@@ -42,6 +42,7 @@ public class FragmentBio extends Fragment {
     public static String YOUTUBE_URL;
     public static String BANDCAMP_URL;
     public static String SOUNDCLOUD_URL;
+    public static String APPLE_URL;
     public static String FACEBOOK_PAGE_ID = "LeslieLouiseOFC";
 
     ImageButton ibFacebook;
@@ -161,12 +162,14 @@ public class FragmentBio extends Fragment {
         }
 
         //Apple
+        APPLE_URL = groupe.getLien_itunes();
         ibApple  = (ImageButton) view.findViewById(R.id.ibApple);
         if(groupe.getLien_itunes() != "") {
             ibApple.setBackgroundResource(R.drawable.round_apple);
             ibApple.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(APPLE_URL));
+                    startActivity(browserIntent);
                 }
             });
         }

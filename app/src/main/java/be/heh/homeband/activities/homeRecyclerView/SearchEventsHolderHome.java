@@ -1,4 +1,4 @@
-package be.heh.homeband.activities.searchevents;
+package be.heh.homeband.activities.homeRecyclerView;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,8 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 
@@ -20,7 +18,7 @@ import io.realm.Realm;
  * Created by christopher on 27-02-18.
  */
 
-public class SearchEventsHolder extends RecyclerView.ViewHolder {
+public class SearchEventsHolderHome extends RecyclerView.ViewHolder {
     private TextView tvEvent;
     private TextView tvEventCity;
     private TextView tvEventDate;
@@ -29,7 +27,7 @@ public class SearchEventsHolder extends RecyclerView.ViewHolder {
     SimpleDateFormat dateFormatter;
 
     //itemView est la vue correspondante à 1 cellule
-    public SearchEventsHolder(View itemView) {
+    public SearchEventsHolderHome(View itemView) {
         super(itemView);
 
         //c'est ici que l'on fait nos findView

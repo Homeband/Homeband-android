@@ -7,7 +7,8 @@ import retrofit2.Retrofit;
  */
 
 public class HomebandRetrofit  {
-    public static String API_URL ="http://10.0.2.2/homeband-api/" ;
+    //public static String API_URL ="http://10.0.2.2/homeband-api/" ;
+    public static String API_URL ="http://dev.zen-project.be/homeband-api/" ;
     public HomebandRetrofit() {
 
     }

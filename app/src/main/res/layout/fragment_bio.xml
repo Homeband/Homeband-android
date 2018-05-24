@@ -8,24 +8,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:id="@+id/rlSocials">
         <ImageButton
             android:id="@+id/ibFacebook"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:src="@drawable/ic_facebook"
             android:background="@drawable/round_disabled"
             android:gravity="center"
             />
         <ImageButton
             android:id="@+id/ibTwitter"
-            android:layout_width="40dp"
-            android:layout_marginLeft="8dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="4dp"
             android:layout_toRightOf="@+id/ibFacebook"
             android:src="@drawable/ic_twitter"
             android:background="@drawable/round_disabled"
@@ -33,9 +34,9 @@
             />
         <ImageButton
             android:id="@+id/ibInstagram"
-            android:layout_width="40dp"
-            android:layout_marginLeft="8dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_marginLeft="4dp"
+            android:layout_height="36dp"
             android:layout_toRightOf="@+id/ibTwitter"
             android:src="@drawable/ic_instagram"
             android:background="@drawable/round_disabled"
@@ -43,9 +44,9 @@
             />
         <ImageButton
             android:id="@+id/ibYoutube"
-            android:layout_width="40dp"
-            android:layout_marginLeft="8dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_marginLeft="4dp"
+            android:layout_height="36dp"
             android:layout_toRightOf="@+id/ibInstagram"
             android:src="@drawable/ic_youtube"
             android:background="@drawable/round_disabled"
@@ -53,9 +54,9 @@
             />
         <ImageButton
             android:id="@+id/ibSpotify"
-            android:layout_width="40dp"
-            android:layout_marginLeft="8dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_marginLeft="4dp"
+            android:layout_height="36dp"
             android:layout_toRightOf="@+id/ibYoutube"
             android:src="@drawable/ic_spotify"
             android:background="@drawable/round_disabled"
@@ -63,9 +64,9 @@
             />
         <ImageButton
             android:id="@+id/ibBandcamp"
-            android:layout_width="40dp"
-            android:layout_marginLeft="8dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_marginLeft="4dp"
+            android:layout_height="36dp"
             android:layout_toRightOf="@+id/ibSpotify"
             android:src="@drawable/ic_bandcamp"
             android:background="@drawable/round_disabled"
@@ -73,9 +74,9 @@
             />
         <ImageButton
             android:id="@+id/ibSoundcloud"
-            android:layout_width="40dp"
-            android:layout_marginLeft="8dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_marginLeft="4dp"
+            android:layout_height="36dp"
             android:layout_toRightOf="@+id/ibBandcamp"
             android:src="@drawable/ic_soundcloud"
             android:background="@drawable/round_disabled"
@@ -83,9 +84,9 @@
             />
         <ImageButton
             android:id="@+id/ibApple"
-            android:layout_width="40dp"
-            android:layout_marginLeft="8dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_marginLeft="4dp"
+            android:layout_height="36dp"
             android:layout_toRightOf="@+id/ibSoundcloud"
             android:src="@drawable/ic_apple"
             android:background="@drawable/round_disabled"
