@@ -13,14 +13,18 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import be.heh.homeband.Dao.AdresseDao;
+import be.heh.homeband.Dao.GroupeDao;
 import be.heh.homeband.Dao.VilleDao;
 import be.heh.homeband.DaoImpl.AdresseDaoImpl;
+import be.heh.homeband.DaoImpl.GroupeDaoImpl;
 import be.heh.homeband.DaoImpl.VilleDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Evenement;
+import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Style;
 import be.heh.homeband.entities.Ville;
 
@@ -35,10 +39,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     TextView tvPrix;
 
     VilleDao villeDao;
-
-    public static String FACEBOOK_URL = "https://fr-fr.facebook.com/LeslieLouiseOFC/";
-    public static String FACEBOOK_PAGE_ID = "LeslieLouiseOFC";
-
+    GroupeDao groupeDao;
 
     Button btnCalendar;
     Button btnEvents;
@@ -74,10 +75,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         btnEvents = (Button) findViewById(R.id.btnEvents);
         btnEvents.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
-                String facebookUrl = getFacebookPageURL(getApplicationContext());
-                facebookIntent.setData(Uri.parse(facebookUrl));
-                startActivity(facebookIntent);
+
             }
         });
 
@@ -87,6 +85,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         tvPrix = (TextView) findViewById(R.id.tvPrix);
 
         villeDao = new VilleDaoImpl();
+        groupeDao = new GroupeDaoImpl();
     }
 
     public void bindData(Evenement event){
@@ -108,29 +107,20 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     public void addCalendar(){
+
+        Groupe groupe = groupeDao.get(event.getId_groupes());
         Calendar cal = Calendar.getInstance();
+        cal.setTime(event.getDate_heure());
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra("beginTime", cal.getTimeInMillis());
         intent.putExtra("allDay", true);
         intent.putExtra("rrule", "FREQ=YEARLY");
+        intent.putExtra("description","Groupe jouant à ce concert: " + groupe.getNom());
         intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
-        intent.putExtra("title", "A Test Event from android app");
+        intent.putExtra("title", event.getNom());
         startActivity(intent);
     }
 
-    //method to get the right URL to use in the intent
-    public String getFacebookPageURL(Context context) {
-        PackageManager packageManager = context.getPackageManager();
-        try {
-            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
-            if (versionCode >= 3002850) { //newer versions of fb app
-                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
-            } else { //older versions of fb app
-                return "fb://page/" + FACEBOOK_PAGE_ID;
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            return FACEBOOK_URL; //normal web url
-        }
-    }
+
 }
