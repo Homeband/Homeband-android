@@ -1,12 +1,12 @@
 package be.heh.homeband.activities;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,12 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.R;
-import be.heh.homeband.activities.homeRecyclerView.SearchEventsResultActivityHome;
-import be.heh.homeband.activities.searchevents.SearchEventsResultActivity;
+import be.heh.homeband.activities.BandOnClick.EventDetailsActivity;
+import be.heh.homeband.activities.BandOnClick.RecyclerTouchListener;
+import be.heh.homeband.activities.homeRecyclerView.SearchEventsAdapterHome;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
-import be.heh.homeband.app.HomebandTools;
+import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Evenement;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +50,9 @@ public class HomeFrag extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private RecyclerView recyclerView;
+    private List<Evenement> events = new ArrayList<Evenement>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -93,7 +97,32 @@ public class HomeFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         getGroupeEvents(1);
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View myview = inflater.inflate(R.layout.fragment_home, container, false);
+
+        recyclerView = (RecyclerView) myview.findViewById(R.id.rvHome);
+
+        //définit l'agencement des cellules, ici de façon verticale, comme une ListView
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //pour adapter en grille comme une RecyclerView, avec 2 cellules par ligne
+        //recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+
+        //puis créer un SearchGroupAdapter, lui fournir notre liste de villes.
+        //cet adapter servira à remplir notre recyclerview
+        recyclerView.setAdapter(new SearchEventsAdapterHome(events));
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Evenement event = events.get(position);
+                getEvent(event.getId_evenements());
+            }
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+        return myview;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -164,10 +193,7 @@ public class HomeFrag extends Fragment {
                         if (res.isOperationReussie() == true) {
                             Type typeListe = new TypeToken<List<Evenement>>(){}.getType();
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                            List<Evenement> listeEvents = gson.fromJson(res.get("events").getAsJsonArray(), typeListe);
-                            Intent intent = new Intent (getContext(),SearchEventsResultActivityHome.class);
-                            intent.putExtra("events",(ArrayList<Evenement>)listeEvents);
-                            startActivity(intent);
+                           events = gson.fromJson(res.get("events").getAsJsonArray(), typeListe);
 
                         } else {
 
@@ -199,6 +225,67 @@ public class HomeFrag extends Fragment {
         } catch (Exception e){
 
 
+            e.printStackTrace();
+        }
+    }
+
+    private void getEvent(int id){
+
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(HomebandRetrofit.API_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            // Création d'une instance du service avec Retrofit
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+
+            // Requête vers l'API
+            serviceApi.getEvent(id).enqueue(new Callback<HomebandApiReponse>() {
+                @Override
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
+
+                    // En fonction du code HTTP de Retour (2** = Successful)
+                    if (response.isSuccessful()) {
+                        // Récupération de la réponse
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
+
+                        CharSequence messageToast;
+                        if (res.isOperationReussie() == true) {
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                            Evenement event = gson.fromJson(res.get("event"),Evenement.class);
+                            Adresse adresse = gson.fromJson(res.get("address"),Adresse.class);
+                            Intent intent = new Intent (getContext(),EventDetailsActivity.class);
+                            intent.putExtra("event",event);
+                            intent.putExtra("address",adresse);
+                            startActivity(intent);
+
+                        } else {
+                            messageToast = "Impossible de récupérer les détails de l'évènement\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } else {
+                        int statusCode = response.code();
+
+                        String res = response.toString();
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+                    Log.d("LoginActivity", t.getMessage());
+                }
+            });
+        } catch (Exception e){
+            Toast.makeText(getActivity(),(CharSequence)"Exception",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
