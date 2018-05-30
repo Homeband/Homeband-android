@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,69 +18,55 @@
                 android:layout_alignParentLeft="true"
                 />
             <TextView
-                android:id="@+id/tvEventName"
-                android:layout_width="match_parent"
+                android:id="@+id/tvEventFavoris"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Botanique"
-                android:textSize="20dp"
-                android:padding="5dp"
+                android:gravity="center"
+                android:text="Ajouter à la page d'acceuil"
                 android:layout_toRightOf="@+id/ivEvent"
+                android:padding="5dp"/>
+            <ImageButton
+                android:id="@+id/ibFavouriteEvent"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_toRightOf="@+id/ivEvent"
+                android:layout_below="@+id/tvEventFavoris"
+                android:src="@drawable/ic_star_white_24dp"
+                android:background="@drawable/round_disabled"
+                android:layout_marginLeft="30dp"
                 />
-            <TextView
-                android:id="@+id/tvEventAdresse"
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_below="@+id/rlCardsView"
+            android:layout_above="@+id/rlButtons"
+            android:layout_weight="1">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/pager_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rue des Alouettes, 15 7100 La Louviere"
-                android:padding="5dp"
-                android:layout_toRightOf="@+id/ivEvent"
-                android:layout_below="@+id/tvEventName"
-                />
-            <TextView
-                android:id="@+id/tvEventDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="12 juin 2018"
-                android:padding="5dp"
-                android:layout_toRightOf="@+id/ivEvent"
-                android:layout_below="@+id/tvEventAdresse"
-                />
-            <TextView
-                android:id="@+id/tvPrix"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="12 €"
-                android:padding="5dp"
-                android:layout_toRightOf="@+id/ivEvent"
-                android:layout_below="@+id/tvEventDate"
+                android:layout_gravity="center"
+                android:minHeight="60dp"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/black_overlay"
                 />
 
+            <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/pager_header"></android.support.v4.view.ViewPager>
         </RelativeLayout>
 
 
 
 
 
-        <RelativeLayout
-            android:id="@+id/bottom_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/rlCardsView"
-            android:layout_above="@+id/rlButtons"
-
-           >
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp">
-                <TextView
-                    android:id="@+id/tvEventDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:text="Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker."/>
-
-            </ScrollView>
-       </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -6,14 +6,21 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import be.heh.homeband.Dao.AdresseDao;
 import be.heh.homeband.Dao.GroupeDao;
@@ -28,18 +35,17 @@ import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Style;
 import be.heh.homeband.entities.Ville;
 
-public class EventDetailsActivity extends AppCompatActivity {
+public class EventDetailsActivity extends AppCompatActivity implements FragmentDescriptionEvent.OnFragmentInteractionListener, FragmentInfos.OnFragmentInteractionListener {
 
     Evenement event;
     Adresse adresse;
 
-    TextView tvEventName;
-    TextView tvEventAdresse;
-    TextView tvEventDate;
-    TextView tvPrix;
+
 
     VilleDao villeDao;
     GroupeDao groupeDao;
+
+    ViewPager viewPager;
 
     Button btnCalendar;
     Button btnEvents;
@@ -54,7 +60,53 @@ public class EventDetailsActivity extends AppCompatActivity {
         adresse = (Adresse) getIntent().getSerializableExtra("address");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
-        bindData(event);
+
+
+        // Locate the viewpager in activity_main.xml
+        viewPager = (ViewPager) findViewById(R.id.pager);
+
+        // Set the ViewPagerAdapter into ViewPager
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFrag(new FragmentDescriptionEvent(), "Description");
+        adapter.addFrag(new FragmentInfos(), "Infos");
+
+        viewPager.setAdapter(adapter);
+
+        TabLayout mTabLayout = (TabLayout) findViewById(R.id.pager_header);
+        mTabLayout.setupWithViewPager(viewPager);
+    }
+    @Override
+    public void onFragmentInteraction(Uri uri){
+        //you can leave it empty
+    }
+
+    class ViewPagerAdapter extends FragmentStatePagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFrag(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 
     @Override
@@ -79,32 +131,13 @@ public class EventDetailsActivity extends AppCompatActivity {
             }
         });
 
-        tvEventName = (TextView) findViewById(R.id.tvEventName);
-        tvEventAdresse = (TextView) findViewById(R.id.tvEventAdresse);
-        tvEventDate = (TextView) findViewById(R.id.tvEventDate);
-        tvPrix = (TextView) findViewById(R.id.tvPrix);
+
 
         villeDao = new VilleDaoImpl();
         groupeDao = new GroupeDaoImpl();
     }
 
-    public void bindData(Evenement event){
 
-        Ville ville = villeDao.get(adresse.getId_villes());
-        String adresseComplete = adresse.getRue() + " " + adresse.getNumero() + "\n" + ville.getCode_postal() + " " + ville.getNom();
-
-        dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        tvEventName.setText(event.getNom());
-        tvEventAdresse.setText(adresseComplete);
-        tvEventDate.setText(dateFormatter.format(event.getDate_heure()));
-        if (event.getPrix()==0){
-            tvPrix.setText("Gratuit");
-
-        }else{
-            tvPrix.setText(String.format("%.2f",event.getPrix())+" €");
-
-        }
-    }
 
     public void addCalendar(){
 

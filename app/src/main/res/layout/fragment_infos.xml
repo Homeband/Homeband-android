@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.BandOnClick.FragmentInfos">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tvEventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Botanique"
+            android:textSize="20dp"
+            android:padding="5dp"
+            />
+        <TextView
+            android:id="@+id/tvEventAdresse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rue des Alouettes, 15 7100 La Louviere"
+            android:padding="5dp"
+            android:layout_below="@+id/tvEventName"
+            />
+        <TextView
+            android:id="@+id/tvEventDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="12 juin 2018"
+            android:padding="5dp"
+            android:layout_below="@+id/tvEventAdresse"
+            />
+        <TextView
+            android:id="@+id/tvPrix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="12 €"
+            android:padding="5dp"
+            android:layout_below="@+id/tvEventDate"
+            />
+    </RelativeLayout>
+
+
+
+
+</FrameLayout>
