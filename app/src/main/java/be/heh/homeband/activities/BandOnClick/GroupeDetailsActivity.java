@@ -255,6 +255,9 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
 
     public void remove_liaison(final int id_utilisateur, final int id_groupe){
+        final DialogFragment loading = new LoadingDialog();
+        android.app.FragmentManager frag = ((AppCompatActivity) this).getFragmentManager();
+        loading.show(frag,"LoadingDialog");
         try {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(HomebandRetrofit.API_URL)
@@ -299,8 +302,11 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             if(evenementDao.listByGroup(id_groupe).isEmpty()){
                                 groupeDao.delete(id_groupe);
                             }
-                        } else {
 
+                            isFavorite = false;
+                            loading.dismiss();
+                        } else {
+                            loading.dismiss();
                             messageToast = "Échec de la connexion\r\n" + res.getMessage();
 
                             // Affichage d'un toast pour indiquer le résultat
@@ -309,7 +315,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             toast.show();
                         }
                     } else {
-
+                        loading.dismiss();
                         int statusCode = response.code();
 
                         String res = response.toString();
@@ -322,12 +328,12 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
                 @Override
                 public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
-
+                    loading.dismiss();
                     Log.d("LoginActivity", t.getMessage());
                 }
             });
         } catch (Exception e){
-
+            loading.dismiss();
             Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
@@ -335,6 +341,9 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
     }
 
     public void add_liaison(final int id_utilisateur, final int id_groupe){
+        final DialogFragment loading = new LoadingDialog();
+        android.app.FragmentManager frag = ((AppCompatActivity) this).getFragmentManager();
+        loading.show(frag,"LoadingDialog");
         try {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(HomebandRetrofit.API_URL)
@@ -392,10 +401,11 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             ibFavourite.setBackgroundResource(R.drawable.round_favourite);
 
 
-
+                            isFavorite = true;
+                            loading.dismiss();
 
                         } else {
-
+                            loading.dismiss();
                             messageToast = "Échec de la connexion\r\n" + res.getMessage();
 
                             // Affichage d'un toast pour indiquer le résultat
@@ -404,7 +414,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             toast.show();
                         }
                     } else {
-
+                        loading.dismiss();
                         int statusCode = response.code();
 
                         String res = response.toString();
@@ -417,12 +427,13 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
                 @Override
                 public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+                    loading.dismiss();
 
                     Log.d("LoginActivity", t.getMessage());
                 }
             });
         } catch (Exception e){
-
+            loading.dismiss();
             Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }

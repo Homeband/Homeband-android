@@ -18,9 +18,11 @@ public class GroupeDaoImpl extends DaoImpl implements GroupeDao {
 
     @Override
     public void delete(Integer id) {
+        realm.beginTransaction();
         realm.where(Groupe.class)
                 .equalTo("id_groupes",id)
                 .findAll().deleteAllFromRealm();
+        realm.commitTransaction();
     }
 
     @Override
