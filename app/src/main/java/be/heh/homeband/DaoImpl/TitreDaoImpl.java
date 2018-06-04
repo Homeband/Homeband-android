@@ -29,4 +29,13 @@ public class TitreDaoImpl extends DaoImpl implements TitreDao {
         realm.commitTransaction();
         return obj;
     }
+
+    @Override
+    public void deleteByGroup(int id_groupes) {
+        realm.beginTransaction();
+        realm.where(Titre.class)
+                .equalTo("id_groupes",id_groupes)
+                .findAll().deleteAllFromRealm();
+        realm.commitTransaction();
+    }
 }

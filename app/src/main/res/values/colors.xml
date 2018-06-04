@@ -20,7 +20,7 @@
     <color name="rbSoundcloud">#ff3300</color>
     <color name="rbYoutube">#ff0000</color>
     <color name="rbApple">#ff2d55</color>
-    <color name="rbFavourite">#ffff66</color>
+    <color name="rbFavourite">#f1c232</color>
     <color name="rbSpotify">#1db954</color>
 
 </resources>

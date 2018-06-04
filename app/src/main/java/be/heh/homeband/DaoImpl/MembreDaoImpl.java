@@ -35,4 +35,13 @@ public class MembreDaoImpl extends DaoImpl implements MembreDao {
         RealmQuery<Membre> query = realm.where(Membre.class);
         return query.equalTo("id_groupes", id_groupe).findAll();
     }
+
+    @Override
+    public void deleteByGroup(int id_groupes) {
+        realm.beginTransaction();
+        realm.where(Membre.class)
+                .equalTo("id_groupes",id_groupes)
+                .findAll().deleteAllFromRealm();
+        realm.commitTransaction();
+    }
 }

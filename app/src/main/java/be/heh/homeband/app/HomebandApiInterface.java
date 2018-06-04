@@ -62,8 +62,11 @@ public interface HomebandApiInterface {
     @GET("api/groupes/{id}/albums")
     Call<HomebandApiReponse> getAlbums(@Path(value="id") int id ) ;
 
-    @POST("api/utilisateurs/{id_utilisateur]/groupes/{id_groupe}")
+    @DELETE("api/utilisateurs/{id_utilisateur}/groupes/{id_groupe}")
+    Call <HomebandApiReponse> removeUtilisateurGroupe(@Path(value="id_utilisateur") int id_utilisateur,@Path(value="id_groupe") int id_groupe);
+
+    @POST("api/utilisateurs/{id_utilisateur}/groupes/{id_groupe}")
     @FormUrlEncoded
-    Call <HomebandApiReponse> addUtilisateurGroupe(@Path(value="id_utilisateur") int id_utilisateur,@Path(value="id_groupe") int id_groupe,@Field("get_groupe") boolean get_groupe,@Field("get_membres") boolean get_membres,@Field("get_albums") boolean get_albums,@Field("get_titres") boolean get_titres );
+    Call <HomebandApiReponse> addUtilisateurGroupe(@Path(value="id_utilisateur") int id_utilisateur,@Path(value="id_groupe") int id_groupe,@Field("get_groupe") int get_groupe,@Field("get_membres") int get_membres,@Field("get_albums") int get_albums,@Field("get_titres") int get_titres );
 }
 

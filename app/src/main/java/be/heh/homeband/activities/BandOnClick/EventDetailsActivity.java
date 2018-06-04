@@ -62,7 +62,7 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
         adresse = (Adresse) getIntent().getSerializableExtra("address");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
-
+        setTitle(event.getNom());
 
         // Locate the viewpager in activity_main.xml
         viewPager = (ViewPager) findViewById(R.id.pager);

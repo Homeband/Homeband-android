@@ -28,4 +28,13 @@ public class AlbumDaoImpl extends DaoImpl implements AlbumDao {
         realm.commitTransaction();
         return obj;
     }
+
+    @Override
+    public void deleteByGroup(int id_groupes) {
+        realm.beginTransaction();
+        realm.where(Album.class)
+                .equalTo("id_groupes",id_groupes)
+                .findAll().deleteAllFromRealm();
+        realm.commitTransaction();
+    }
 }

@@ -29,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 import org.w3c.dom.Text;
 
 import be.heh.homeband.Dao.AlbumDao;
+import be.heh.homeband.Dao.EvenementDao;
 import be.heh.homeband.Dao.GroupeDao;
 import be.heh.homeband.Dao.MembreDao;
 import be.heh.homeband.Dao.StyleDao;
@@ -38,6 +39,7 @@ import be.heh.homeband.Dao.UtilisateursGroupesDao;
 import be.heh.homeband.Dao.VersionDao;
 import be.heh.homeband.Dao.VilleDao;
 import be.heh.homeband.DaoImpl.AlbumDaoImpl;
+import be.heh.homeband.DaoImpl.EvenementDaoImpl;
 import be.heh.homeband.DaoImpl.GroupeDaoImpl;
 import be.heh.homeband.DaoImpl.MembreDaoImpl;
 import be.heh.homeband.DaoImpl.StyleDaoImpl;
@@ -74,6 +76,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -81,6 +84,8 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
     Button btnMusiques;
     Button btnEvents;
+
+    Boolean isFavorite;
 
     TextView tvBandName;
     TextView tvBandCity;
@@ -101,6 +106,9 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
     MembreDao membreDao;
     AlbumDao albumDao;
     TitreDao titreDao;
+    EvenementDao evenementDao;
+
+    HashMap<String, Integer> idLiaison;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +123,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
         bindData(groupe);
+        setTitle(groupe.getNom());
         // Locate the viewpager in activity_main.xml
         viewPager = (ViewPager) findViewById(R.id.pager);
 
@@ -172,27 +181,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
     }
 
     public void init(){
-        btnMusiques = (Button) findViewById(R.id.btnMusiques);
-        btnMusiques.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                getAlbums(groupe.getId_groupes());
-            }
-        });
 
-        btnEvents = (Button) findViewById(R.id.btnEvents);
-        btnEvents.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-               getGroupeEvents(groupe.getId_groupes());
-            }
-        });
-
-        ibFavourite = (ImageButton)  findViewById(R.id.ibFavourite);
-        ibFavourite.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Utilisateur user = utilisateurDao.getConnectedUser();
-                add_liaison(user.getId_utilisateurs(),groupe.getId_groupes());
-            }
-        });
 
         tvBandName = (TextView) findViewById(R.id.tvBandName);
         tvBandCity = (TextView) findViewById(R.id.tvBandCity);
@@ -206,6 +195,50 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         membreDao = new MembreDaoImpl();
         albumDao = new AlbumDaoImpl();
         titreDao = new TitreDaoImpl();
+        evenementDao = new EvenementDaoImpl();
+
+        btnMusiques = (Button) findViewById(R.id.btnMusiques);
+        btnMusiques.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getAlbums(groupe.getId_groupes());
+            }
+        });
+
+        btnEvents = (Button) findViewById(R.id.btnEvents);
+        btnEvents.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getGroupeEvents(groupe.getId_groupes());
+            }
+        });
+
+        final Utilisateur user = utilisateurDao.getConnectedUser();
+        ibFavourite = (ImageButton)  findViewById(R.id.ibFavourite);
+        ibFavourite.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(!isFavorite) {
+                    add_liaison(user.getId_utilisateurs(), groupe.getId_groupes());
+                    ibFavourite.setBackgroundResource(R.drawable.round_favourite);
+
+                } else {
+                    remove_liaison(user.getId_utilisateurs(), groupe.getId_groupes());
+
+                }
+            }
+        });
+
+
+
+
+        idLiaison = new HashMap<String, Integer>();
+        idLiaison.put(UtilisateursGroupesDaoImpl.KEY_UTILISATEUR, user.getId_utilisateurs());
+        idLiaison.put(UtilisateursGroupesDaoImpl.KEY_GROUPE, groupe.getId_groupes());
+        if(utilisateursGroupesDao.get(idLiaison) == null){
+            isFavorite = false;
+        } else {
+            isFavorite = true;
+            ibFavourite.setBackgroundResource(R.drawable.round_favourite);
+        }
+
 
     }
 
@@ -221,8 +254,83 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
 
 
-    public void remove_liaison(){
+    public void remove_liaison(final int id_utilisateur, final int id_groupe){
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(HomebandRetrofit.API_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
+            // Création d'une instance du service avec Retrofit
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+
+            // Requête vers l'API
+            serviceApi.removeUtilisateurGroupe(id_utilisateur,id_groupe).enqueue(new Callback<HomebandApiReponse>() {
+                @Override
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
+
+
+                    // En fonction du code HTTP de Retour (2** = Successful)
+                    if (response.isSuccessful()) {
+
+                        // Récupération de la réponse de l'API
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
+
+                        CharSequence messageToast;
+                        if (res.isOperationReussie() == true) {
+
+                            //1. Supression liaison locale
+                            utilisateursGroupesDao.delete(idLiaison);
+
+                            //2. Supression Membres local
+                            membreDao.deleteByGroup(id_groupe);
+
+                            //3. Supression Album
+                            albumDao.deleteByGroup(id_groupe);
+
+                            //4. Supression Titres
+                            titreDao.deleteByGroup(id_groupe);
+
+                            //5. Modofication bouton favoris
+                            ibFavourite.setBackgroundResource(R.drawable.round_disabled);
+
+                            //6. Supression groupe local
+                            if(evenementDao.listByGroup(id_groupe).isEmpty()){
+                                groupeDao.delete(id_groupe);
+                            }
+                        } else {
+
+                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } else {
+
+                        int statusCode = response.code();
+
+                        String res = response.toString();
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+
+                    Log.d("LoginActivity", t.getMessage());
+                }
+            });
+        } catch (Exception e){
+
+            Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
 
     }
 
@@ -237,10 +345,10 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.addUtilisateurGroupe(id_utilisateur,id_groupe,false,false,true,true).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.addUtilisateurGroupe(id_utilisateur,id_groupe,0,0,1,1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
-                    boolean toUpdate=false;
+
 
                     // En fonction du code HTTP de Retour (2** = Successful)
                     if (response.isSuccessful()) {
@@ -257,7 +365,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             Type typeListeTitre = new TypeToken<List<Titre>>(){}.getType();
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             List<Album> listeAlbums = gson.fromJson(res.get("albums").getAsJsonArray(), typeListe);
-                            List<Titre> listeTitres = gson.fromJson(res.get("titres").getAsJsonArray(), typeListeTitre);
+                            List<Titre> listeTitres = gson.fromJson(res.get("titles").getAsJsonArray(), typeListeTitre);
 
                             //2. Création liaison locale
                             UtilisateursGroupes liaison = new UtilisateursGroupes();
@@ -281,7 +389,9 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                                 titreDao.write(listeTitres.get(i)); }
 
                             //7. Modofication bouton favoris
-                            ibFavourite.setBackgroundColor(getResources().getColor(R.color.rbFavourite));
+                            ibFavourite.setBackgroundResource(R.drawable.round_favourite);
+
+
 
 
                         } else {
