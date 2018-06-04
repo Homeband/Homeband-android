@@ -109,8 +109,10 @@ public class SearchEventsResultActivity extends AppCompatActivity {
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             Evenement event = gson.fromJson(res.get("event"),Evenement.class);
                             Adresse adresse = gson.fromJson(res.get("address"),Adresse.class);
+                            Groupe groupe = gson.fromJson(res.get("group"),Groupe.class);
                             Intent intent = new Intent (getApplicationContext(),EventDetailsActivity.class);
                             intent.putExtra("event",event);
+                            intent.putExtra("group",groupe);
                             intent.putExtra("address",adresse);
                             startActivity(intent);
 

@@ -39,6 +39,7 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
 
     Evenement event;
     Adresse adresse;
+    Groupe groupe;
 
 
 
@@ -57,6 +58,7 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_events);
         event = (Evenement) getIntent().getSerializableExtra("event");
+        groupe = (Groupe) getIntent().getSerializableExtra("group");
         adresse = (Adresse) getIntent().getSerializableExtra("address");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
@@ -140,16 +142,14 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
 
 
     public void addCalendar(){
-
-        Groupe groupe = groupeDao.get(event.getId_groupes());
+        Ville ville = villeDao.get(adresse.getId_villes());
         Calendar cal = Calendar.getInstance();
         cal.setTime(event.getDate_heure());
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra("beginTime", cal.getTimeInMillis());
-        intent.putExtra("allDay", true);
-        intent.putExtra("rrule", "FREQ=YEARLY");
-        intent.putExtra("description","Groupe jouant à ce concert: " + groupe.getNom());
+        intent.putExtra("eventLocation",adresse.getNumero() +" " + adresse.getRue() + ", " + ville.getCode_postal()+ " " + ville.getNom() );
+        intent.putExtra("description", groupe.getNom());
         intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
         intent.putExtra("title", event.getNom());
         startActivity(intent);

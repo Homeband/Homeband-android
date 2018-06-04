@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnCalendar"
-                android:text="Ajouter l'évènement à mon calendrier"
+                android:text="Ajouter à mon calendrier"
                 android:textSize="15sp"
                 android:padding="10dp"
                 android:drawableLeft="@drawable/ic_perm_contact_calendar_white_24dp"
