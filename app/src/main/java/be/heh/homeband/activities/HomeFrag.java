@@ -25,7 +25,7 @@ import java.util.List;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.BandOnClick.EventDetailsActivity;
 import be.heh.homeband.activities.BandOnClick.RecyclerTouchListener;
-import be.heh.homeband.activities.homeRecyclerView.SearchEventsAdapterHome;
+import be.heh.homeband.activities.homeRecyclerView.FragmentHomeAdapter;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
@@ -109,7 +109,7 @@ public class HomeFrag extends Fragment {
 
         //puis créer un SearchGroupAdapter, lui fournir notre liste de villes.
         //cet adapter servira à remplir notre recyclerview
-        recyclerView.setAdapter(new SearchEventsAdapterHome(events));
+        recyclerView.setAdapter(new FragmentHomeAdapter(events));
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override

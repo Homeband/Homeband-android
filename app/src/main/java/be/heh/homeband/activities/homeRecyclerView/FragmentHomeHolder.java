@@ -18,7 +18,7 @@ import io.realm.Realm;
  * Created by christopher on 27-02-18.
  */
 
-public class SearchEventsHolderHome extends RecyclerView.ViewHolder {
+public class FragmentHomeHolder extends RecyclerView.ViewHolder {
     private TextView tvEvent;
     private TextView tvEventCity;
     private TextView tvEventDate;
@@ -27,7 +27,7 @@ public class SearchEventsHolderHome extends RecyclerView.ViewHolder {
     SimpleDateFormat dateFormatter;
 
     //itemView est la vue correspondante à 1 cellule
-    public SearchEventsHolderHome(View itemView) {
+    public FragmentHomeHolder(View itemView) {
         super(itemView);
 
         //c'est ici que l'on fait nos findView
