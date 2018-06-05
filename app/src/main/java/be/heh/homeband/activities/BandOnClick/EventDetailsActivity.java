@@ -33,9 +33,11 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import be.heh.homeband.Dao.AdresseDao;
+import be.heh.homeband.Dao.EvenementDao;
 import be.heh.homeband.Dao.GroupeDao;
 import be.heh.homeband.Dao.VilleDao;
 import be.heh.homeband.DaoImpl.AdresseDaoImpl;
+import be.heh.homeband.DaoImpl.EvenementDaoImpl;
 import be.heh.homeband.DaoImpl.GroupeDaoImpl;
 import be.heh.homeband.DaoImpl.VilleDaoImpl;
 import be.heh.homeband.R;
@@ -63,10 +65,12 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
     Adresse adresse;
     Groupe groupe;
 
-
+    Boolean isFavorite;
 
     VilleDao villeDao;
     GroupeDao groupeDao;
+    AdresseDao adresseDao;
+    EvenementDao evenementDao;
 
     ImageButton ibFavourite;
 
@@ -157,16 +161,36 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
             }
         });
 
+        adresseDao = new AdresseDaoImpl();
+        villeDao = new VilleDaoImpl();
+        groupeDao = new GroupeDaoImpl();
+        evenementDao = new EvenementDaoImpl();
+
+
+
         ibFavourite = (ImageButton)  findViewById(R.id.ibFavouriteEvent);
         ibFavourite.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                if(!isFavorite) {
+                    add_favourite();
+                    ibFavourite.setBackgroundResource(R.drawable.round_favourite);
 
+                } else {
+                    remove_favourite();
+                    ibFavourite.setBackgroundResource(R.drawable.round_disabled);
+                }
             }
         });
 
+        if(evenementDao.get(event.getId_evenements()) == null){
+            isFavorite = false;
+        } else {
+            isFavorite = true;
+            ibFavourite.setBackgroundResource(R.drawable.round_favourite);
+        }
 
-        villeDao = new VilleDaoImpl();
-        groupeDao = new GroupeDaoImpl();
+
+
     }
 
 
@@ -185,100 +209,46 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
         startActivity(intent);
     }
 
-//    public void add_favourite(){
-//        final DialogFragment loading = new LoadingDialog();
-//        android.app.FragmentManager frag = ((AppCompatActivity) this).getFragmentManager();
-//        loading.show(frag,"LoadingDialog");
-//        try {
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl(HomebandRetrofit.API_URL)
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .build();
-//
-//            // Création d'une instance du service avec Retrofit
-//            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
-//
-//            // Requête vers l'API
-//            serviceApi.addUtilisateurGroupe().enqueue(new Callback<HomebandApiReponse>() {
-//                @Override
-//                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
-//
-//
-//                    // En fonction du code HTTP de Retour (2** = Successful)
-//                    if (response.isSuccessful()) {
-//
-//                        // Récupération de la réponse de l'API
-//                        HomebandApiReponse res = response.body();
-//                        res.mapResultat();
-//
-//                        CharSequence messageToast;
-//                        if (res.isOperationReussie() == true) {
-//
-//                            //1. Récupération info API
-//                            Type typeListe = new TypeToken<List<Album>>(){}.getType();
-//                            Type typeListeTitre = new TypeToken<List<Titre>>(){}.getType();
-//                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-//                            List<Album> listeAlbums = gson.fromJson(res.get("albums").getAsJsonArray(), typeListe);
-//                            List<Titre> listeTitres = gson.fromJson(res.get("titles").getAsJsonArray(), typeListeTitre);
-//
-//                            //2. Création liaison locale
-//
-//
-//                            //3. Ajout groupe local
-//
-//
-//                            //4. Ajout Membres
-//
-//
-//                            //5. Ajout Album
-//
-//
-//                            //6. Ajout Titres
-//
-//
-//                            //7. Modofication bouton favoris
-//
-//
-//
-//                            isFavorite = true;
-//                            loading.dismiss();
-//
-//                        } else {
-//                            loading.dismiss();
-//                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
-//
-//                            // Affichage d'un toast pour indiquer le résultat
-//                            Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
-//                            toast.setGravity(Gravity.CENTER, 0, 0);
-//                            toast.show();
-//                        }
-//                    } else {
-//                        loading.dismiss();
-//                        int statusCode = response.code();
-//
-//                        String res = response.toString();
-//                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
-//                        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
-//                        toast.setGravity(Gravity.CENTER, 0, 0);
-//                        toast.show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
-//                    loading.dismiss();
-//
-//                    Log.d("LoginActivity", t.getMessage());
-//                }
-//            });
-//        } catch (Exception e){
-//            loading.dismiss();
-//            Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
-//            e.printStackTrace();
-//        }
-//    }
+    public void add_favourite(){
+        final DialogFragment loading = new LoadingDialog();
+        android.app.FragmentManager frag = ((AppCompatActivity) this).getFragmentManager();
+        loading.show(frag,"LoadingDialog");
+
+        //1. Ajout de l'adresse
+          adresseDao.write(adresse);
+
+        //2. Si le groupe n'existe pas sur le téléphone on l'ajoute
+        if(groupeDao.get(groupe.getId_groupes()) == null){
+            groupeDao.write(groupe);
+        }
+
+        //3. Ajout Evenements
+        evenementDao.write(event);
+
+
+        isFavorite = true;
+        loading.dismiss();
+    }
 
     public void remove_favourite(){
+        final DialogFragment loading = new LoadingDialog();
+        android.app.FragmentManager frag = ((AppCompatActivity) this).getFragmentManager();
+        loading.show(frag,"LoadingDialog");
+
+        //1. Supprime l'adresse
+        adresseDao.delete(adresse.getId_adresses());
+
+        //2. Si le groupe est sur le téléphone on le supprime
+        //groupeDao.delete(groupe.getId_groupes());
+
+
+        //3. Ajout Evenements
+        evenementDao.delete(event.getId_evenements());
+
+
+        isFavorite = false;
+        loading.dismiss();
+
 
     }
 }

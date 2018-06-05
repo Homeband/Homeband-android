@@ -5,10 +5,26 @@
     android:layout_height="match_parent"
     tools:context=".activities.FavouriteFrag">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Groupe en Favoris" />
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="10dp"
+            android:text="Groupe en favoris"
+            android:textColor="#111"
+            android:textSize="16dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvFavourite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:scrollbars="vertical" />
+    </LinearLayout>
 
 </FrameLayout>

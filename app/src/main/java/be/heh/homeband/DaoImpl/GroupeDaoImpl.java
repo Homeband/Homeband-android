@@ -3,6 +3,7 @@ package be.heh.homeband.DaoImpl;
 import java.util.List;
 
 import be.heh.homeband.Dao.GroupeDao;
+import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
 
 public class GroupeDaoImpl extends DaoImpl implements GroupeDao {
@@ -13,15 +14,18 @@ public class GroupeDaoImpl extends DaoImpl implements GroupeDao {
 
     @Override
     public List<Groupe> list() {
-        return null;
+        return realm.copyFromRealm(realm.where(Groupe.class).findAll()) ;
     }
 
     @Override
     public void delete(Integer id) {
         realm.beginTransaction();
-        realm.where(Groupe.class)
+        Groupe result = realm.where(Groupe.class)
                 .equalTo("id_groupes",id)
-                .findAll().deleteAllFromRealm();
+                .findFirst();
+        if (result != null){
+            result.deleteFromRealm();
+        }
         realm.commitTransaction();
     }
 

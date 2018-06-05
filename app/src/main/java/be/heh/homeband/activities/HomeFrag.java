@@ -20,8 +20,11 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import be.heh.homeband.Dao.EvenementDao;
+import be.heh.homeband.DaoImpl.EvenementDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.BandOnClick.EventDetailsActivity;
 import be.heh.homeband.activities.BandOnClick.RecyclerTouchListener;
@@ -31,6 +34,7 @@ import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Evenement;
+import be.heh.homeband.entities.Groupe;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,6 +57,8 @@ public class HomeFrag extends Fragment {
 
     private RecyclerView recyclerView;
     private List<Evenement> events = new ArrayList<Evenement>();
+
+    EvenementDao evenementDao;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -96,8 +102,10 @@ public class HomeFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getGroupeEvents(1);
+
         View myview = inflater.inflate(R.layout.fragment_home, container, false);
+        evenementDao = new EvenementDaoImpl();
+        events = getFavouriteEvent();
 
         recyclerView = (RecyclerView) myview.findViewById(R.id.rvHome);
 
@@ -164,69 +172,9 @@ public class HomeFrag extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void getGroupeEvents(int id){
+    public void getFavouriteEvents(){
+       evenementDao.list();
 
-
-        try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(HomebandRetrofit.API_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            // Création d'une instance du service avec Retrofit
-            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
-
-            // Requête vers l'API
-            serviceApi.getGroupEvents(id).enqueue(new Callback<HomebandApiReponse>() {
-                @Override
-                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
-                    boolean toUpdate=false;
-
-                    // En fonction du code HTTP de Retour (2** = Successful)
-                    if (response.isSuccessful()) {
-
-                        // Récupération de la réponse de l'API
-                        HomebandApiReponse res = response.body();
-                        res.mapResultat();
-
-                        CharSequence messageToast;
-                        if (res.isOperationReussie() == true) {
-                            Type typeListe = new TypeToken<List<Evenement>>(){}.getType();
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                           events = gson.fromJson(res.get("events").getAsJsonArray(), typeListe);
-
-                        } else {
-
-                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
-
-                            // Affichage d'un toast pour indiquer le résultat
-                            Toast toast = Toast.makeText(getContext(), messageToast, Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
-                        }
-                    } else {
-
-                        int statusCode = response.code();
-
-                        String res = response.toString();
-                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
-                        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
-
-                    Log.d("LoginActivity", t.getMessage());
-                }
-            });
-        } catch (Exception e){
-
-
-            e.printStackTrace();
-        }
     }
 
     private void getEvent(int id){
@@ -288,5 +236,9 @@ public class HomeFrag extends Fragment {
             Toast.makeText(getActivity(),(CharSequence)"Exception",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+    }
+
+    public List<Evenement> getFavouriteEvent(){
+        return evenementDao.list();
     }
 }

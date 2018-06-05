@@ -4,26 +4,37 @@ import java.util.List;
 
 import be.heh.homeband.Dao.EvenementDao;
 import be.heh.homeband.entities.Evenement;
+import be.heh.homeband.entities.Groupe;
 
 public class EvenementDaoImpl extends DaoImpl implements EvenementDao {
     @Override
     public Evenement get(Integer id) {
-        return null;
+        return realm.where(Evenement.class).equalTo("id_evenements",id).findFirst();
     }
 
     @Override
     public List<Evenement> list() {
-        return null;
+        return realm.copyFromRealm(realm.where(Evenement.class).findAll()) ;
     }
 
     @Override
     public void delete(Integer id) {
-
+        realm.beginTransaction();
+        Evenement result = realm.where(Evenement.class)
+                .equalTo("id_evenements",id)
+                .findFirst();
+        if (result != null){
+            result.deleteFromRealm();
+        }
+        realm.commitTransaction();
     }
 
     @Override
     public Evenement write(Evenement obj) {
-        return null;
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(obj);
+        realm.commitTransaction();
+        return obj;
     }
 
     @Override
