@@ -21,7 +21,6 @@ import io.realm.Realm;
 public class AvisHolder extends RecyclerView.ViewHolder {
 
     private TextView tvUtilisateur;
-    private TextView tvDateAvis;
     private TextView tvComment;
 
     UtilisateurDao utilisateurDao;
@@ -35,7 +34,6 @@ public class AvisHolder extends RecyclerView.ViewHolder {
         //c'est ici que l'on fait nos findView
 
         tvUtilisateur = (TextView) itemView.findViewById(R.id.tvUtilisateur);
-        tvDateAvis = (TextView) itemView.findViewById(R.id.tvDateAvis);
         tvComment = (TextView) itemView.findViewById(R.id.tvComment);
 
         utilisateurDao = new UtilisateurDaoImpl();
@@ -49,8 +47,7 @@ public class AvisHolder extends RecyclerView.ViewHolder {
         Utilisateur user = utilisateurDao.get(monavis.getId_utilisateurs());
 
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy ");
-        tvUtilisateur.setText(user.getLogin());
-        tvDateAvis.setText(dateFormatter.format(monavis.getDate_ajout()));
+        tvUtilisateur.setText("Laissé par " + user.getLogin()+" le "+ dateFormatter.format(monavis.getDate_ajout()));
         tvComment.setText(monavis.getCommentaire());
     }
 

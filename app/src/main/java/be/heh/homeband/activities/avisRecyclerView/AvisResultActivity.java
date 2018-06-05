@@ -45,6 +45,8 @@ public class AvisResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listgroup);
 
+        setTitle("Avis");
+
         avis = (ArrayList<Avis>) getIntent().getSerializableExtra("comments");
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewGroup);

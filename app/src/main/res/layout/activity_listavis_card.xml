@@ -20,7 +20,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
 
         <!-- Les CardView agissent comme des FrameLayout,
          pour avoir une organisation verticale nous devons
@@ -29,34 +31,25 @@
 
         <TextView
             android:id="@+id/tvUtilisateur"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="5dp"
             android:background="?android:selectableItemBackground"
             android:layout_toRightOf="@id/imgGroup"
             android:fontFamily="sans-serif"
             android:textColor="#333"
-            android:textSize="18sp"
+            android:textStyle="bold"
             tools:text="Saovers" />
-        <TextView
-            android:id="@+id/tvDateAvis"
-            android:layout_width="match_parent"
-            android:layout_below="@id/tvUtilisateur"
-            android:layout_marginRight="5dp"
-            android:layout_height="wrap_content"
-            android:background="?android:selectableItemBackground"
-            tools:text="25/01/2018"
-            android:fontFamily="sans-serif"
-            android:textColor="#333"
-            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/tvComment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDateAvis"
-            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tvUtilisateur"
+            android:layout_marginTop="5dp"
             tools:text="Lorem Ipsumjfeuhfuiezifjzeijfizejufizjefijezifjoooooooooooooooooooooooooooooooooooooo"
+            android:textSize="18sp"
             />
 
     </RelativeLayout>
