@@ -51,11 +51,13 @@ import be.heh.homeband.DaoImpl.VilleDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.ListAlbum.ListAlbumResultActivity;
 import be.heh.homeband.activities.LoadingDialog;
+import be.heh.homeband.activities.avisRecyclerView.AvisResultActivity;
 import be.heh.homeband.activities.searchevents.SearchEventsResultActivity;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
 import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Album;
+import be.heh.homeband.entities.Avis;
 import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Membre;
@@ -84,6 +86,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
     Button btnMusiques;
     Button btnEvents;
+    Button btnAvis;
 
     Boolean isFavorite;
 
@@ -208,6 +211,13 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         btnEvents.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getGroupeEvents(groupe.getId_groupes());
+            }
+        });
+
+        btnAvis = (Button) findViewById(R.id.btnAvis);
+        btnAvis.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                    getAvis(groupe.getId_groupes());
             }
         });
 
@@ -540,6 +550,72 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             List<Evenement> listeEvents = gson.fromJson(res.get("events").getAsJsonArray(), typeListe);
                             Intent intent = new Intent (getApplicationContext(),SearchEventsResultActivity.class);
                             intent.putExtra("events",(ArrayList<Evenement>)listeEvents);
+                            startActivity(intent);
+
+                        } else {
+
+                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } else {
+
+                        int statusCode = response.code();
+
+                        String res = response.toString();
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+
+                    Log.d("LoginActivity", t.getMessage());
+                }
+            });
+        } catch (Exception e){
+
+            Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+    public void getAvis(int id){
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(HomebandRetrofit.API_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            // Création d'une instance du service avec Retrofit
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+
+            // Requête vers l'API
+            serviceApi.getAvis(id).enqueue(new Callback<HomebandApiReponse>() {
+                @Override
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
+
+
+                    // En fonction du code HTTP de Retour (2** = Successful)
+                    if (response.isSuccessful()) {
+
+                        // Récupération de la réponse de l'API
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
+
+                        CharSequence messageToast;
+                        if (res.isOperationReussie() == true) {
+                            Type typeListe = new TypeToken<List<Avis>>(){}.getType();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                            List<Avis> listeAvis = gson.fromJson(res.get("comments").getAsJsonArray(), typeListe);
+                            Intent intent = new Intent (getApplicationContext(),AvisResultActivity.class);
+                            intent.putExtra("comments",(ArrayList<Avis>)listeAvis);
                             startActivity(intent);
 
                         } else {

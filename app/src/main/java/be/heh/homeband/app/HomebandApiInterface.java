@@ -65,6 +65,9 @@ public interface HomebandApiInterface {
     @DELETE("api/utilisateurs/{id_utilisateur}/groupes/{id_groupe}")
     Call <HomebandApiReponse> removeUtilisateurGroupe(@Path(value="id_utilisateur") int id_utilisateur,@Path(value="id_groupe") int id_groupe);
 
+    @GET("api/groupes/{id}/avis")
+    Call<HomebandApiReponse> getAvis(@Path(value="id") int id_groupe ) ;
+
     @POST("api/utilisateurs/{id_utilisateur}/groupes/{id_groupe}")
     @FormUrlEncoded
     Call <HomebandApiReponse> addUtilisateurGroupe(@Path(value="id_utilisateur") int id_utilisateur,@Path(value="id_groupe") int id_groupe,@Field("get_groupe") int get_groupe,@Field("get_membres") int get_membres,@Field("get_albums") int get_albums,@Field("get_titres") int get_titres );

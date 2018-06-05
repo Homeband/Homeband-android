@@ -25,8 +25,6 @@ public class SearchGroupHolder extends RecyclerView.ViewHolder {
     public SearchGroupHolder(View itemView) {
         super(itemView);
 
-        //c'est ici que l'on fait nos findView
-
         tvGroupName = (TextView) itemView.findViewById(R.id.tvGroupName);
         tvGroupCity = (TextView) itemView.findViewById(R.id.tvGroupCity);
         imgGroup = (ImageView) itemView.findViewById(R.id.imgGroup);

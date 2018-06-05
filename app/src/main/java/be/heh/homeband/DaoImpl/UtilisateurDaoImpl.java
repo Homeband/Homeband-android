@@ -3,6 +3,7 @@ package be.heh.homeband.DaoImpl;
 import java.util.List;
 
 import be.heh.homeband.Dao.UtilisateurDao;
+import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Utilisateur;
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -10,7 +11,7 @@ import io.realm.RealmQuery;
 public class UtilisateurDaoImpl extends DaoImpl implements UtilisateurDao {
     @Override
     public Utilisateur get(Integer id) {
-       return null;
+        return realm.where(Utilisateur.class).equalTo("id_utilisateurs",id).findFirst();
     }
 
     @Override

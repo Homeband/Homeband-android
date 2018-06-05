@@ -48,7 +48,6 @@ public class MembreAdapter extends ArrayAdapter<Membre> {
         // 4. Set the text for textView 
         labelView.setText(membre.getNom()+" "+membre.getPrenom());
 
-        Log.d("Avant if", String.valueOf(membre.isEst_date())+membre.getNom());
         if (membre.isEst_date()){
 
             if(membre.getDate_debut() != null && membre.getDate_fin() != null){
