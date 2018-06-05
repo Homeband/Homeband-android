@@ -5,7 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AddAvis">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvAddAvis"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Ajouter un avis"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/etAddAvis"
+        android:layout_below="@+id/tvAddAvis"
+        android:layout_above="@+id/btnAddAvis"
+        android:background="@drawable/edittext_background"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+       android:gravity="top"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAddAvis"
+       android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:text="Envoyer"
+        android:textColor="@color/colorAccent"
+        android:background="@color/colorPrimary"
+        />
 
+</RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>

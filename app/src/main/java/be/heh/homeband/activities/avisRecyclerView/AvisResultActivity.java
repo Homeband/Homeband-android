@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.R;
+import be.heh.homeband.activities.AddAvis;
+import be.heh.homeband.activities.BandOnClick.EventDetailsActivity;
 import be.heh.homeband.activities.BandOnClick.GroupeDetailsActivity;
 import be.heh.homeband.activities.BandOnClick.RecyclerTouchListener;
 import be.heh.homeband.activities.searchgroup.SearchGroupAdapter;
@@ -97,8 +99,9 @@ public class AvisResultActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
+                Intent intent = new Intent (getApplicationContext(),AddAvis.class);
+                startActivity(intent);
+
 
             default:
                 // If we got here, the user's action was not recognized.
