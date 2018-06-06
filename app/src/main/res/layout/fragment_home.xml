@@ -36,6 +36,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="gone"
-        android:text="Pas d'évènements en favoris" />
+        android:text="Vos évènements favoris s'afficheront ici" />
 
 </android.support.constraint.ConstraintLayout>

@@ -115,6 +115,7 @@ public class AddAvis extends AppCompatActivity {
                             Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
+                            finish();
 
                         } else {
 
@@ -124,6 +125,7 @@ public class AddAvis extends AppCompatActivity {
                             Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
+
                         }
                     } else {
 
@@ -134,6 +136,7 @@ public class AddAvis extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
+
                     }
                 }
 

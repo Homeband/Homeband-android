@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -56,6 +57,12 @@ public class AvisResultActivity extends AppCompatActivity {
         groupe = (Groupe) getIntent().getSerializableExtra("group");
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewGroup);
+
+        if (avis.isEmpty()) {
+            setContentView(R.layout.activity_list_group_empty);
+        }
+        else {
+        }
 
         //définit l'agencement des cellules, ici de façon verticale, comme une ListView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
