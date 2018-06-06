@@ -10,7 +10,11 @@ import be.heh.homeband.entities.Groupe;
 public class GroupeDaoImpl extends DaoImpl implements GroupeDao {
     @Override
     public Groupe get(Integer id) {
-        return realm.where(Groupe.class).equalTo("id_groupes",id).findFirst();
+        Groupe groupe = realm.where(Groupe.class).equalTo("id_groupes",id).findFirst();
+        if (groupe != null){
+            return realm.copyFromRealm(groupe);
+        }
+        return null;
     }
 
     @Override

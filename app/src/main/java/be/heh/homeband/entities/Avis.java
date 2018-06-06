@@ -14,6 +14,17 @@ public class Avis implements Serializable {
 	private int est_actif;
 	private int id_groupes;
 	private int id_utilisateurs;
+	private String username;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
 
 	public Avis(){
 

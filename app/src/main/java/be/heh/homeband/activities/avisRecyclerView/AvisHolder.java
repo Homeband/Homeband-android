@@ -44,10 +44,9 @@ public class AvisHolder extends RecyclerView.ViewHolder {
 
     //puis ajouter une fonction pour remplir la cellule en fonction d'un MyObject
     public void bind(Avis monavis){
-        Utilisateur user = utilisateurDao.get(monavis.getId_utilisateurs());
 
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy ");
-        tvUtilisateur.setText("Laissé par " + user.getLogin()+" le "+ dateFormatter.format(monavis.getDate_ajout()));
+        tvUtilisateur.setText("Laissé par " + monavis.getUsername() + " le "+  dateFormatter.format(monavis.getDate_ajout()));
         tvComment.setText(monavis.getCommentaire());
     }
 

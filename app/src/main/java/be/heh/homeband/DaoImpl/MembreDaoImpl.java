@@ -1,5 +1,6 @@
 package be.heh.homeband.DaoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.Dao.MembreDao;
@@ -33,7 +34,8 @@ public class MembreDaoImpl extends DaoImpl implements MembreDao {
     @Override
     public List<Membre> getByGroupe(int id_groupe) {
         RealmQuery<Membre> query = realm.where(Membre.class);
-        return query.equalTo("id_groupes", id_groupe).findAll();
+        ArrayList<Membre> membre = (ArrayList<Membre>) realm.copyFromRealm(query.equalTo("id_groupes", id_groupe).findAll());
+        return membre;
     }
 
     @Override

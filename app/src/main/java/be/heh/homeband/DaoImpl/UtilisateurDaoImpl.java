@@ -14,7 +14,11 @@ import okhttp3.internal.Util;
 public class UtilisateurDaoImpl extends DaoImpl implements UtilisateurDao {
     @Override
     public Utilisateur get(Integer id) {
-        return realm.where(Utilisateur.class).equalTo("id_utilisateurs",id).findFirst();
+        Utilisateur user = realm.where(Utilisateur.class).equalTo("id_utilisateurs",id).findFirst();
+        if(user != null){
+            return realm.copyFromRealm(user);
+        }
+        return null;
     }
 
     @Override

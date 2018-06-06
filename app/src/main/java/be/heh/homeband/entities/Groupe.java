@@ -34,7 +34,7 @@ public class Groupe extends RealmObject implements Serializable {
 	private int id_villes;
 
 	@LinkingObjects("groups")
-	private final RealmResults<Utilisateur> users = null;
+	private final  RealmResults<Utilisateur> users = null;
 	private RealmList<Evenement> events;
 
 	public Groupe(){
