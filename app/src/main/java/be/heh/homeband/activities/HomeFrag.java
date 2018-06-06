@@ -12,11 +12,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -56,6 +59,8 @@ public class HomeFrag extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private RecyclerView recyclerView;
+    private TextView emptyView;
+    private TextView tvTitleHome;
     private List<Evenement> events = new ArrayList<Evenement>();
 
     EvenementDao evenementDao;
@@ -108,6 +113,19 @@ public class HomeFrag extends Fragment {
         events = getFavouriteEvent();
 
         recyclerView = (RecyclerView) myview.findViewById(R.id.rvHome);
+        emptyView = (TextView) myview.findViewById(R.id.empty_view);
+        tvTitleHome = (TextView) myview.findViewById(R.id.tvTitleHome);
+
+        if (events.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            tvTitleHome.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            tvTitleHome.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
 
         //définit l'agencement des cellules, ici de façon verticale, comme une ListView
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

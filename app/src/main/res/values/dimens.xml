@@ -13,8 +13,8 @@
 
 
     <!-- activity detail groupe -->
-    <dimen name="btn_détail_groupe_margin_left">5dp</dimen>
-    <dimen name="btn_détail_groupe_margin_right">5dp</dimen>
+    <dimen name="btn_détail_groupe_margin_left">25dp</dimen>
+    <dimen name="btn_détail_groupe_margin_right">25dp</dimen>
     <dimen name="btn_détail_groupe_width">110dp</dimen>
 
 

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rlCardsView">
             <ImageView
@@ -19,22 +19,27 @@
                 />
             <TextView
                 android:id="@+id/tvEventFavoris"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Ajouter à la page d'acceuil"
+                android:textAlignment="center"
+                android:text="Ajouter en favoris"
                 android:layout_toRightOf="@+id/ivEvent"
                 android:padding="5dp"/>
-            <ImageButton
-                android:id="@+id/ibFavouriteEvent"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/ivEvent"
                 android:layout_below="@+id/tvEventFavoris"
-                android:src="@drawable/ic_star_white_24dp"
-                android:background="@drawable/round_disabled"
-                android:layout_marginLeft="30dp"
-                />
+                android:gravity="center">
+                <ImageButton
+                    android:id="@+id/ibFavouriteEvent"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_star_white_24dp"
+                    android:background="@drawable/round_disabled"
+                    />
+            </RelativeLayout>
+
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/bottom_layout"

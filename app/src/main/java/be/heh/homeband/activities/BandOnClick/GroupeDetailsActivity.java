@@ -597,7 +597,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getAvis(id).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getAvis(id,1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -616,6 +616,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             List<Avis> listeAvis = gson.fromJson(res.get("comments").getAsJsonArray(), typeListe);
                             Intent intent = new Intent (getApplicationContext(),AvisResultActivity.class);
                             intent.putExtra("comments",(ArrayList<Avis>)listeAvis);
+                            intent.putExtra("group",groupe);
                             startActivity(intent);
 
                         } else {

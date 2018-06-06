@@ -66,7 +66,10 @@ public interface HomebandApiInterface {
     Call <HomebandApiReponse> removeUtilisateurGroupe(@Path(value="id_utilisateur") int id_utilisateur,@Path(value="id_groupe") int id_groupe);
 
     @GET("api/groupes/{id}/avis")
-    Call<HomebandApiReponse> getAvis(@Path(value="id") int id_groupe ) ;
+    Call<HomebandApiReponse> getAvis(@Path(value="id") int id_groupe,@Query(value="type")int type ) ;
+
+    @POST("api/groupes/{id}/avis")
+    Call<HomebandApiReponse> postAvis(@Path(value="id") int id_groupe, @Body HashMap<String,Object> params) ;
 
     @POST("api/utilisateurs/{id_utilisateur}/groupes/{id_groupe}")
     @FormUrlEncoded

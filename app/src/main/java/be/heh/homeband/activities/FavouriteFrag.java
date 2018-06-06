@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -57,6 +58,8 @@ public class FavouriteFrag extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private RecyclerView recyclerView;
+    private TextView emptyView;
+    private TextView tvTitleFavourite;
     private List<Groupe> groupes = new ArrayList<Groupe>();
 
     GroupeDao groupeDao;
@@ -107,6 +110,19 @@ public class FavouriteFrag extends Fragment {
         groupes = getFavouriteGroup();
 
         recyclerView = (RecyclerView) myview.findViewById(R.id.rvFavourite);
+        emptyView = (TextView) myview.findViewById(R.id.empty_view);
+        tvTitleFavourite = (TextView) myview.findViewById(R.id.tvTitleFavourite);
+
+        if (groupes.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            tvTitleFavourite.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            tvTitleFavourite.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
