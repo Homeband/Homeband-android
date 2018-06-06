@@ -1,5 +1,6 @@
 package be.heh.homeband.DaoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.Dao.GroupeDao;
@@ -35,5 +36,25 @@ public class GroupeDaoImpl extends DaoImpl implements GroupeDao {
         realm.copyToRealmOrUpdate(obj);
         realm.commitTransaction();
         return obj;
+    }
+
+    @Override
+    public List<Groupe> listByUser(int id_utilisateurs) {
+        List<Groupe> groupes = realm.where(Groupe.class).equalTo("users.id_utilisateurs", id_utilisateurs).findAll();
+        if(groupes.size() > 0){
+            return realm.copyFromRealm(groupes);
+        }
+
+        return new ArrayList<Groupe>();
+    }
+
+    @Override
+    public boolean isUsed(int id_groupes) {
+        Groupe groupeDB = realm.where(Groupe.class).equalTo("id_groupes", id_groupes).findFirst();
+        if(groupeDB != null){
+            return !(groupeDB.getEvents().isEmpty() || groupeDB.getUsers().isEmpty());
+        }
+
+        return false;
     }
 }

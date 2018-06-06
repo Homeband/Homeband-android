@@ -24,7 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.Dao.GroupeDao;
+import be.heh.homeband.Dao.MembreDao;
+import be.heh.homeband.Dao.UtilisateurDao;
 import be.heh.homeband.DaoImpl.GroupeDaoImpl;
+import be.heh.homeband.DaoImpl.MembreDaoImpl;
+import be.heh.homeband.DaoImpl.UtilisateurDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.BandOnClick.GroupeDetailsActivity;
 import be.heh.homeband.activities.BandOnClick.RecyclerTouchListener;
@@ -37,6 +41,7 @@ import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Membre;
+import be.heh.homeband.entities.Utilisateur;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,6 +68,8 @@ public class FavouriteFrag extends Fragment {
     private List<Groupe> groupes = new ArrayList<Groupe>();
 
     GroupeDao groupeDao;
+    UtilisateurDao utilisateurDao;
+    MembreDao membreDao;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -107,6 +114,8 @@ public class FavouriteFrag extends Fragment {
         // Inflate the layout for this fragment
         View myview = inflater.inflate(R.layout.fragment_favourite, container, false);
         groupeDao = new GroupeDaoImpl();
+        utilisateurDao = new UtilisateurDaoImpl();
+        membreDao = new MembreDaoImpl();
         groupes = getFavouriteGroup();
 
         recyclerView = (RecyclerView) myview.findViewById(R.id.rvFavourite);
@@ -182,74 +191,17 @@ public class FavouriteFrag extends Fragment {
     }
 
     private void getGroupe(int id){
+        Groupe groupe = groupeDao.get(id);
+        List<Membre> membres = membreDao.getByGroupe(id);
 
-        try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(HomebandRetrofit.API_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            // Création d'une instance du service avec Retrofit
-            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
-
-            // Requête vers l'API
-            serviceApi.getGroupe(id,1).enqueue(new Callback<HomebandApiReponse>() {
-                @Override
-                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
-
-                    // En fonction du code HTTP de Retour (2** = Successful)
-                    if (response.isSuccessful()) {
-                        // Récupération de la réponse
-                        HomebandApiReponse res = response.body();
-                        res.mapResultat();
-
-                        CharSequence messageToast;
-                        if (res.isOperationReussie() == true) {
-                            GsonBuilder builder = new GsonBuilder();
-                            builder.registerTypeAdapter(boolean.class, new BooleanTypeAdapter());
-                            Gson gson = builder.create();
-                            //Gson gson = new Gson();
-                            //C'est le groupe que l'on va récupérer en objet json et transforme en objet groupe. Le dernier parametre c'est le type d'objet retourner
-                            Groupe groupe = gson.fromJson(res.get("group"),Groupe.class);
-                            Type typeListe = new TypeToken<List<Membre>>(){}.getType();
-                            Log.d("Membres", res.toString());
-                            List<Membre> membres = gson.fromJson(res.get("members").getAsJsonArray(), typeListe);
-
-                            Intent intent = new Intent (getContext(),GroupeDetailsActivity.class);
-                            intent.putExtra("groupe",groupe);
-                            intent.putExtra("members",(ArrayList<Membre>) membres);
-                            startActivity(intent);
-
-                        } else {
-                            messageToast = "Impossible de récupérer les détails du groupe\r\n" + res.getMessage();
-
-                            // Affichage d'un toast pour indiquer le résultat
-                            Toast toast = Toast.makeText(getContext(), messageToast, Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
-                        }
-                    } else {
-                        int statusCode = response.code();
-
-                        String res = response.toString();
-                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
-                        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
-                    Log.d("LoginActivity", t.getMessage());
-                }
-            });
-        } catch (Exception e){
-            Toast.makeText(getContext(),(CharSequence)"Exception",Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
+        Intent intent = new Intent (getContext(),GroupeDetailsActivity.class);
+        intent.putExtra("groupe",groupe);
+        intent.putExtra("members",(ArrayList<Membre>) membres);
+        startActivity(intent);
     }
 
     public List<Groupe> getFavouriteGroup(){
-        return groupeDao.list();
+        Utilisateur user = utilisateurDao.getConnectedUser();
+        return groupeDao.listByUser(user.getId_utilisateurs());
     }
 }

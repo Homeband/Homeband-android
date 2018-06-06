@@ -1,5 +1,6 @@
 package be.heh.homeband.DaoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.Dao.EvenementDao;
@@ -45,9 +46,22 @@ public class EvenementDaoImpl extends DaoImpl implements EvenementDao {
     }
 
     @Override
-    public void deleteByGroup(int id_groupes) {
-        realm.where(Evenement.class)
-                .equalTo("id_groupes",id_groupes)
-                .findAll().deleteAllFromRealm();
+    public List<Evenement> listByUser(int id_utilisateurs) {
+        List<Evenement> evenements = realm.where(Evenement.class).equalTo("users.id_utilisateurs", id_utilisateurs).findAll();
+        if(evenements.size() > 0){
+            return realm.copyFromRealm(evenements);
+        }
+
+        return new ArrayList<Evenement>();
+    }
+
+    @Override
+    public boolean isUsed(int id_evenements) {
+        Evenement evenementDB = realm.where(Evenement.class).equalTo("id_evenements", id_evenements).findFirst();
+        if(evenementDB != null){
+            return !(evenementDB.getUsers().isEmpty());
+        }
+
+        return false;
     }
 }

@@ -26,10 +26,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import be.heh.homeband.Dao.AdresseDao;
 import be.heh.homeband.Dao.EvenementDao;
+import be.heh.homeband.Dao.UtilisateurDao;
+import be.heh.homeband.DaoImpl.AdresseDaoImpl;
 import be.heh.homeband.DaoImpl.EvenementDaoImpl;
+import be.heh.homeband.DaoImpl.UtilisateurDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.BandOnClick.EventDetailsActivity;
+import be.heh.homeband.activities.BandOnClick.GroupeDetailsActivity;
 import be.heh.homeband.activities.BandOnClick.RecyclerTouchListener;
 import be.heh.homeband.activities.homeRecyclerView.FragmentHomeAdapter;
 import be.heh.homeband.app.HomebandApiInterface;
@@ -38,6 +43,8 @@ import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
+import be.heh.homeband.entities.Membre;
+import be.heh.homeband.entities.Utilisateur;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,6 +71,8 @@ public class HomeFrag extends Fragment {
     private List<Evenement> events = new ArrayList<Evenement>();
 
     EvenementDao evenementDao;
+    AdresseDao adresseDao;
+    UtilisateurDao utilisateurDao;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -110,6 +119,8 @@ public class HomeFrag extends Fragment {
 
         View myview = inflater.inflate(R.layout.fragment_home, container, false);
         evenementDao = new EvenementDaoImpl();
+        adresseDao = new AdresseDaoImpl();
+        utilisateurDao = new UtilisateurDaoImpl();
         events = getFavouriteEvent();
 
         recyclerView = (RecyclerView) myview.findViewById(R.id.rvHome);
@@ -190,73 +201,19 @@ public class HomeFrag extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void getFavouriteEvents(){
-       evenementDao.list();
-
-    }
-
     private void getEvent(int id){
 
-        try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(HomebandRetrofit.API_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            // Création d'une instance du service avec Retrofit
-            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+        Evenement evenement = evenementDao.get(id);
+        Adresse adresse = adresseDao.get(evenement.getId_adresses());
 
-            // Requête vers l'API
-            serviceApi.getEvent(id).enqueue(new Callback<HomebandApiReponse>() {
-                @Override
-                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
-
-                    // En fonction du code HTTP de Retour (2** = Successful)
-                    if (response.isSuccessful()) {
-                        // Récupération de la réponse
-                        HomebandApiReponse res = response.body();
-                        res.mapResultat();
-
-                        CharSequence messageToast;
-                        if (res.isOperationReussie() == true) {
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                            Evenement event = gson.fromJson(res.get("event"),Evenement.class);
-                            Adresse adresse = gson.fromJson(res.get("address"),Adresse.class);
-                            Intent intent = new Intent (getContext(),EventDetailsActivity.class);
-                            intent.putExtra("event",event);
-                            intent.putExtra("address",adresse);
-                            startActivity(intent);
-
-                        } else {
-                            messageToast = "Impossible de récupérer les détails de l'évènement\r\n" + res.getMessage();
-
-                            // Affichage d'un toast pour indiquer le résultat
-                            Toast toast = Toast.makeText(getContext(), messageToast, Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
-                        }
-                    } else {
-                        int statusCode = response.code();
-
-                        String res = response.toString();
-                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
-                        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
-                    Log.d("LoginActivity", t.getMessage());
-                }
-            });
-        } catch (Exception e){
-            Toast.makeText(getActivity(),(CharSequence)"Exception",Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
+        Intent intent = new Intent (getContext(),EventDetailsActivity.class);
+        intent.putExtra("event", evenement);
+        intent.putExtra("address", adresse);
+        startActivity(intent);
     }
 
     public List<Evenement> getFavouriteEvent(){
-        return evenementDao.list();
+        Utilisateur user = utilisateurDao.getConnectedUser();
+        return evenementDao.listByUser(user.getId_utilisateurs());
     }
 }

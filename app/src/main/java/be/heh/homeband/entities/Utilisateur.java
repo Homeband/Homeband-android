@@ -1,5 +1,6 @@
 package be.heh.homeband.entities;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -16,6 +17,8 @@ public class Utilisateur extends RealmObject {
 	private String api_ck;
 	private boolean est_actif;
 	private boolean est_connecte;
+	private RealmList<Groupe> groups;
+	private RealmList<Evenement> events;
 
 	public Utilisateur(){
 
@@ -91,5 +94,21 @@ public class Utilisateur extends RealmObject {
 
     public void setEst_connecte(boolean est_connecte) {
         this.est_connecte = est_connecte;
+    }
+
+    public RealmList<Groupe> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(RealmList<Groupe> groups) {
+        this.groups = groups;
+    }
+
+    public RealmList<Evenement> getEvents() {
+        return events;
+    }
+
+    public void setEvents(RealmList<Evenement> events) {
+        this.events = events;
     }
 }

@@ -1,12 +1,15 @@
 package be.heh.homeband.DaoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.Dao.UtilisateurDao;
+import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Utilisateur;
 import io.realm.Realm;
 import io.realm.RealmQuery;
+import okhttp3.internal.Util;
 
 public class UtilisateurDaoImpl extends DaoImpl implements UtilisateurDao {
     @Override
@@ -54,5 +57,105 @@ public class UtilisateurDaoImpl extends DaoImpl implements UtilisateurDao {
                 }
             });
         }
+    }
+
+    @Override
+    public void addGroup(int id_utilisateurs, Groupe groupe) {
+        if(id_utilisateurs > 0 && groupe != null){
+            Utilisateur user = realm.where(Utilisateur.class).equalTo("id_utilisateurs", id_utilisateurs).findFirst();
+            if(user != null){
+                Groupe groupeDB = realm.where(Groupe.class).equalTo("id_groupes", groupe.getId_groupes()).findFirst();
+                if(groupeDB == null){
+                    groupeDB = groupe;
+                }
+
+                realm.beginTransaction();
+                user.getGroups().add(groupeDB);
+                realm.commitTransaction();
+            }
+        }
+    }
+
+    @Override
+    public void deleteGroup(int id_utilisateurs, int id_groupes) {
+        if(id_utilisateurs > 0 && id_groupes > 0){
+            Utilisateur user = realm.where(Utilisateur.class).equalTo("id_utilisateurs", id_utilisateurs).findFirst();
+            if(user != null){
+                Groupe groupeDB = realm.where(Groupe.class).equalTo("id_groupes", id_groupes).findFirst();
+                if(groupeDB != null){
+                    realm.beginTransaction();
+                    user.getGroups().remove(groupeDB);
+                    if(groupeDB.getUsers().size() == 0 && groupeDB.getEvents().size() == 0){
+                        groupeDB.deleteFromRealm();
+                    }
+                    realm.commitTransaction();
+                }
+            }
+        }
+    }
+
+    @Override
+    public Groupe getGroup(int id_utilisateurs, int id_groupes) {
+        if(id_utilisateurs > 0 && id_groupes > 0){
+            Utilisateur user = realm.where(Utilisateur.class).equalTo("id_utilisateurs", id_utilisateurs).findFirst();
+            if(user != null){
+                Groupe groupeDB = realm.where(Groupe.class).equalTo("id_groupes", id_groupes).findFirst();
+                if(groupeDB != null){
+                    return realm.copyFromRealm(groupeDB);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public void addEvent(int id_utilisateurs, Evenement evenement) {
+        if(id_utilisateurs > 0 && evenement != null){
+            Utilisateur user = realm.where(Utilisateur.class).equalTo("id_utilisateurs", id_utilisateurs).findFirst();
+            if(user != null){
+                Evenement evenementDB = realm.where(Evenement.class).equalTo("id_evenements", evenement.getId_evenements()).findFirst();
+                if(evenementDB == null){
+                    evenementDB = evenement;
+                }
+
+                realm.beginTransaction();
+                user.getEvents().add(evenementDB);
+                realm.commitTransaction();
+            }
+        }
+    }
+
+    @Override
+    public void deleteEvent(int id_utilisateurs, int id_evenements) {
+        if(id_utilisateurs > 0 && id_evenements > 0){
+            Utilisateur user = realm.where(Utilisateur.class).equalTo("id_utilisateurs", id_utilisateurs).findFirst();
+            if(user != null){
+                Evenement evenementDB = realm.where(Evenement.class).equalTo("id_evenements", id_evenements).findFirst();
+                if(evenementDB != null){
+                    realm.beginTransaction();
+                    user.getEvents().remove(evenementDB);
+                    if(evenementDB.getUsers().size() == 0){
+                        evenementDB.deleteFromRealm();
+                    }
+                    realm.commitTransaction();
+                }
+            }
+        }
+    }
+
+    @Override
+    public Evenement getEvent(int id_utilisateurs, int id_evenements) {
+        if(id_utilisateurs > 0 && id_evenements > 0){
+            Utilisateur user = realm.where(Utilisateur.class).equalTo("id_utilisateurs", id_utilisateurs).findFirst();
+            if(user != null){
+                Evenement evenementDB = realm.where(Evenement.class).equalTo("id_evenements", id_evenements).findFirst();
+                if(evenementDB != null){
+                    return realm.copyFromRealm(evenementDB);
+                }
+            }
+        }
+
+        return null;
     }
 }

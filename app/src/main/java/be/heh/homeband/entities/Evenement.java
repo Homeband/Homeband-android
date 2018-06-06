@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.annotations.Ignore;
+import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
 
@@ -20,6 +22,9 @@ public class Evenement extends RealmObject implements Serializable {
 	private boolean est_actif;
 	private int id_groupes;
 	private int id_adresses;
+
+	@LinkingObjects("events")
+	private final RealmResults<Utilisateur> users = null;
 
 	@Ignore
 	private int id_villes;
@@ -94,6 +99,18 @@ public class Evenement extends RealmObject implements Serializable {
 
 	public void setId_adresses(int id_adresses) {
 		this.id_adresses = id_adresses;
+	}
+
+	public int getId_villes() {
+		return id_villes;
+	}
+
+	public void setId_villes(int id_villes) {
+		this.id_villes = id_villes;
+	}
+
+	public RealmResults<Utilisateur> getUsers() {
+		return users;
 	}
 
 }

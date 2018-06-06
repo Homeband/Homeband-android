@@ -4,6 +4,8 @@ import android.util.Log;
 
 import java.util.Date;
 
+import be.heh.homeband.entities.Evenement;
+import be.heh.homeband.entities.Groupe;
 import io.realm.DynamicRealm;
 import io.realm.FieldAttribute;
 import io.realm.RealmMigration;
@@ -101,10 +103,22 @@ public class HomebandRealmMigration implements RealmMigration {
 
             oldVersion++;
         }
+
         if(oldVersion == 6){
             schema.get("Groupe")
                     .addField("lien_soundcloud", String.class)
                     .removeField("lien_souncloud");
+            oldVersion++;
+        }
+
+        if(oldVersion == 7){
+            schema.get("Utilisateur")
+                    .addRealmListField("groups", schema.get("Groupe"))
+                    .addRealmListField("events", schema.get("Evenement"));
+
+            schema.get("Groupe")
+                    .addRealmListField("events", schema.get("Evenement"));
+
             oldVersion++;
         }
 

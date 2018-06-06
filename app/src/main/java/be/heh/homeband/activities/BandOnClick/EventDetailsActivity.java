@@ -35,10 +35,12 @@ import java.util.List;
 import be.heh.homeband.Dao.AdresseDao;
 import be.heh.homeband.Dao.EvenementDao;
 import be.heh.homeband.Dao.GroupeDao;
+import be.heh.homeband.Dao.UtilisateurDao;
 import be.heh.homeband.Dao.VilleDao;
 import be.heh.homeband.DaoImpl.AdresseDaoImpl;
 import be.heh.homeband.DaoImpl.EvenementDaoImpl;
 import be.heh.homeband.DaoImpl.GroupeDaoImpl;
+import be.heh.homeband.DaoImpl.UtilisateurDaoImpl;
 import be.heh.homeband.DaoImpl.VilleDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.LoadingDialog;
@@ -51,6 +53,7 @@ import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Style;
 import be.heh.homeband.entities.Titre;
+import be.heh.homeband.entities.Utilisateur;
 import be.heh.homeband.entities.UtilisateursGroupes;
 import be.heh.homeband.entities.Ville;
 import retrofit2.Call;
@@ -71,6 +74,7 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
     GroupeDao groupeDao;
     AdresseDao adresseDao;
     EvenementDao evenementDao;
+    UtilisateurDao utilisateurDao;
 
     ImageButton ibFavourite;
 
@@ -165,7 +169,7 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
         villeDao = new VilleDaoImpl();
         groupeDao = new GroupeDaoImpl();
         evenementDao = new EvenementDaoImpl();
-
+        utilisateurDao = new UtilisateurDaoImpl();
 
 
         ibFavourite = (ImageButton)  findViewById(R.id.ibFavouriteEvent);
@@ -182,18 +186,15 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
             }
         });
 
-        if(evenementDao.get(event.getId_evenements()) == null){
+        Utilisateur user = utilisateurDao.getConnectedUser();
+        if(utilisateurDao.getEvent(user.getId_utilisateurs(), event.getId_evenements()) == null){
             isFavorite = false;
         } else {
             isFavorite = true;
             ibFavourite.setBackgroundResource(R.drawable.round_favourite);
         }
 
-
-
     }
-
-
 
     public void addCalendar(){
         Ville ville = villeDao.get(adresse.getId_villes());
@@ -214,19 +215,20 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
         android.app.FragmentManager frag = ((AppCompatActivity) this).getFragmentManager();
         loading.show(frag,"LoadingDialog");
 
+        Utilisateur user = utilisateurDao.getConnectedUser();
+        utilisateurDao.addEvent(user.getId_utilisateurs(), event);
+
         //1. Ajout de l'adresse
-          adresseDao.write(adresse);
+        adresseDao.write(adresse);
 
         //2. Si le groupe n'existe pas sur le téléphone on l'ajoute
         if(groupeDao.get(groupe.getId_groupes()) == null){
             groupeDao.write(groupe);
         }
 
-        //3. Ajout Evenements
-        evenementDao.write(event);
-
-
         isFavorite = true;
+        ibFavourite.setBackgroundResource(R.drawable.round_favourite);
+
         loading.dismiss();
     }
 
@@ -235,20 +237,19 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
         android.app.FragmentManager frag = ((AppCompatActivity) this).getFragmentManager();
         loading.show(frag,"LoadingDialog");
 
-        //1. Supprime l'adresse
-        adresseDao.delete(adresse.getId_adresses());
+        Utilisateur user = utilisateurDao.getConnectedUser();
+        utilisateurDao.deleteEvent(user.getId_utilisateurs(), event.getId_evenements());
 
-        //2. Si le groupe est sur le téléphone on le supprime
-        //groupeDao.delete(groupe.getId_groupes());
-
-
-        //3. Ajout Evenements
-        evenementDao.delete(event.getId_evenements());
-
+        if(!evenementDao.isUsed(event.getId_evenements())){
+            adresseDao.delete(adresse.getId_adresses());
+            if(groupeDao.isUsed(event.getId_groupes())){
+                groupeDao.delete(event.getId_groupes());
+            }
+        }
 
         isFavorite = false;
+        ibFavourite.setBackgroundResource(R.drawable.round_disabled);
+
         loading.dismiss();
-
-
     }
 }

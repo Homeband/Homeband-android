@@ -2,8 +2,12 @@ package be.heh.homeband.entities;
 
 import java.io.Serializable;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
+import okhttp3.internal.Util;
 
 
 public class Groupe extends RealmObject implements Serializable {
@@ -28,6 +32,10 @@ public class Groupe extends RealmObject implements Serializable {
 	private boolean est_actif;
 	private int id_styles;
 	private int id_villes;
+
+	@LinkingObjects("groups")
+	private final RealmResults<Utilisateur> users = null;
+	private RealmList<Evenement> events;
 
 	public Groupe(){
 
@@ -188,5 +196,17 @@ public class Groupe extends RealmObject implements Serializable {
 
 	public void setId_villes(int id_villes) {
 		this.id_villes = id_villes;
+	}
+
+	public RealmResults<Utilisateur> getUsers() {
+		return users;
+	}
+
+	public RealmList<Evenement> getEvents() {
+		return events;
+	}
+
+	public void setEvents(RealmList<Evenement> events) {
+		this.events = events;
 	}
 }

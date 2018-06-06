@@ -242,7 +242,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         idLiaison = new HashMap<String, Integer>();
         idLiaison.put(UtilisateursGroupesDaoImpl.KEY_UTILISATEUR, user.getId_utilisateurs());
         idLiaison.put(UtilisateursGroupesDaoImpl.KEY_GROUPE, groupe.getId_groupes());
-        if(utilisateursGroupesDao.get(idLiaison) == null){
+        if(utilisateurDao.getGroup(user.getId_utilisateurs(), groupe.getId_groupes()) == null){
             isFavorite = false;
         } else {
             isFavorite = true;
@@ -260,94 +260,6 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         tvBandName.setText(groupe.getNom());
         tvBandCity.setText(ville.getNom());
         tvBandStyle.setText(style.getNom());
-    }
-
-
-
-    public void remove_liaison(final int id_utilisateur, final int id_groupe){
-        final DialogFragment loading = new LoadingDialog();
-        android.app.FragmentManager frag = ((AppCompatActivity) this).getFragmentManager();
-        loading.show(frag,"LoadingDialog");
-        try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(HomebandRetrofit.API_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            // Création d'une instance du service avec Retrofit
-            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
-
-            // Requête vers l'API
-            serviceApi.removeUtilisateurGroupe(id_utilisateur,id_groupe).enqueue(new Callback<HomebandApiReponse>() {
-                @Override
-                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
-
-
-                    // En fonction du code HTTP de Retour (2** = Successful)
-                    if (response.isSuccessful()) {
-
-                        // Récupération de la réponse de l'API
-                        HomebandApiReponse res = response.body();
-                        res.mapResultat();
-
-                        CharSequence messageToast;
-                        if (res.isOperationReussie() == true) {
-
-                            //1. Supression liaison locale
-                            utilisateursGroupesDao.delete(idLiaison);
-
-                            //2. Supression Membres local
-                            membreDao.deleteByGroup(id_groupe);
-
-                            //3. Supression Album
-                            albumDao.deleteByGroup(id_groupe);
-
-                            //4. Supression Titres
-                            titreDao.deleteByGroup(id_groupe);
-
-                            //5. Modofication bouton favoris
-                            ibFavourite.setBackgroundResource(R.drawable.round_disabled);
-
-                            //6. Supression groupe local
-                            if(evenementDao.listByGroup(id_groupe).isEmpty()){
-                                groupeDao.delete(id_groupe);
-                            }
-
-                            isFavorite = false;
-                            loading.dismiss();
-                        } else {
-                            loading.dismiss();
-                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
-
-                            // Affichage d'un toast pour indiquer le résultat
-                            Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
-                        }
-                    } else {
-                        loading.dismiss();
-                        int statusCode = response.code();
-
-                        String res = response.toString();
-                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
-                        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
-                    loading.dismiss();
-                    Log.d("LoginActivity", t.getMessage());
-                }
-            });
-        } catch (Exception e){
-            loading.dismiss();
-            Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-
     }
 
     public void add_liaison(final int id_utilisateur, final int id_groupe){
@@ -386,32 +298,27 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             List<Album> listeAlbums = gson.fromJson(res.get("albums").getAsJsonArray(), typeListe);
                             List<Titre> listeTitres = gson.fromJson(res.get("titles").getAsJsonArray(), typeListeTitre);
 
-                            //2. Création liaison locale
-                            UtilisateursGroupes liaison = new UtilisateursGroupes();
-                            liaison.setId_groupes(id_groupe);
-                            liaison.setId_utilisateurs(id_utilisateur);
-                            utilisateursGroupesDao.write(liaison);
 
-                            //3. Ajout groupe local
-                            groupeDao.write(groupe);
+                            // Récupération de l'utilisateur connecté
+                            Utilisateur user = utilisateurDao.getConnectedUser();
+                            utilisateurDao.addGroup(user.getId_utilisateurs(), groupe);
 
                             //4. Ajout Membres
-                            for(int i=0;i<membres.size();i++){
-                                membreDao.write(membres.get(i)); }
+                            for(int i=0;i<membres.size();i++)
+                                membreDao.write(membres.get(i));
 
                             //5. Ajout Album
-                            for(int i=0;i<listeAlbums.size();i++){
-                                albumDao.write(listeAlbums.get(i)); }
+                            for(int i=0;i<listeAlbums.size();i++)
+                                albumDao.write(listeAlbums.get(i));
 
                             //6. Ajout Titres
-                            for(int i=0;i<listeTitres.size();i++){
-                                titreDao.write(listeTitres.get(i)); }
+                            for(int i=0;i<listeTitres.size();i++)
+                                titreDao.write(listeTitres.get(i));
 
                             //7. Modofication bouton favoris
                             ibFavourite.setBackgroundResource(R.drawable.round_favourite);
-
-
                             isFavorite = true;
+
                             loading.dismiss();
 
                         } else {
@@ -447,6 +354,90 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
             Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+    }
+
+    public void remove_liaison(final int id_utilisateur, final int id_groupe){
+        final DialogFragment loading = new LoadingDialog();
+        android.app.FragmentManager frag = ((AppCompatActivity) this).getFragmentManager();
+        loading.show(frag,"LoadingDialog");
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(HomebandRetrofit.API_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            // Création d'une instance du service avec Retrofit
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+
+            // Requête vers l'API
+            serviceApi.removeUtilisateurGroupe(id_utilisateur,id_groupe).enqueue(new Callback<HomebandApiReponse>() {
+                @Override
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
+
+
+                    // En fonction du code HTTP de Retour (2** = Successful)
+                    if (response.isSuccessful()) {
+
+                        // Récupération de la réponse de l'API
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
+
+                        CharSequence messageToast;
+                        if (res.isOperationReussie() == true) {
+
+                            // Récupération de l'utilisateur connecté
+                            Utilisateur user = utilisateurDao.getConnectedUser();
+
+                            // Suppression du groupe de sa liste
+                            utilisateurDao.deleteGroup(user.getId_utilisateurs(), groupe.getId_groupes());
+                            if(!groupeDao.isUsed(groupe.getId_groupes())){
+                                //2. Supression Membres local
+                                membreDao.deleteByGroup(id_groupe);
+
+                                //3. Supression Album
+                                albumDao.deleteByGroup(id_groupe);
+
+                                //4. Supression Titres
+                                titreDao.deleteByGroup(id_groupe);
+                            }
+
+                            isFavorite = false;
+                            ibFavourite.setBackgroundResource(R.drawable.round_disabled);
+
+                            loading.dismiss();
+                        } else {
+                            loading.dismiss();
+                            messageToast = "Échec de la connexion\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getApplicationContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } else {
+                        loading.dismiss();
+                        int statusCode = response.code();
+
+                        String res = response.toString();
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+                    loading.dismiss();
+                    Log.d("LoginActivity", t.getMessage());
+                }
+            });
+        } catch (Exception e){
+            loading.dismiss();
+            Toast.makeText(this,(CharSequence)"Exception",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+
     }
 
     public void getAlbums(int id){
