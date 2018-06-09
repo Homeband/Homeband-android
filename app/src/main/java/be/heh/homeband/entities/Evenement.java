@@ -23,6 +23,10 @@ public class Evenement extends RealmObject implements Serializable {
 	private int id_groupes;
 	private int id_adresses;
 
+
+
+	private String illustration;
+
 	@LinkingObjects("events")
 	private final RealmResults<Utilisateur> users = null;
 
@@ -111,6 +115,14 @@ public class Evenement extends RealmObject implements Serializable {
 
 	public RealmResults<Utilisateur> getUsers() {
 		return users;
+	}
+
+	public String getIllustration() {
+		return illustration;
+	}
+
+	public void setIllustration(String illustration) {
+		this.illustration = illustration;
 	}
 
 }

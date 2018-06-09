@@ -40,7 +40,13 @@ public class SearchGroupHolder extends RecyclerView.ViewHolder {
         }else{
             tvGroupCity.setText("");
         }
-
-        Picasso.with(imgGroup.getContext()).load("http://www.tate.org.uk/art/images/work/T/T05/T05010_10.jpg").centerCrop().fit().into(imgGroup);
+        String url = "http://dev.zen-project.be/homeband/images/";
+        if (monGroupe.getIllustration().equals("") ){
+            url += "no_image.png";
+        }
+        else{
+            url += "group/" + monGroupe.getIllustration();
+        }
+        Picasso.with(imgGroup.getContext()).load(url).centerCrop().fit().into(imgGroup);
     }
 }

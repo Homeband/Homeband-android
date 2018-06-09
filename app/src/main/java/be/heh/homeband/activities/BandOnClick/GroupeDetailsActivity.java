@@ -19,12 +19,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -95,6 +97,8 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
     TextView tvBandStyle;
 
     ImageButton ibFavourite;
+
+    ImageView ivBand;
 
     Groupe groupe;
     List<Membre> membres;
@@ -184,7 +188,15 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
     public void init(){
 
-
+        ivBand = (ImageView) findViewById(R.id.ivBand);
+        String url = "http://dev.zen-project.be/homeband/images/";
+        if (groupe.getIllustration() == ""){
+            url += "no_image.png";
+        }
+        else{
+            url += "group/" + groupe.getIllustration();
+        }
+        Picasso.with(this).load(url).centerCrop().fit().into(ivBand);
         tvBandName = (TextView) findViewById(R.id.tvBandName);
         tvBandCity = (TextView) findViewById(R.id.tvBandCity);
         tvBandStyle = (TextView) findViewById(R.id.tvBandStyle);

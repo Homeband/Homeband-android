@@ -16,7 +16,6 @@
                 android:id="@+id/ivBand"
                 android:layout_width="230dp"
                 android:layout_height="160dp"
-                android:src="@drawable/royalblood"
                 android:layout_alignParentLeft="true"
                 />
             <TextView

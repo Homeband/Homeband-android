@@ -32,6 +32,7 @@ public class Groupe extends RealmObject implements Serializable {
 	private boolean est_actif;
 	private int id_styles;
 	private int id_villes;
+	private String illustration;
 
 	@LinkingObjects("groups")
 	private final  RealmResults<Utilisateur> users = null;
@@ -208,5 +209,13 @@ public class Groupe extends RealmObject implements Serializable {
 
 	public void setEvents(RealmList<Evenement> events) {
 		this.events = events;
+	}
+
+	public String getIllustration() {
+		return illustration;
+	}
+
+	public void setIllustration(String illustration) {
+		this.illustration = illustration;
 	}
 }
