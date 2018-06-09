@@ -69,7 +69,7 @@
         android:id="@+id/bMotDePasseOublie"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_above="@+id/bCreerCompte"
+        android:layout_above="@+id/btnCreerCompte"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="55dp"
         android:background="#00FFFFFF"
@@ -79,7 +79,7 @@
         />
 
     <Button
-        android:id="@+id/bCreerCompte"
+        android:id="@+id/btnCreerCompte"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"

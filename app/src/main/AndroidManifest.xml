@@ -43,6 +43,7 @@
         <activity android:name=".activities.ListAlbum.ListAlbumResultActivity" />
         <activity android:name=".activities.avisRecyclerView.AvisResultActivity" />
         <activity android:name=".activities.AddAvis"></activity>
+        <activity android:name=".activities.Inscription" />
     </application>
 
 </manifest>

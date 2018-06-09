@@ -29,7 +29,7 @@
             android:textColor="@color/colorAccent"
             />
         <EditText
-            android:id="@+id/etLogin"
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/imgLogo"
@@ -44,13 +44,25 @@
             />
 
         <Button
+            android:id="@+id/btnSendMail"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
-            android:background="@color/colorAccent"
             android:layout_marginTop="20dp"
             android:text="Envoyer"
-            android:layout_below="@id/etLogin"
+            android:layout_below="@id/etEmail"
+            android:background="#00FFFFFF"
+            android:textColor="#FFFFFF"
+            />
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:text="Annuler"
+            android:layout_below="@id/btnSendMail"
+            android:background="#00FFFFFF"
+            android:textColor="#FFFFFF"
             />
         <Button
             android:id="@+id/bCreerCompte"

@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassword;
 
     private Button btnMotDePasseOublie;
+    private Button btnCreerCompte;
+
     private boolean estConnecte = false;
 
     UtilisateurDao utilisateurDao;
@@ -75,6 +77,14 @@ public class LoginActivity extends AppCompatActivity {
         btnMotDePasseOublie.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent i = new Intent(v.getContext(), PasswordForgetActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnCreerCompte = findViewById(R.id.btnCreerCompte);
+        btnCreerCompte.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent i = new Intent(v.getContext(), Inscription.class);
                 startActivity(i);
             }
         });
