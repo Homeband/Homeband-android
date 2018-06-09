@@ -114,8 +114,6 @@ public class SearchGroupResultActivity extends AppCompatActivity{
                             GsonBuilder builder = new GsonBuilder();
                             builder.registerTypeAdapter(boolean.class, new BooleanTypeAdapter());
                             Gson gson = builder.create();
-                            //Gson gson = new Gson();
-                            //C'est le groupe que l'on va récupérer en objet json et transforme en objet groupe. Le dernier parametre c'est le type d'objet retourner
                             Groupe groupe = gson.fromJson(res.get("group"),Groupe.class);
                             Type typeListe = new TypeToken<List<Membre>>(){}.getType();
                             List<Membre> membres = gson.fromJson(res.get("members").getAsJsonArray(), typeListe);

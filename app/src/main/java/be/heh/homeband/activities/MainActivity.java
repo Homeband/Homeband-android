@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements  HomeFrag.OnFragm
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    toolbar.setTitle("Acceuil");
+                    toolbar.setTitle("Accueil");
                     fragment = new HomeFrag();
                     loadFragment(fragment);
                     return true;

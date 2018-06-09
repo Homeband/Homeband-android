@@ -70,8 +70,6 @@ public class AvisResultActivity extends AppCompatActivity {
         //pour adapter en grille comme une RecyclerView, avec 2 cellules par ligne
         //recyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
-        //puis créer un SearchGroupAdapter, lui fournir notre liste de villes.
-        //cet adapter servira à remplir notre recyclerview
         recyclerView.setAdapter(new AvisAdapter(avis));
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {

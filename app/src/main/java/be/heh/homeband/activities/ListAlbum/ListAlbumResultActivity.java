@@ -112,7 +112,6 @@ public class ListAlbumResultActivity extends AppCompatActivity {
 
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             Type typeListe = new TypeToken<List<Titre>>(){}.getType();
-                            //C'est le groupe que l'on va récupérer en objet json et transforme en objet groupe. Le dernier parametre c'est le type d'objet retourner
                             List<Titre> listeTitre = gson.fromJson(res.get("titres").getAsJsonArray(), typeListe);
                             Intent intent = new Intent (getApplicationContext(),AlbumDetailsActivity.class);
                             intent.putExtra("titres",(ArrayList<Titre>) listeTitre);

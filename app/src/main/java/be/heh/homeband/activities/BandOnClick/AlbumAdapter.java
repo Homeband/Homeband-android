@@ -44,12 +44,10 @@ public class AlbumAdapter extends ArrayAdapter<Titre> {
         // 3. Get the two text view from the rowView
         TextView labelView = (TextView) rowView.findViewById(R.id.tvTitreAlbum);
 
-
-
         // 4. Set the text for textView
         labelView.setText(titre.getTitre());
 
-        // 5. retrn rowView
+        // 5. return rowView
         return rowView;
     }
 }

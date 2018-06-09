@@ -127,7 +127,6 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
         init();
         bindData(groupe);
         setTitle(groupe.getNom());
-        // Locate the viewpager in activity_main.xml
         viewPager = (ViewPager) findViewById(R.id.pager);
 
         // Set the ViewPagerAdapter into ViewPager
@@ -299,23 +298,23 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             List<Titre> listeTitres = gson.fromJson(res.get("titles").getAsJsonArray(), typeListeTitre);
 
 
-                            // Récupération de l'utilisateur connecté
+                            //2. Récupération de l'utilisateur connecté
                             Utilisateur user = utilisateurDao.getConnectedUser();
                             utilisateurDao.addGroup(user.getId_utilisateurs(), groupe);
 
-                            //4. Ajout Membres
+                            //3. Ajout Membres
                             for(int i=0;i<membres.size();i++)
                                 membreDao.write(membres.get(i));
 
-                            //5. Ajout Album
+                            //4. Ajout Album
                             for(int i=0;i<listeAlbums.size();i++)
                                 albumDao.write(listeAlbums.get(i));
 
-                            //6. Ajout Titres
+                            //5. Ajout Titres
                             for(int i=0;i<listeTitres.size();i++)
                                 titreDao.write(listeTitres.get(i));
 
-                            //7. Modofication bouton favoris
+                            //6. Modofication bouton favoris
                             ibFavourite.setBackgroundResource(R.drawable.round_favourite);
                             isFavorite = true;
 
