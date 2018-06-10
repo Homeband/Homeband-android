@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:text="Laisser les champs vides pour ne pas modifier votre mot de passe"
+            android:text="Laissez les champs vides pour ne pas modifier votre mot de passe"
             android:layout_below="@+id/tvPassword"
             android:layout_marginHorizontal="20dp"
             android:paddingHorizontal="10dp"

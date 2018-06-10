@@ -12,8 +12,8 @@
     <!-- Menu bottom -->
     <string name="title_home">Home</string>
     <string name="title_place">Localisation</string>
-    <string name="title_favorite">favoris</string>
-    <string name="title_settings">paramètre</string>
+    <string name="title_favorite">Favoris</string>
+    <string name="title_settings">Paramètres</string>
     <!-- Activité recherche groupe -->
     <string name="title_activity_search">Recherche groupe</string>
     <string name="title_activity_search_band">Groupe</string>
