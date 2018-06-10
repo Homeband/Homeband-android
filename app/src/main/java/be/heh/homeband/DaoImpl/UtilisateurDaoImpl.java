@@ -33,7 +33,10 @@ public class UtilisateurDaoImpl extends DaoImpl implements UtilisateurDao {
 
     @Override
     public Utilisateur write(Utilisateur obj) {
-        return null;
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(obj);
+        realm.commitTransaction();
+        return obj;
     }
 
     @Override

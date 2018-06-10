@@ -5,12 +5,112 @@
     tools:context="be.heh.homeband.activities.SettingsFrag">
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
+        <TextView
+            android:id="@+id/tvMail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Adresse e-mail"
+            android:layout_marginHorizontal="15dp"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            />
+        <EditText
+            android:id="@+id/etMailSettings"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:paddingHorizontal="10dp"
+            android:layout_below="@+id/tvMail"
+            android:hint="E-mail"
+            android:textColor="#000000"
+            android:backgroundTint="@android:color/holo_red_dark"
+
+            />
+        <TextView
+            android:id="@+id/tvPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Modifier votre mot de passe"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:padding="15dp"
+            android:layout_below="@+id/etMailSettings"
+            android:layout_marginHorizontal="15dp"
+            android:paddingHorizontal="10dp"
+            />
+        <TextView
+            android:id="@+id/tvPassword2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Laisser les champs vides pour ne pas modifier votre mot de passe"
+            android:layout_below="@+id/tvPassword"
+            android:layout_marginHorizontal="20dp"
+            android:paddingHorizontal="10dp"
+            />
+
+        <EditText
+            android:id="@+id/etMDP"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:paddingHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tvPassword2"
+            android:layout_centerHorizontal="true"
+            android:hint="Mot de passe"
+            android:textColor="#000000"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:inputType="textPassword"
+            />
+
+
+
+        <EditText
+            android:id="@+id/etMDPC"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:paddingHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/etMDP"
+            android:layout_centerHorizontal="true"
+            android:hint="Confirmation mot de passe "
+            android:textColor="#000000"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:inputType="textPassword"
+            />
+        <Button
+            android:id="@+id/btnModifierSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etMDPC"
+            android:layout_centerHorizontal="true"
+            android:text="Modifier les paramètres"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+            />
+    </RelativeLayout>
     <Button
         android:id="@+id/btnDisconnect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Deconnexion"
-        android:layout_centerHorizontal="true"/>
+        android:text="Déconnexion"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:background="#00FFFFFF"
+        android:textColor="@color/colorPrimary"
+
+        />
 
 </RelativeLayout>

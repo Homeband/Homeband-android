@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import be.heh.homeband.Dao.UtilisateurDao;
+import be.heh.homeband.DaoImpl.UtilisateurDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.app.HomebandApiInterface;
 import be.heh.homeband.app.HomebandApiReponse;
@@ -45,6 +47,8 @@ public class Inscription extends AppCompatActivity {
 
     Button btnSendInscription;
     Button btnSendInscriptionCancel;
+
+    UtilisateurDao utilisateurDao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,6 +92,7 @@ public class Inscription extends AppCompatActivity {
             }
         });
 
+        utilisateurDao = new UtilisateurDaoImpl();
     }
 
 

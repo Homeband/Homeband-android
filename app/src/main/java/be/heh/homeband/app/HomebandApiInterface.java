@@ -78,6 +78,9 @@ public interface HomebandApiInterface {
     @FormUrlEncoded
     Call<HomebandApiReponse> postForget(@Field("email") String email) ;
 
+    @PUT("api/utilisateurs/{id}")
+    Call<HomebandApiReponse> putSettings(@Path(value="id") int id_utilisateur, @Body HashMap<String,Object> params ) ;
+
     @POST("api/utilisateurs/{id_utilisateur}/groupes/{id_groupe}")
     @FormUrlEncoded
     Call <HomebandApiReponse> addUtilisateurGroupe(@Path(value="id_utilisateur") int id_utilisateur,@Path(value="id_groupe") int id_groupe,@Field("get_groupe") int get_groupe,@Field("get_membres") int get_membres,@Field("get_albums") int get_albums,@Field("get_titres") int get_titres );

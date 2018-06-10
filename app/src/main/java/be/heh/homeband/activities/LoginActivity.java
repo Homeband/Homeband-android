@@ -146,14 +146,16 @@ public class LoginActivity extends AppCompatActivity {
                             final Utilisateur user = gson.fromJson(res.get("user").getAsJsonObject(), Utilisateur.class);
                             user.setEst_connecte(true);
                             estConnecte = true;
-                            Realm realm = Realm.getDefaultInstance();
-                            realm.executeTransaction(new Realm.Transaction() {
-                                @Override
-                                public void execute(Realm realm) {
+                            utilisateurDao.write(user);
+//                            Realm realm = Realm.getDefaultInstance();
+//                            realm.executeTransaction(new Realm.Transaction() {
+//                                @Override
+//                                public void execute(Realm realm) {
+//
+//                                    realm.copyToRealmOrUpdate(user);
+//                                }
+//                            });
 
-                                    realm.copyToRealmOrUpdate(user);
-                                }
-                            });
 
                         } else {
                             messageToast = "Échec de la connexion\r\n" + res.getMessage();

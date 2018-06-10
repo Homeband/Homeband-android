@@ -1,21 +1,42 @@
 package be.heh.homeband.activities;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import be.heh.homeband.Dao.UtilisateurDao;
 import be.heh.homeband.DaoImpl.UtilisateurDaoImpl;
 import be.heh.homeband.R;
+import be.heh.homeband.app.HomebandApiInterface;
+import be.heh.homeband.app.HomebandApiReponse;
+import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.app.HomebandTools;
 import be.heh.homeband.entities.Utilisateur;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,13 +47,22 @@ import be.heh.homeband.entities.Utilisateur;
  * create an instance of this fragment.
  */
 public class SettingsFrag extends Fragment implements View.OnClickListener {
-    private Button btnDisconnect;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    Utilisateur user;
+
     UtilisateurDao utilisateurDao;
+    EditText etMail;
+    EditText etMDP;
+    EditText etMDPC;
+
+    Button btnModifierSettings;
+    Button btnDisconnect;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -120,15 +150,146 @@ public class SettingsFrag extends Fragment implements View.OnClickListener {
     }
     public void onClick(View v) {
 
-        utilisateurDao = new UtilisateurDaoImpl();
         utilisateurDao.disconnectUser();
         getActivity().finish();
 
         }
     public void initialisation(View myview){
+        utilisateurDao = new UtilisateurDaoImpl();
 
         btnDisconnect = (Button) myview.findViewById(R.id.btnDisconnect);
-
         btnDisconnect.setOnClickListener(this);
+
+        user = utilisateurDao.getConnectedUser();
+
+        etMail = myview.findViewById(R.id.etMailSettings);
+        etMail.setText(user.getEmail());
+        etMDP = myview.findViewById(R.id.etMDP);
+        etMDPC = myview.findViewById(R.id.etMDPC);
+
+        btnModifierSettings = myview.findViewById(R.id.btnModifierSettings);
+        btnModifierSettings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                changeParams();
+
+            }
+        });
+
+
     }
+
+    public void changeParams(){
+
+        if(isEmailValid(etMail.getText().toString())){
+            if(etMDP.getText().toString() != "" || etMDPC.getText().toString() != "" ){
+                if(etMDP.getText().toString().equals(etMDPC.getText().toString())){
+                    user.setMot_de_passe(etMDP.getText().toString());
+                }
+                else{
+                    Toast toast = Toast.makeText(getContext(), "Les deux mot de passe ne sont pas identiques", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                    return;
+                }
+            }
+            user.setEmail(etMail.getText().toString());
+            user.setEst_actif(true);
+            modifierMail(user);
+        }
+        else{
+            Toast toast = Toast.makeText(getContext(), "Adresse mail non valide", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
+
+
+
+    }
+
+    public void modifierMail(Utilisateur user){
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("user",user);
+        final DialogFragment loading = new LoadingDialog();
+        android.app.FragmentManager frag = ((AppCompatActivity) getActivity()).getFragmentManager();
+        loading.show(frag,"LoadingDialog");
+        try {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(HomebandRetrofit.API_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build();
+
+            // Création d'une instance du service avec Retrofit
+            HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
+
+            // Requête vers l'API
+            serviceApi.putSettings(user.getId_utilisateurs(),params).enqueue(new Callback<HomebandApiReponse>() {
+                @Override
+                public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
+
+
+                    // En fonction du code HTTP de Retour (2** = Successful)
+                    if (response.isSuccessful()) {
+
+                        // Récupération de la réponse de l'API
+                        HomebandApiReponse res = response.body();
+                        res.mapResultat();
+
+                        CharSequence messageToast;
+                        if (res.isOperationReussie() == true) {
+
+                            Gson gson = new Gson();
+                            final Utilisateur user = gson.fromJson(res.get("user").getAsJsonObject(), Utilisateur.class);
+                            utilisateurDao.write(user);
+                            Toast toast = Toast.makeText(getContext(), "Les modifications demandées ont bien été effectuées.", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                            loading.dismiss();
+
+                        } else {
+                            loading.dismiss();
+                            messageToast = "Une erreur s'est produite lors de la modification des données.\r\n" + res.getMessage();
+
+                            // Affichage d'un toast pour indiquer le résultat
+                            Toast toast = Toast.makeText(getContext(), messageToast, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } else {
+                        loading.dismiss();
+                        int statusCode = response.code();
+
+                        String res = response.toString();
+                        CharSequence message ="Erreur lors de l'appel à l'API (" + statusCode +")";
+                        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HomebandApiReponse> call, Throwable t) {
+                    loading.dismiss();
+
+                    Log.d("LoginActivity", t.getMessage());
+                }
+            });
+        } catch (Exception e){
+            loading.dismiss();
+            Toast.makeText(getContext(),(CharSequence)"Exception",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
 }
