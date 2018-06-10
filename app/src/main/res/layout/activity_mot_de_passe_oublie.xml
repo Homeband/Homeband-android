@@ -60,22 +60,13 @@
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:text="Annuler"
-            android:layout_below="@id/btnSendMail"
-            android:background="#00FFFFFF"
-            android:textColor="#FFFFFF"
-            />
-        <Button
-            android:id="@+id/bCreerCompte"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginHorizontal="60dp"
+            android:layout_marginBottom="40dp"
             android:background="#00FFFFFF"
-            android:paddingHorizontal="10dp"
-            android:text="@string/new_account"
-            android:textColor="#FFFFFF" />
+            android:textSize="12dp"
+            android:textColor="#A9A9A9"
+            />
+
 
     </RelativeLayout>
 

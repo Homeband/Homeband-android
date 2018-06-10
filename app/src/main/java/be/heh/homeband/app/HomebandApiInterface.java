@@ -74,6 +74,9 @@ public interface HomebandApiInterface {
     @POST("api/utilisateurs")
     Call<HomebandApiReponse> postUser(@Body HashMap<String,Object> params) ;
 
+    @POST("api/utilisateurs/forget")
+    @FormUrlEncoded
+    Call<HomebandApiReponse> postForget(@Field("email") String email) ;
 
     @POST("api/utilisateurs/{id_utilisateur}/groupes/{id_groupe}")
     @FormUrlEncoded

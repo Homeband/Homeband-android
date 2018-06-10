@@ -105,9 +105,9 @@ public class Inscription extends AppCompatActivity {
                     Utilisateur user = new Utilisateur();
                     user.setEmail(etEmail.getText().toString());
                     user.setLogin(etLogin.getText().toString());
-                    user.setMot_de_passe(etEmail.getText().toString());
+                    user.setMot_de_passe(etMDP.getText().toString());
                     inscriptionAPI(user);
-                    //this.finish();
+                    this.finish();
 
                 }
                 else{
@@ -117,7 +117,7 @@ public class Inscription extends AppCompatActivity {
                 }
             }
             else{
-                Toast toast = Toast.makeText(getApplicationContext(), "Les deux champs de mot de passes ne sont pas identique", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getApplicationContext(), "Les deux champs de mot de passe ne sont pas identiques", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
             }
