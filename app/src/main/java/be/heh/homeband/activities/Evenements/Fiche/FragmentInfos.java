@@ -1,6 +1,7 @@
 package be.heh.homeband.activities.Evenements.Fiche;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.parceler.Parcels;
 
 import java.text.SimpleDateFormat;
 
@@ -74,8 +77,17 @@ public class FragmentInfos extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View myview = inflater.inflate(R.layout.fragment_infos, container, false);
-        event = (Evenement) getActivity().getIntent().getSerializableExtra("event");
-        adresse = (Adresse) getActivity().getIntent().getSerializableExtra("address");
+        Intent intent = getActivity().getIntent();
+
+        if(intent.hasExtra("type") && intent.getStringExtra("type").equals("local")){
+            Bundle bundle = intent.getBundleExtra("params");
+            event = Parcels.unwrap(bundle.getParcelable("event"));
+            adresse = (Adresse) intent.getSerializableExtra("address");
+        } else {
+            event = (Evenement) intent.getSerializableExtra("event");
+            adresse = (Adresse) intent.getSerializableExtra("address");
+        }
+
         init(myview);
         bind(event);
         return myview;

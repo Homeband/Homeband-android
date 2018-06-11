@@ -12,21 +12,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.Dao.AdresseDao;
 import be.heh.homeband.Dao.EvenementDao;
+import be.heh.homeband.Dao.GroupeDao;
 import be.heh.homeband.Dao.UtilisateurDao;
 import be.heh.homeband.DaoImpl.AdresseDaoImpl;
 import be.heh.homeband.DaoImpl.EvenementDaoImpl;
+import be.heh.homeband.DaoImpl.GroupeDaoImpl;
 import be.heh.homeband.DaoImpl.UtilisateurDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.Evenements.Fiche.EventDetailsActivity;
+import be.heh.homeband.activities.Groupes.Fiche.GroupeDetailsActivity;
 import be.heh.homeband.app.RecyclerTouchListener;
 import be.heh.homeband.activities.Evenements.Favoris.FragmentHomeAdapter;
 import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Evenement;
+import be.heh.homeband.entities.Groupe;
+import be.heh.homeband.entities.Membre;
 import be.heh.homeband.entities.Utilisateur;
 
 /**
@@ -46,6 +53,7 @@ public class HomeFrag extends Fragment {
 
     EvenementDao evenementDao;
     AdresseDao adresseDao;
+    GroupeDao groupeDao;
     UtilisateurDao utilisateurDao;
     private OnFragmentInteractionListener mListener;
 
@@ -82,6 +90,7 @@ public class HomeFrag extends Fragment {
         View myview = inflater.inflate(R.layout.fragment_home, container, false);
         evenementDao = new EvenementDaoImpl();
         adresseDao = new AdresseDaoImpl();
+        groupeDao = new GroupeDaoImpl();
         utilisateurDao = new UtilisateurDaoImpl();
         events = getFavouriteEvent();
 
@@ -164,11 +173,18 @@ public class HomeFrag extends Fragment {
     private void getEvent(int id){
 
         Evenement evenement = evenementDao.get(id);
+        Groupe groupe = groupeDao.get(evenement.getId_groupes());
         Adresse adresse = adresseDao.get(evenement.getId_adresses());
 
-        Intent intent = new Intent (getContext(),EventDetailsActivity.class);
-        intent.putExtra("event", evenement);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("event", Parcels.wrap(evenement));
+        bundle.putParcelable("group", Parcels.wrap(groupe));
+
+        Intent intent = new Intent (getContext(), EventDetailsActivity.class);
+        intent.putExtra("type", "local");
         intent.putExtra("address", adresse);
+        intent.putExtra("params", bundle);
         startActivity(intent);
     }
 

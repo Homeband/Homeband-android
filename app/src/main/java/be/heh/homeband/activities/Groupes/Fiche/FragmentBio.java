@@ -11,8 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
+
 import be.heh.homeband.R;
 import be.heh.homeband.entities.Groupe;
+import be.heh.homeband.entities.Membre;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,7 +79,14 @@ public class FragmentBio extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //C'est l'objet groupe reçu depuis l'API
-        groupe = (Groupe) getActivity().getIntent().getSerializableExtra("groupe");
+        Intent intent = getActivity().getIntent();
+        if(intent.hasExtra("type") && intent.getStringExtra("type").equals("local")){
+            Bundle bundle = intent.getBundleExtra("params");
+            groupe = Parcels.unwrap(bundle.getParcelable("groupe"));
+        } else {
+            groupe = (Groupe) getActivity().getIntent().getSerializableExtra("groupe");
+        }
+
         View myview = inflater.inflate(R.layout.fragment_bio, container, false);
         initialisation(myview);
         return myview;

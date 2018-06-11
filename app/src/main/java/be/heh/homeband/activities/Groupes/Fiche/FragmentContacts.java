@@ -1,6 +1,7 @@
 package be.heh.homeband.activities.Groupes.Fiche;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.parceler.Parcels;
 
 import be.heh.homeband.R;
 import be.heh.homeband.entities.Groupe;
@@ -54,7 +57,13 @@ public class FragmentContacts extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        groupe = (Groupe) getActivity().getIntent().getSerializableExtra("groupe");
+        Intent intent = getActivity().getIntent();
+        if(intent.hasExtra("type") && intent.getStringExtra("type").equals("local")){
+            Bundle bundle = intent.getBundleExtra("params");
+            groupe = Parcels.unwrap(bundle.getParcelable("groupe"));
+        } else {
+            groupe = (Groupe) getActivity().getIntent().getSerializableExtra("groupe");
+        }
         View myview = inflater.inflate(R.layout.fragment_contacts, container, false);
         initialisation(myview);
         return myview;

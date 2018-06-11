@@ -18,6 +18,8 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import org.parceler.Parcels;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +40,7 @@ import be.heh.homeband.activities.LoadingDialog;
 import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
+import be.heh.homeband.entities.Membre;
 import be.heh.homeband.entities.Utilisateur;
 import be.heh.homeband.entities.Ville;
 
@@ -70,9 +73,20 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_events);
-        event = (Evenement) getIntent().getSerializableExtra("event");
-        groupe = (Groupe) getIntent().getSerializableExtra("group");
-        adresse = (Adresse) getIntent().getSerializableExtra("address");
+
+        Intent intent = getIntent();
+
+        if(intent.hasExtra("type") && intent.getStringExtra("type").equals("local")){
+            Bundle bundle = intent.getBundleExtra("params");
+            event = Parcels.unwrap(bundle.getParcelable("event"));
+            groupe = Parcels.unwrap(bundle.getParcelable("group"));
+            adresse = (Adresse) intent.getSerializableExtra("address");
+        } else {
+            event = (Evenement) intent.getSerializableExtra("event");
+            groupe = (Groupe) intent.getSerializableExtra("group");
+            adresse = (Adresse) intent.getSerializableExtra("address");
+        }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
         setTitle(event.getNom());

@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import be.heh.homeband.Dao.VilleDao;
+import be.heh.homeband.DaoImpl.VilleDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Ville;
@@ -17,36 +19,47 @@ import io.realm.Realm;
  */
 
 public class SearchGroupHolder extends RecyclerView.ViewHolder {
+
+    // Eléments visuels
     private TextView tvGroupName;
     private TextView tvGroupCity;
     private ImageView imgGroup;
 
-    //itemView est la vue correspondante à 1 cellule
+    private VilleDao villeDao;
+
+    // Constructeur (Binding des variables avec le XML)
     public SearchGroupHolder(View itemView) {
         super(itemView);
 
         tvGroupName = (TextView) itemView.findViewById(R.id.tvGroupName);
         tvGroupCity = (TextView) itemView.findViewById(R.id.tvGroupCity);
         imgGroup = (ImageView) itemView.findViewById(R.id.imgGroup);
+
+        villeDao = new VilleDaoImpl();
     }
 
-    //puis ajouter une fonction pour remplir la cellule en fonction d'un MyObject
+    // Remplis les éléments avec les valeurs de l'objets (ici le groupe)
     public void bind(Groupe monGroupe){
-        Realm realm = Realm.getDefaultInstance();
-        Ville ville = realm.where(Ville.class).equalTo("id_villes",monGroupe.getId_villes()).findFirst();
+
+        Ville ville = villeDao.get(monGroupe.getId_villes());
+
         tvGroupName.setText(monGroupe.getNom());
+
         if (ville != null){
             tvGroupCity.setText(ville.getNom());
-        }else{
+        } else{
             tvGroupCity.setText("");
         }
-        String url = "http://dev.zen-project.be/homeband/images/";
+
+        // Image
+        String urlImage = "http://dev.zen-project.be/homeband/images/";
         if (monGroupe.getIllustration().equals("") ){
-            url += "no_image.png";
+            urlImage += "no_image.png";
         }
         else{
-            url += "group/" + monGroupe.getIllustration();
+            urlImage += "group/" + monGroupe.getIllustration();
         }
-        Picasso.with(imgGroup.getContext()).load(url).centerCrop().fit().into(imgGroup);
+
+        Picasso.with(imgGroup.getContext()).load(urlImage).centerCrop().fit().into(imgGroup);
     }
 }

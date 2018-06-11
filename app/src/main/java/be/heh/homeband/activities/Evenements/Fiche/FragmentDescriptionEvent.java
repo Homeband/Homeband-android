@@ -1,6 +1,7 @@
 package be.heh.homeband.activities.Evenements.Fiche;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import java.text.SimpleDateFormat;
 
 import be.heh.homeband.Dao.GroupeDao;
@@ -16,6 +19,7 @@ import be.heh.homeband.Dao.VilleDao;
 import be.heh.homeband.R;
 import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Evenement;
+import be.heh.homeband.entities.Groupe;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,8 +65,16 @@ public class FragmentDescriptionEvent extends Fragment {
         // Inflate the layout for this fragment
 
          View myView = inflater.inflate(R.layout.fragment_description_event, container, false);
-        event = (Evenement) getActivity().getIntent().getSerializableExtra("event");
-        adresse = (Adresse) getActivity().getIntent().getSerializableExtra("address");
+        Intent intent = getActivity().getIntent();
+
+        if(intent.hasExtra("type") && intent.getStringExtra("type").equals("local")){
+            Bundle bundle = intent.getBundleExtra("params");
+            event = Parcels.unwrap(bundle.getParcelable("event"));
+            adresse = (Adresse) intent.getSerializableExtra("address");
+        } else {
+            event = (Evenement) intent.getSerializableExtra("event");
+            adresse = (Adresse) intent.getSerializableExtra("address");
+        }
          init(myView);
         return myView;
     }

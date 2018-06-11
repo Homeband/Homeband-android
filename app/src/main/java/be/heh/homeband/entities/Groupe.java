@@ -1,14 +1,21 @@
 package be.heh.homeband.entities;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelPropertyConverter;
+
 import java.io.Serializable;
 
+import be.heh.homeband.app.RealmListParcelConverter;
+import io.realm.GroupeRealmProxy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
-
+@Parcel(implementations = { GroupeRealmProxy.class },
+        value = Parcel.Serialization.BEAN,
+        analyze = { Groupe.class })
 public class Groupe extends RealmObject implements Serializable {
 
 	@PrimaryKey
@@ -33,8 +40,11 @@ public class Groupe extends RealmObject implements Serializable {
 	private int id_villes;
 	private String illustration;
 
+
 	@LinkingObjects("groups")
 	private final  RealmResults<Utilisateur> users = null;
+
+	@ParcelPropertyConverter(RealmListParcelConverter.class)
 	private RealmList<Evenement> events;
 
 	public Groupe(){
@@ -202,6 +212,7 @@ public class Groupe extends RealmObject implements Serializable {
 		return users;
 	}
 
+	@ParcelPropertyConverter(RealmListParcelConverter.class)
 	public RealmList<Evenement> getEvents() {
 		return events;
 	}

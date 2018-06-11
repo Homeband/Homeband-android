@@ -25,6 +25,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import org.parceler.Parcels;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,8 +113,16 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
 
 
         //C'est l'objet groupe reçu depuis l'API
-        groupe = (Groupe) getIntent().getSerializableExtra("groupe");
-        membres = (ArrayList<Membre>) getIntent().getSerializableExtra("members");
+        Intent intent = getIntent();
+
+        if(intent.hasExtra("type") && intent.getStringExtra("type").equals("local")){
+            Bundle bundle = intent.getBundleExtra("params");
+            groupe = Parcels.unwrap(bundle.getParcelable("groupe"));
+            membres = (ArrayList<Membre>) bundle.get("members");
+        } else {
+            groupe = (Groupe) getIntent().getSerializableExtra("groupe");
+            membres = (ArrayList<Membre>) getIntent().getSerializableExtra("members");
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();

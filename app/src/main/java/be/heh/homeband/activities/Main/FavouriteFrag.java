@@ -12,6 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.parceler.Parcel;
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,9 +163,13 @@ public class FavouriteFrag extends Fragment {
         Groupe groupe = groupeDao.get(id);
         List<Membre> membres = membreDao.getByGroupe(id);
 
-        Intent intent = new Intent (getContext(),GroupeDetailsActivity.class);
-        intent.putExtra("groupe",groupe);
-        intent.putExtra("members",(ArrayList<Membre>) membres);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("groupe", Parcels.wrap(groupe));
+        bundle.putSerializable("members", (ArrayList<Membre>) membres);
+
+        Intent intent = new Intent (getContext(), GroupeDetailsActivity.class);
+        intent.putExtra("type", "local");
+        intent.putExtra("params", bundle);
         startActivity(intent);
     }
 

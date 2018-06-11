@@ -18,20 +18,18 @@ public class SearchGroupAdapter extends RecyclerView.Adapter<SearchGroupHolder> 
 
     List<Groupe> list;
 
-    //ajouter un constructeur prenant en entrée une liste
-    public SearchGroupAdapter(List<Groupe> list) {
-        this.list = list;
-    }
+    // Constructeur
+    public SearchGroupAdapter(List<Groupe> list) { this.list = list; }
 
-    //cette fonction permet de créer les viewHolder
-    //et par la même indiquer la vue à inflater (à partir des layout xml)
+    // Definit le  layout à utiliser et créer le ViewHolder (vide)
+    // cette fonction permet de créer les viewHolder
     @Override
     public SearchGroupHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_listgroup_card,viewGroup,false);
         return new SearchGroupHolder(view);
     }
 
-    //c'est ici que nous allons remplir notre cellule avec le texte/image de chaque MyObjects
+    // Donne les paramètres au ViewHolder pour se remplir
     @Override
     public void onBindViewHolder(SearchGroupHolder searchGroupHolder, int position) {
         Groupe myObject = list.get(position);

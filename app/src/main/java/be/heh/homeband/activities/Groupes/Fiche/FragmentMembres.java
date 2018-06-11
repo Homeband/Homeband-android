@@ -1,6 +1,7 @@
 package be.heh.homeband.activities.Groupes.Fiche;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -59,8 +62,17 @@ public class FragmentMembres extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        groupe = (Groupe) getActivity().getIntent().getSerializableExtra("groupe");
-        membres = (ArrayList<Membre>) getActivity().getIntent().getSerializableExtra("members");
+        Intent intent = getActivity().getIntent();
+
+        if(intent.hasExtra("type") && intent.getStringExtra("type").equals("local")){
+            Bundle bundle = intent.getBundleExtra("params");
+            groupe = Parcels.unwrap(bundle.getParcelable("groupe"));
+            membres = (ArrayList<Membre>) bundle.get("members");
+        } else {
+            groupe = (Groupe) intent.getSerializableExtra("groupe");
+            membres = (ArrayList<Membre>) intent.getSerializableExtra("members");
+        }
+
         // Inflate the layout for this fragment
         View myview = inflater.inflate(R.layout.fragment_membres, container, false);
         initialisation(myview);

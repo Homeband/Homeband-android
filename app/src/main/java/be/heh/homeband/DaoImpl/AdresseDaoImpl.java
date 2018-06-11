@@ -8,7 +8,14 @@ import be.heh.homeband.entities.Adresse;
 public class AdresseDaoImpl  extends DaoImpl implements AdresseDao {
     @Override
     public Adresse get(Integer id) {
-        return realm.where(Adresse.class).equalTo("id_adresses",id).findFirst();
+        Adresse result = realm.where(Adresse.class)
+                .equalTo("id_adresses",id)
+                .findFirst();
+        if (result != null){
+            return realm.copyFromRealm(result);
+        }
+        
+        return null;
     }
 
     @Override
