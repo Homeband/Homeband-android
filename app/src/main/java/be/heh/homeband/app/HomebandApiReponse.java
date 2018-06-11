@@ -1,14 +1,12 @@
 package be.heh.homeband.app;
 
 import com.google.gson.JsonElement;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Nicolas on 26-01-18.
+ * Created on 26-01-18.
  */
 
 public class HomebandApiReponse extends HashMap<String, JsonElement> {

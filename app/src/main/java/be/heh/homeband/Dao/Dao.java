@@ -1,6 +1,5 @@
 package be.heh.homeband.Dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface Dao<K,E> {

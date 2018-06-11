@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/hb_gradient"
-    tools:context="be.heh.homeband.activities.PasswordForgetActivity">
+    tools:context="be.heh.homeband.activities.Offline.PasswordForgetActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -4,7 +4,6 @@ import java.util.List;
 
 import be.heh.homeband.Dao.VersionDao;
 import be.heh.homeband.entities.Version;
-import io.realm.Realm;
 import io.realm.RealmQuery;
 
 public class VersionDaoImpl extends DaoImpl implements VersionDao {

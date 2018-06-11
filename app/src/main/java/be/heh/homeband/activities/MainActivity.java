@@ -4,15 +4,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import  android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.support.v7.app.ActionBar;
 
 import be.heh.homeband.R;
+import be.heh.homeband.activities.Main.FavouriteFrag;
+import be.heh.homeband.activities.Main.HomeFrag;
+import be.heh.homeband.activities.Main.SearchFrag;
+import be.heh.homeband.activities.Main.SettingsFrag;
 import be.heh.homeband.app.HomebandTools;
 import be.heh.homeband.entities.Style;
 

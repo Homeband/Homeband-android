@@ -6,26 +6,17 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,14 +26,11 @@ import be.heh.homeband.Dao.VersionDao;
 import be.heh.homeband.DaoImpl.VersionDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.LoadingDialog;
-import be.heh.homeband.activities.MainActivity;
 import be.heh.homeband.entities.Style;
-import be.heh.homeband.entities.Utilisateur;
 import be.heh.homeband.entities.Version;
 import be.heh.homeband.entities.Ville;
 import io.realm.Realm;
 import io.realm.RealmQuery;
-import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +38,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by christopher on 07/03/2018.
+ * Created on 07/03/2018.
  */
 
 public abstract class HomebandTools {

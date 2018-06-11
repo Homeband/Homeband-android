@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.Dao.GroupeDao;
-import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Groupe;
 
 public class GroupeDaoImpl extends DaoImpl implements GroupeDao {

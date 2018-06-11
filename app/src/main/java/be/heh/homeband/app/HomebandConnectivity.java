@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Created by christopher on 12/03/2018.
+ * Created on 12/03/2018.
  */
 
 public class HomebandConnectivity {

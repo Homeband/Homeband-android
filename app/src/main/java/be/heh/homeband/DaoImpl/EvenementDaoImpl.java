@@ -5,7 +5,6 @@ import java.util.List;
 
 import be.heh.homeband.Dao.EvenementDao;
 import be.heh.homeband.entities.Evenement;
-import be.heh.homeband.entities.Groupe;
 
 public class EvenementDaoImpl extends DaoImpl implements EvenementDao {
     @Override

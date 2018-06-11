@@ -4,8 +4,6 @@ import java.util.List;
 
 import be.heh.homeband.Dao.StyleDao;
 import be.heh.homeband.entities.Style;
-import be.heh.homeband.entities.Ville;
-import io.realm.Realm;
 
 public class StyleDaoImpl extends DaoImpl implements StyleDao {
     @Override

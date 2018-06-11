@@ -3,14 +3,13 @@ package be.heh.homeband.activities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
 import be.heh.homeband.R;
 
 /**
- * Created by christopher on 22/03/2018.
+ * Created on 22/03/2018.
  */
 
 public class LoadingDialog extends DialogFragment {

@@ -20,7 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".activities.Offline.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,19 +31,19 @@
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_home" />
         <activity
-            android:name=".activities.searchgroup.SearchGroupResultActivity"
+            android:name=".activities.Groupes.Recherche.SearchGroupResultActivity"
             android:label="Liste des groupes"></activity>
         <activity
-            android:name=".activities.searchevents.SearchEventsResultActivity"
+            android:name=".activities.Evenements.Recherche.SearchEventsResultActivity"
             android:label="Liste des évènements"></activity>
-        <activity android:name=".activities.PasswordForgetActivity" />
-        <activity android:name=".activities.BandOnClick.GroupeDetailsActivity" />
-        <activity android:name=".activities.BandOnClick.AlbumDetailsActivity" />
-        <activity android:name=".activities.BandOnClick.EventDetailsActivity" />
-        <activity android:name=".activities.ListAlbum.ListAlbumResultActivity" />
-        <activity android:name=".activities.avisRecyclerView.AvisResultActivity" />
-        <activity android:name=".activities.AddAvis"></activity>
-        <activity android:name=".activities.Inscription" />
+        <activity android:name=".activities.Offline.PasswordForgetActivity" />
+        <activity android:name=".activities.Groupes.Fiche.GroupeDetailsActivity" />
+        <activity android:name=".activities.Groupes.Albums.AlbumDetailsActivity" />
+        <activity android:name=".activities.Evenements.Fiche.EventDetailsActivity" />
+        <activity android:name=".activities.Groupes.Albums.ListAlbumResultActivity" />
+        <activity android:name=".activities.Groupes.Avis.AvisResultActivity" />
+        <activity android:name=".activities.Groupes.Avis.AddAvis"></activity>
+        <activity android:name=".activities.Offline.InscriptionActivity" />
     </application>
 
 </manifest>

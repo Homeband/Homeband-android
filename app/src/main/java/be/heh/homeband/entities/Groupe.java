@@ -7,7 +7,6 @@ import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
-import okhttp3.internal.Util;
 
 
 public class Groupe extends RealmObject implements Serializable {

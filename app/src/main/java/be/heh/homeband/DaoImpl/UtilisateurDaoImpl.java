@@ -1,6 +1,5 @@
 package be.heh.homeband.DaoImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.Dao.UtilisateurDao;
@@ -9,7 +8,6 @@ import be.heh.homeband.entities.Groupe;
 import be.heh.homeband.entities.Utilisateur;
 import io.realm.Realm;
 import io.realm.RealmQuery;
-import okhttp3.internal.Util;
 
 public class UtilisateurDaoImpl extends DaoImpl implements UtilisateurDao {
     @Override

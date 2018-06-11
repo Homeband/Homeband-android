@@ -1,11 +1,7 @@
 package be.heh.homeband.app;
 
-import android.util.Log;
-
 import java.util.Date;
 
-import be.heh.homeband.entities.Evenement;
-import be.heh.homeband.entities.Groupe;
 import io.realm.DynamicRealm;
 import io.realm.FieldAttribute;
 import io.realm.RealmMigration;

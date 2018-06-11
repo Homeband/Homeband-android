@@ -2,12 +2,11 @@ package be.heh.homeband.app;
 
 import android.app.Application;
 
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
- * Created by christopher on 21/03/2018.
+ * Created on 21/03/2018.
  */
 
 public class HomebandApplication extends Application {

@@ -4,7 +4,6 @@ import java.util.List;
 
 import be.heh.homeband.Dao.AdresseDao;
 import be.heh.homeband.entities.Adresse;
-import be.heh.homeband.entities.Evenement;
 
 public class AdresseDaoImpl  extends DaoImpl implements AdresseDao {
     @Override

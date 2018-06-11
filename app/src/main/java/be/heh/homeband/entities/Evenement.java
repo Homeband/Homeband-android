@@ -2,7 +2,6 @@ package be.heh.homeband.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import io.realm.RealmObject;
 import io.realm.RealmResults;
