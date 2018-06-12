@@ -55,6 +55,8 @@ public class HomeFrag extends Fragment {
     AdresseDao adresseDao;
     GroupeDao groupeDao;
     UtilisateurDao utilisateurDao;
+
+    private FragmentHomeAdapter adapter;
     private OnFragmentInteractionListener mListener;
 
     public HomeFrag() {
@@ -79,6 +81,19 @@ public class HomeFrag extends Fragment {
         if (getArguments() != null) {
 
         }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        events = getFavouriteEvent();
+        recyclerView.setAdapter(null);
+        recyclerView.setLayoutManager(null);
+        recyclerView.getRecycledViewPool().clear();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -117,7 +132,8 @@ public class HomeFrag extends Fragment {
 
         //puis créer un SearchGroupAdapter, lui fournir notre liste de villes.
         //cet adapter servira à remplir notre recyclerview
-        recyclerView.setAdapter(new FragmentHomeAdapter(events));
+        adapter= new FragmentHomeAdapter(events);
+        recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
