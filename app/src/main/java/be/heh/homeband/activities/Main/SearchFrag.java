@@ -154,7 +154,6 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
             } else {
                 getEvents();
             }
-
         }
     }
 
@@ -253,6 +252,8 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
             }
         });
 
+        etKilometre.setText("10");
+
         initDate();
         initStyles();
     }
@@ -320,7 +321,11 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
         int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
 
         String var_adresse = etAdresse.getText().toString();
-        int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
+        int var_kilometre = etKilometre.getText().toString() != "" ? Integer.parseInt(etKilometre.getText().toString()) : 0;
+
+        if(var_adresse.equals("")){
+            var_kilometre = 0;
+        }
 
         try {
             Gson gson = new GsonBuilder().setLenient().create();
@@ -386,8 +391,11 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
     public void getEvents(){
         int var_style = ((Style)(spinStyle.getSelectedItem())).getId_styles();
         String adresse = etAdresse.getText().toString();
-        int var_kilometre = Integer.parseInt(etKilometre.getText().toString());
+        int var_kilometre = etKilometre.getText().toString() != "" ? Integer.parseInt(etKilometre.getText().toString()) : 0;
 
+        if(adresse.equals("")){
+            var_kilometre = 0;
+        }
 
         String dateDu = null;
         String dateAu = null;
@@ -461,8 +469,6 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
     }
-
-
 
     public void getLocalisations(){
         double lat;

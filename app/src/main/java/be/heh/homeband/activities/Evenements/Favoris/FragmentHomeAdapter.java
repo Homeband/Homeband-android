@@ -42,4 +42,8 @@ public class FragmentHomeAdapter extends RecyclerView.Adapter<FragmentHomeHolder
     public int getItemCount() {
         return list.size();
     }
+
+    public void setList(List<Evenement> list){
+        this.list = list;
+    }
 }

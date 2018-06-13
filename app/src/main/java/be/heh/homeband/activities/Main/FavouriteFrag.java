@@ -54,6 +54,8 @@ public class FavouriteFrag extends Fragment {
     UtilisateurDao utilisateurDao;
     MembreDao membreDao;
 
+    private SearchGroupAdapter adapter;
+
     private OnFragmentInteractionListener mListener;
 
     public FavouriteFrag() {
@@ -77,6 +79,14 @@ public class FavouriteFrag extends Fragment {
         if (getArguments() != null) {
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        groupes = getFavouriteGroup();
+        adapter.setList(groupes);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -105,8 +115,8 @@ public class FavouriteFrag extends Fragment {
         }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        recyclerView.setAdapter(new SearchGroupAdapter(groupes));
+        adapter = new SearchGroupAdapter(groupes);
+        recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {

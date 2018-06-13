@@ -88,13 +88,8 @@ public class HomeFrag extends Fragment {
     public void onResume() {
         super.onResume();
         events = getFavouriteEvent();
-        recyclerView.setAdapter(null);
-        recyclerView.setLayoutManager(null);
-        recyclerView.getRecycledViewPool().clear();
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter.setList(events);
         adapter.notifyDataSetChanged();
-
     }
 
     @Override

@@ -9,7 +9,12 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 
+import be.heh.homeband.Dao.AdresseDao;
+import be.heh.homeband.Dao.VilleDao;
+import be.heh.homeband.DaoImpl.AdresseDaoImpl;
+import be.heh.homeband.DaoImpl.VilleDaoImpl;
 import be.heh.homeband.R;
+import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Ville;
 import io.realm.Realm;
@@ -26,6 +31,9 @@ public class SearchEventsHolder extends RecyclerView.ViewHolder {
 
     SimpleDateFormat dateFormatter;
 
+    VilleDao villeDao;
+    AdresseDao adresseDao;
+
     //itemView est la vue correspondante à 1 cellule
     public SearchEventsHolder(View itemView) {
         super(itemView);
@@ -36,13 +44,17 @@ public class SearchEventsHolder extends RecyclerView.ViewHolder {
         tvEventCity = (TextView) itemView.findViewById(R.id.tvEventCity);
         tvEventDate = (TextView) itemView.findViewById(R.id.tvEventDate);
         imageView = (ImageView) itemView.findViewById(R.id.imageEvents);
+
+        villeDao = new VilleDaoImpl();
+        adresseDao = new AdresseDaoImpl();
+
     }
 
     //puis ajouter une fonction pour remplir la cellule en fonction d'un MyObject
     public void bind(Evenement monEvent){
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Realm realm = Realm.getDefaultInstance();
-        Ville ville = realm.where(Ville.class).equalTo("id_villes",monEvent.getId_adresses()).findFirst();
+
+        Ville ville = villeDao.get(monEvent.getId_villes());
         tvEvent.setText(monEvent.getNom());
         if (ville != null){
             tvEventCity.setText(ville.getNom());

@@ -40,4 +40,8 @@ public class SearchGroupAdapter extends RecyclerView.Adapter<SearchGroupHolder> 
     public int getItemCount() {
         return list.size();
     }
+
+    public void setList(List<Groupe> list){
+        this.list = list;
+    }
 }

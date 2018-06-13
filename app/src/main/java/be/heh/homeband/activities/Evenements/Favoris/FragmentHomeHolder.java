@@ -42,7 +42,7 @@ public class FragmentHomeHolder extends RecyclerView.ViewHolder {
     public void bind(Evenement monEvent){
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Realm realm = Realm.getDefaultInstance();
-        Ville ville = realm.where(Ville.class).equalTo("id_villes",monEvent.getId_adresses()).findFirst();
+        Ville ville = realm.where(Ville.class).equalTo("id_villes",monEvent.getId_villes()).findFirst();
         tvEvent.setText(monEvent.getNom());
         if (ville != null){
             tvEventCity.setText(ville.getNom());
