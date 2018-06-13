@@ -104,7 +104,10 @@ public class UtilisateurDaoImpl extends DaoImpl implements UtilisateurDao {
         if(id_utilisateurs > 0 && id_groupes > 0){
             Utilisateur user = realm.where(Utilisateur.class).equalTo("id_utilisateurs", id_utilisateurs).findFirst();
             if(user != null){
-                Groupe groupeDB = realm.where(Groupe.class).equalTo("id_groupes", id_groupes).findFirst();
+                Groupe groupeDB = realm.where(Groupe.class)
+                        .equalTo("id_groupes", id_groupes)
+                        .equalTo("users.id_utilisateurs", user.getId_utilisateurs())
+                        .findFirst();
                 if(groupeDB != null){
                     return realm.copyFromRealm(groupeDB);
                 }
@@ -154,7 +157,10 @@ public class UtilisateurDaoImpl extends DaoImpl implements UtilisateurDao {
         if(id_utilisateurs > 0 && id_evenements > 0){
             Utilisateur user = realm.where(Utilisateur.class).equalTo("id_utilisateurs", id_utilisateurs).findFirst();
             if(user != null){
-                Evenement evenementDB = realm.where(Evenement.class).equalTo("id_evenements", id_evenements).findFirst();
+                Evenement evenementDB = realm.where(Evenement.class)
+                        .equalTo("id_evenements", id_evenements)
+                        .equalTo("users.id_utilisateurs", user.getId_utilisateurs())
+                        .findFirst();
                 if(evenementDB != null){
                     return realm.copyFromRealm(evenementDB);
                 }
