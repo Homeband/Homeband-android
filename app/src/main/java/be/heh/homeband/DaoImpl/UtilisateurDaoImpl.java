@@ -21,12 +21,19 @@ public class UtilisateurDaoImpl extends DaoImpl implements UtilisateurDao {
 
     @Override
     public List<Utilisateur> list() {
-        return null;
+        return realm.copyFromRealm(realm.where(Utilisateur.class).findAll()) ;
     }
 
     @Override
     public void delete(Integer id) {
-
+        realm.beginTransaction();
+        Utilisateur result = realm.where(Utilisateur.class)
+                .equalTo("id_utilisateurs",id)
+                .findFirst();
+        if (result != null){
+            result.deleteFromRealm();
+        }
+        realm.commitTransaction();
     }
 
     @Override

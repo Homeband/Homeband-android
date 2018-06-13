@@ -106,8 +106,10 @@ public class ListAlbumResultActivity extends AppCompatActivity {
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             Type typeListe = new TypeToken<List<Titre>>(){}.getType();
                             List<Titre> listeTitre = gson.fromJson(res.get("titres").getAsJsonArray(), typeListe);
+                            Album album = gson.fromJson(res.get("album").getAsJsonObject(), Album.class);
                             Intent intent = new Intent (getApplicationContext(),AlbumDetailsActivity.class);
                             intent.putExtra("titres",(ArrayList<Titre>) listeTitre);
+                            intent.putExtra("albums",album);
                             startActivity(intent);
 
                         } else {

@@ -3,12 +3,20 @@ package be.heh.homeband.DaoImpl;
 import java.util.List;
 
 import be.heh.homeband.Dao.StyleDao;
+import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Style;
 
 public class StyleDaoImpl extends DaoImpl implements StyleDao {
     @Override
     public Style get(Integer id) {
-        return realm.where(Style.class).equalTo("id_styles",id).findFirst();
+        Style result = realm.where(Style.class)
+                .equalTo("id_styles",id)
+                .findFirst();
+        if (result != null){
+            return realm.copyFromRealm(result);
+        }
+
+        return null;
     }
 
     @Override
@@ -20,7 +28,14 @@ public class StyleDaoImpl extends DaoImpl implements StyleDao {
 
     @Override
     public void delete(Integer id) {
-
+        realm.beginTransaction();
+        Style result = realm.where(Style.class)
+                .equalTo("id_styles",id)
+                .findFirst();
+        if (result != null){
+            result.deleteFromRealm();
+        }
+        realm.commitTransaction();
     }
 
     @Override

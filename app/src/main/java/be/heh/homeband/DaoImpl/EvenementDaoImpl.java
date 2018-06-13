@@ -4,12 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.Dao.EvenementDao;
+import be.heh.homeband.entities.Album;
 import be.heh.homeband.entities.Evenement;
 
 public class EvenementDaoImpl extends DaoImpl implements EvenementDao {
     @Override
     public Evenement get(Integer id) {
-        return realm.where(Evenement.class).equalTo("id_evenements",id).findFirst();
+        Evenement result = realm.where(Evenement.class)
+                .equalTo("id_evenements",id)
+                .findFirst();
+        if (result != null){
+            return realm.copyFromRealm(result);
+        }
+
+        return null;
     }
 
     @Override

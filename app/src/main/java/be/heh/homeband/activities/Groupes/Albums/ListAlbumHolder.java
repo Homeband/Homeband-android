@@ -38,6 +38,15 @@ public class ListAlbumHolder extends RecyclerView.ViewHolder {
         tvAlbumName.setText(monAlbum.getTitre());
         tvAlbumDate.setText(dateFormatter.format(monAlbum.getDate_sortie()));
 
-        Picasso.with(imgAlbum.getContext()).load("http://www.tate.org.uk/art/images/work/T/T05/T05010_10.jpg").centerCrop().fit().into(imgAlbum);
+        // Image
+        String urlImage = "http://dev.zen-project.be/homeband/images/";
+        if (monAlbum.getImage().equals("") ){
+            urlImage += "no_image.png";
+        }
+        else{
+            urlImage += "albums/" + monAlbum.getImage();
+        }
+
+        Picasso.with(imgAlbum.getContext()).load(urlImage).centerCrop().fit().into(imgAlbum);
     }
 }

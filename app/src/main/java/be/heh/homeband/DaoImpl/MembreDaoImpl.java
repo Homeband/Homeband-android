@@ -4,12 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.heh.homeband.Dao.MembreDao;
+import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.Membre;
 import io.realm.RealmQuery;
 
 public class MembreDaoImpl extends DaoImpl implements MembreDao {
     @Override
     public Membre get(Integer id) {
+        Membre result = realm.where(Membre.class)
+                .equalTo("id_membres",id)
+                .findFirst();
+        if (result != null){
+            return realm.copyFromRealm(result);
+        }
+
         return null;
     }
 
@@ -20,7 +28,14 @@ public class MembreDaoImpl extends DaoImpl implements MembreDao {
 
     @Override
     public void delete(Integer id) {
-
+        realm.beginTransaction();
+        Membre result = realm.where(Membre.class)
+                .equalTo("id_membres",id)
+                .findFirst();
+        if (result != null){
+            result.deleteFromRealm();
+        }
+        realm.commitTransaction();
     }
 
     @Override

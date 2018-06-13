@@ -3,11 +3,19 @@ package be.heh.homeband.DaoImpl;
 import java.util.List;
 
 import be.heh.homeband.Dao.AlbumDao;
+import be.heh.homeband.entities.Adresse;
 import be.heh.homeband.entities.Album;
 
 public class AlbumDaoImpl extends DaoImpl implements AlbumDao {
     @Override
     public Album get(Integer id) {
+        Album result = realm.where(Album.class)
+                .equalTo("id_albums",id)
+                .findFirst();
+        if (result != null){
+            return realm.copyFromRealm(result);
+        }
+
         return null;
     }
 
@@ -18,7 +26,14 @@ public class AlbumDaoImpl extends DaoImpl implements AlbumDao {
 
     @Override
     public void delete(Integer id) {
-
+        realm.beginTransaction();
+        Album result = realm.where(Album.class)
+                .equalTo("id_albums",id)
+                .findFirst();
+        if (result != null){
+            result.deleteFromRealm();
+        }
+        realm.commitTransaction();
     }
 
     @Override

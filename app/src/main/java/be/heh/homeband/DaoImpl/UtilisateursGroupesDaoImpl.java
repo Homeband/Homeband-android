@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import be.heh.homeband.Dao.UtilisateursGroupesDao;
+import be.heh.homeband.entities.Evenement;
 import be.heh.homeband.entities.UtilisateursGroupes;
 
 public class UtilisateursGroupesDaoImpl extends DaoImpl implements UtilisateursGroupesDao {
@@ -32,7 +33,7 @@ public class UtilisateursGroupesDaoImpl extends DaoImpl implements UtilisateursG
 
     @Override
     public List<UtilisateursGroupes> list() {
-        return null;
+        return realm.copyFromRealm(realm.where(UtilisateursGroupes.class).findAll()) ;
     }
 
     @Override
