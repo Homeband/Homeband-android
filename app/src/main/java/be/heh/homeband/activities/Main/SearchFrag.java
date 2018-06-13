@@ -420,7 +420,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getEvenements(var_style,adresse,var_kilometre,dateDu,dateAu).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getEvenements(var_style,adresse,var_kilometre,dateDu,dateAu, 1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

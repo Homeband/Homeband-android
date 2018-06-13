@@ -42,7 +42,7 @@ public interface HomebandApiInterface {
     Call<HomebandApiReponse> getEvent(@Path(value="id") int id );
 
     @GET("api/evenements")
-    Call<HomebandApiReponse> getEvenements(@Query("styles")int styles, @Query("adresse")String adresse, @Query("rayon")int rayon, @Query("date_debut")String du, @Query("date_fin")String au );
+    Call<HomebandApiReponse> getEvenements(@Query("styles")int styles, @Query("adresse")String adresse, @Query("rayon")int rayon, @Query("date_debut")String du, @Query("date_fin")String au, @Query("get_ville")int get_villes );
 
     @GET("api/versions")
     Call<HomebandApiReponse> getVersions(@Query("nomtable")String nomtable );
