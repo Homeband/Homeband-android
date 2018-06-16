@@ -136,7 +136,7 @@ public class FragmentBio extends Fragment {
         //Facebook
         FACEBOOK_URL = groupe.getLien_facebook();
         ibFacebook = (ImageButton) view.findViewById(R.id.ibFacebook);
-        if(groupe.getLien_facebook() != "") {
+        if(!groupe.getLien_facebook().equals("")) {
             ibFacebook.setBackgroundResource(R.drawable.round_facebook);
             ibFacebook.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -149,7 +149,7 @@ public class FragmentBio extends Fragment {
         //Apple
         APPLE_URL = groupe.getLien_itunes();
         ibApple  = (ImageButton) view.findViewById(R.id.ibApple);
-        if(groupe.getLien_itunes() != "") {
+        if(!groupe.getLien_itunes().equals("")) {
             ibApple.setBackgroundResource(R.drawable.round_apple);
             ibApple.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -163,7 +163,7 @@ public class FragmentBio extends Fragment {
         //Bandcamp
         BANDCAMP_URL = groupe.getLien_bandcamp();
         ibBandcamp  = (ImageButton) view.findViewById(R.id.ibBandcamp);
-        if(groupe.getLien_bandcamp() != "") {
+        if(!groupe.getLien_bandcamp().equals("")) {
             ibBandcamp.setBackgroundResource(R.drawable.round_bandcamp);
             ibBandcamp.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -175,7 +175,7 @@ public class FragmentBio extends Fragment {
 
         //Instagram
         ibInstagram  = (ImageButton) view.findViewById(R.id.ibInstagram);
-        if(groupe.getLien_instagram() != "") {
+        if(!groupe.getLien_instagram().equals("")) {
             ibInstagram.setBackgroundResource(R.drawable.round_insta);
             ibInstagram.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -187,7 +187,7 @@ public class FragmentBio extends Fragment {
         //Soundcloud
         SOUNDCLOUD_URL = groupe.getLien_soundcloud();
         ibSoundcloud  = (ImageButton) view.findViewById(R.id.ibSoundcloud);
-        if(groupe.getLien_soundcloud() != "") {
+        if(!groupe.getLien_soundcloud().equals("")) {
             ibSoundcloud.setBackgroundResource(R.drawable.round_soundcloud);
             ibSoundcloud.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -199,7 +199,7 @@ public class FragmentBio extends Fragment {
 
         //Spotify
         ibSpotify  = (ImageButton) view.findViewById(R.id.ibSpotify);
-        if(groupe.getLien_spotify() != "") {
+        if(!groupe.getLien_spotify().equals("")) {
             ibSpotify.setBackgroundResource(R.drawable.round_spotify);
             ibSpotify.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -211,7 +211,7 @@ public class FragmentBio extends Fragment {
         //Youtube
         YOUTUBE_URL = groupe.getLien_youtube();
         ibYoutube  = (ImageButton) view.findViewById(R.id.ibYoutube);
-        if(groupe.getLien_youtube() != "") {
+        if(!groupe.getLien_youtube().equals("")) {
             ibYoutube.setBackgroundResource(R.drawable.round_youtube);
             ibYoutube.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -223,7 +223,7 @@ public class FragmentBio extends Fragment {
         //Twitter
         TWITTER_URL = groupe.getLien_twitter();
         ibTwitter  = (ImageButton) view.findViewById(R.id.ibTwitter);
-        if(groupe.getLien_twitter() != "") {
+        if(!groupe.getLien_twitter().equals("")) {
             ibTwitter.setBackgroundResource(R.drawable.round_twitter);
            ibTwitter.setOnClickListener(new View.OnClickListener() {
                public void onClick(View v) {
