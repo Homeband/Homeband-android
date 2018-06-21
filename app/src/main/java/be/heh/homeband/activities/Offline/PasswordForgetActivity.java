@@ -89,7 +89,7 @@ public class PasswordForgetActivity extends AppCompatActivity {
 
     public void postForget(String email){
         final DialogFragment loading = new LoadingDialog();
-        android.app.FragmentManager frag = ((AppCompatActivity) this).getFragmentManager();
+        android.app.FragmentManager frag = this.getFragmentManager();
         loading.show(frag,"LoadingDialog");
         try {
             Retrofit retrofit = new Retrofit.Builder()

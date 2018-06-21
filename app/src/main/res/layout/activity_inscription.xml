@@ -28,48 +28,28 @@
         android:layout_below="@+id/rlInscription"
         >
 
-        <TextView
-            android:id="@+id/tvUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Veuillez entrer un nom d'utilisateur"
-            android:padding="15dp"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent"
-            />
         <EditText
             android:id="@+id/etUser"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="15dp"
             android:layout_marginHorizontal="40dp"
             android:paddingHorizontal="10dp"
-            android:layout_below="@+id/tvUser"
             android:layout_centerHorizontal="true"
             android:hint="Login"
             android:textColorHint="#66FFFFFF"
             android:background="@drawable/hb_edittext_red_radius"
             android:textColor="#FFFFFF"
             />
-        <TextView
-            android:id="@+id/tvEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Veuillez entrer une adresse mail"
-            android:padding="15dp"
-            android:layout_below="@+id/etUser"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent"
-            />
 
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="15dp"
             android:layout_marginHorizontal="40dp"
             android:paddingHorizontal="10dp"
-            android:layout_below="@+id/tvEmail"
+            android:layout_below="@+id/etUser"
             android:layout_centerHorizontal="true"
             android:hint="Adresse E-mail"
             android:textColorHint="#66FFFFFF"
@@ -77,25 +57,14 @@
             android:textColor="#FFFFFF"
             />
 
-        <TextView
-            android:id="@+id/tvMDP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Veuillez entrer un mot de passe"
-            android:padding="15dp"
-            android:layout_below="@+id/etEmail"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent"
-            />
-
         <EditText
             android:id="@+id/etMDP"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="15dp"
             android:layout_marginHorizontal="40dp"
             android:paddingHorizontal="10dp"
-            android:layout_below="@+id/tvMDP"
+            android:layout_below="@+id/etEmail"
             android:layout_centerHorizontal="true"
             android:hint="Mot de passe"
             android:inputType="textPassword"
@@ -103,26 +72,17 @@
             android:background="@drawable/hb_edittext_red_radius"
             android:textColor="#FFFFFF"
             />
-        <TextView
-            android:id="@+id/tvMDPC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Veuillez confirmer votre mot de passe"
-            android:padding="15dp"
-            android:layout_below="@+id/etMDP"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent"
-            />
+
         <EditText
             android:id="@+id/etMDPC"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="15dp"
             android:paddingHorizontal="10dp"
-            android:layout_below="@+id/tvMDPC"
+            android:layout_below="@+id/etMDP"
             android:layout_centerHorizontal="true"
-            android:hint="Mot de passe"
+            android:hint="Confirmation mot de passe"
             android:inputType="textPassword"
             android:textColorHint="#66FFFFFF"
             android:background="@drawable/hb_edittext_red_radius"

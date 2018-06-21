@@ -32,14 +32,6 @@ public class FragmentBio extends Fragment {
     TextView tvBio;
     Groupe groupe;
 
-    public static String FACEBOOK_URL;
-    public static String TWITTER_URL;
-    public static String YOUTUBE_URL;
-    public static String BANDCAMP_URL;
-    public static String SOUNDCLOUD_URL;
-    public static String APPLE_URL;
-    public static String FACEBOOK_PAGE_ID = "LeslieLouiseOFC";
-
     ImageButton ibFacebook;
     ImageButton ibTwitter;
     ImageButton ibInstagram;
@@ -134,26 +126,35 @@ public class FragmentBio extends Fragment {
         tvBio.setText(groupe.getBiographie());
 
         //Facebook
-        FACEBOOK_URL = groupe.getLien_facebook();
         ibFacebook = (ImageButton) view.findViewById(R.id.ibFacebook);
         if(!groupe.getLien_facebook().equals("")) {
             ibFacebook.setBackgroundResource(R.drawable.round_facebook);
             ibFacebook.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_URL));
-                    startActivity(browserIntent);
+
+                    String url = groupe.getLien_facebook();
+                    String toRemove = "http(s)?:\\/\\/(.)*(\\.)?facebook\\.com\\/";
+                    String pageId = url.replaceAll(toRemove,"");
+                    String app = "fb://facewebmodal/f?href=https://www.facebook.com/leslielouiseofc" ;
+                    try{
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(app));
+                        startActivity(browserIntent);
+                    }catch(Exception e){
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(browserIntent);
+                    }
+
                 }
             });
         }
 
         //Apple
-        APPLE_URL = groupe.getLien_itunes();
         ibApple  = (ImageButton) view.findViewById(R.id.ibApple);
         if(!groupe.getLien_itunes().equals("")) {
             ibApple.setBackgroundResource(R.drawable.round_apple);
             ibApple.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(APPLE_URL));
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(groupe.getLien_itunes()));
                     startActivity(browserIntent);
                 }
             });
@@ -161,13 +162,12 @@ public class FragmentBio extends Fragment {
 
 
         //Bandcamp
-        BANDCAMP_URL = groupe.getLien_bandcamp();
         ibBandcamp  = (ImageButton) view.findViewById(R.id.ibBandcamp);
         if(!groupe.getLien_bandcamp().equals("")) {
             ibBandcamp.setBackgroundResource(R.drawable.round_bandcamp);
             ibBandcamp.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BANDCAMP_URL));
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(groupe.getLien_bandcamp()));
                     startActivity(browserIntent);
                 }
             });
@@ -179,19 +179,28 @@ public class FragmentBio extends Fragment {
             ibInstagram.setBackgroundResource(R.drawable.round_insta);
             ibInstagram.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
+                    String url = groupe.getLien_instagram();
+                    String toRemove = "http(s)?:\\/\\/(.)*(\\.)?instagram\\.com\\/";
+                    String pageId = url.replaceAll(toRemove,"");
+                    String app = "instagram://user?username=" + pageId;
+                    try{
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(app));
+                        startActivity(browserIntent);
+                    }catch(Exception e){
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(browserIntent);
+                    }
                 }
             });
         }
 
         //Soundcloud
-        SOUNDCLOUD_URL = groupe.getLien_soundcloud();
         ibSoundcloud  = (ImageButton) view.findViewById(R.id.ibSoundcloud);
         if(!groupe.getLien_soundcloud().equals("")) {
             ibSoundcloud.setBackgroundResource(R.drawable.round_soundcloud);
             ibSoundcloud.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(SOUNDCLOUD_URL));
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(groupe.getLien_soundcloud()));
                     startActivity(browserIntent);
                 }
             });
@@ -203,32 +212,60 @@ public class FragmentBio extends Fragment {
             ibSpotify.setBackgroundResource(R.drawable.round_spotify);
             ibSpotify.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //requière uniquement l'app
+                    String url = groupe.getLien_spotify();
+                    String toRemove = "http(s)?:\\/\\/(.)*(\\.)?spotify\\.com\\/artist\\/";
+                    String pageId = url.replaceAll(toRemove,"");
+                    String app = "spotify:artist:" + pageId;
+                    try{
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(app));
+                        startActivity(browserIntent);
+                    }catch(Exception e){
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(browserIntent);
+                    }
                 }
             });
         }
 
         //Youtube
-        YOUTUBE_URL = groupe.getLien_youtube();
         ibYoutube  = (ImageButton) view.findViewById(R.id.ibYoutube);
         if(!groupe.getLien_youtube().equals("")) {
             ibYoutube.setBackgroundResource(R.drawable.round_youtube);
             ibYoutube.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //requière uniquement l'app
+                    String url = groupe.getLien_youtube();
+                    String toRemove = "http(s)?:\\/\\/(.)*(\\.)?youtube\\.com\\/channel\\/";
+                    String pageId = url.replaceAll(toRemove,"");
+                    String app = "youtube://www.youtube.com/channel/" + pageId;
+                    try{
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(app));
+                        startActivity(browserIntent);
+                    }catch(Exception e){
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(browserIntent);
+                    }
                 }
             });
         }
 
         //Twitter
-        TWITTER_URL = groupe.getLien_twitter();
         ibTwitter  = (ImageButton) view.findViewById(R.id.ibTwitter);
         if(!groupe.getLien_twitter().equals("")) {
             ibTwitter.setBackgroundResource(R.drawable.round_twitter);
            ibTwitter.setOnClickListener(new View.OnClickListener() {
                public void onClick(View v) {
 
-                   //requière uniquement l'app
+                   String url = groupe.getLien_twitter();
+                   String toRemove = "http(s)?:\\/\\/(.)*(\\.)?twitter\\.com\\/";
+                   String pageId = url.replaceAll(toRemove,"");
+                   String app = "twitter://user?screen_name=" + pageId;
+                   try{
+                       Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(app));
+                       startActivity(browserIntent);
+                   }catch(Exception e){
+                       Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                       startActivity(browserIntent);
+                   }
                }
            });
         }

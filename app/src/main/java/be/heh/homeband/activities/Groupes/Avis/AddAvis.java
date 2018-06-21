@@ -31,7 +31,7 @@ public class AddAvis extends AppCompatActivity {
     private Button btnAddAvis;
     private EditText etAddAvis;
 
-    Groupe groupe;
+    int id_groupes;
 
     UtilisateurDao utilisateurDao;
 
@@ -53,7 +53,7 @@ public class AddAvis extends AppCompatActivity {
 
     public void init(){
 
-        groupe = (Groupe) getIntent().getSerializableExtra("group");
+        id_groupes = (int) getIntent().getSerializableExtra("id_groupes");
 
         btnAddAvis = (Button) findViewById(R.id.btnAddAvis);
         etAddAvis = (EditText) findViewById(R.id.etAddAvis);
@@ -66,11 +66,11 @@ public class AddAvis extends AppCompatActivity {
                 avis.setCommentaire(etAddAvis.getText().toString());
                 avis.setDate_ajout(new Date());
                 avis.setId_utilisateurs(utilisateurDao.getConnectedUser().getId_utilisateurs());
-                avis.setId_groupes(groupe.getId_groupes());
+                avis.setId_groupes(id_groupes);
                 avis.setEst_accepte(false);
                 avis.setEst_verifie(false);
                 avis.setEst_actif(1);
-               addAvis(groupe.getId_groupes(),avis);
+               addAvis(id_groupes,avis);
             }
         });
     }

@@ -615,7 +615,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
                             List<Avis> listeAvis = gson.fromJson(res.get("comments").getAsJsonArray(), typeListe);
                             Intent intent = new Intent (getApplicationContext(),AvisResultActivity.class);
                             intent.putExtra("comments",(ArrayList<Avis>)listeAvis);
-                            intent.putExtra("group",groupe);
+                            intent.putExtra("id_groupes",groupe.getId_groupes());
                             startActivity(intent);
 
                         } else {

@@ -71,8 +71,6 @@ public class LoginActivity extends AppCompatActivity {
     private void initialisation(){
         this.etLogin = findViewById(R.id.etLogin);
         this.etPassword = findViewById(R.id.etPassword);
-        this.etLogin.setText("carole");
-        this.etPassword.setText("testtest");
 
         this.btnMotDePasseOublie=findViewById(R.id.bMotDePasseOublie);
         btnMotDePasseOublie.setOnClickListener(new View.OnClickListener(){

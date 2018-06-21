@@ -21,7 +21,7 @@ public class AvisResultActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private List<Avis> avis = new ArrayList<Avis>();
-    Groupe groupe;
+    int id_groupes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class AvisResultActivity extends AppCompatActivity {
         setTitle("Avis");
 
         avis = (ArrayList<Avis>) getIntent().getSerializableExtra("comments");
-        groupe = (Groupe) getIntent().getSerializableExtra("group");
+        id_groupes = (int) getIntent().getSerializableExtra("id_groupes");
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewGroup);
 
@@ -84,7 +84,7 @@ public class AvisResultActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_add:
                 Intent intent = new Intent (getApplicationContext(),AddAvis.class);
-                intent.putExtra("group",groupe);
+                intent.putExtra("id_groupes",id_groupes);
                 startActivity(intent);
 
 
