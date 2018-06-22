@@ -284,7 +284,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.addUtilisateurGroupe(id_utilisateur,id_groupe,0,0,1,1).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.addUtilisateurGroupe(HomebandRetrofit.headers(),id_utilisateur,id_groupe,0,0,1,1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -378,7 +378,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.removeUtilisateurGroupe(id_utilisateur,id_groupe).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.removeUtilisateurGroupe(HomebandRetrofit.headers(),id_utilisateur,id_groupe).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -461,7 +461,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getAlbums(id).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getAlbums(HomebandRetrofit.headers(),id).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
                     boolean toUpdate=false;
@@ -530,7 +530,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getGroupEvents(id).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getGroupEvents(HomebandRetrofit.headers(),id).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
                     boolean toUpdate=false;
@@ -596,7 +596,7 @@ public class GroupeDetailsActivity extends AppCompatActivity implements Fragment
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getAvis(id,1).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getAvis(HomebandRetrofit.headers(),id,1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

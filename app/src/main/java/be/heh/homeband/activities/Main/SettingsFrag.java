@@ -196,7 +196,7 @@ public class SettingsFrag extends Fragment implements View.OnClickListener {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.putSettings(user.getId_utilisateurs(),params).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.putSettings(HomebandRetrofit.headers(),user.getId_utilisateurs(),params).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

@@ -146,7 +146,7 @@ public class InscriptionActivity extends AppCompatActivity {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.postUser(params).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.postUser(HomebandRetrofit.headers(),params).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

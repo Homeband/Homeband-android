@@ -338,7 +338,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getGroupes(var_style,var_adresse,var_kilometre).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getGroupes(HomebandRetrofit.headers(),var_style,var_adresse,var_kilometre).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -420,7 +420,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getEvenements(var_style,adresse,var_kilometre,dateDu,dateAu, 1).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getEvenements(HomebandRetrofit.headers(),var_style,adresse,var_kilometre,dateDu,dateAu, 1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
@@ -494,7 +494,7 @@ public class SearchFrag extends Fragment implements View.OnClickListener {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getLocalisations(1,null,lat,lon).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getLocalisations(HomebandRetrofit.headers(),1,null,lat,lon).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

@@ -99,7 +99,7 @@ public class SearchGroupResultActivity extends AppCompatActivity{
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getGroupe(id,1).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getGroupe(HomebandRetrofit.headers(),id,1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

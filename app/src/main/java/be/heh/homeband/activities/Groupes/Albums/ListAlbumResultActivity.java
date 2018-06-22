@@ -90,7 +90,7 @@ public class ListAlbumResultActivity extends AppCompatActivity {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getAlbumDetails(id,idAlbum).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getAlbumDetails(HomebandRetrofit.headers(),id,idAlbum).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

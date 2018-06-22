@@ -101,7 +101,7 @@ public class PasswordForgetActivity extends AppCompatActivity {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.postForget(email).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.postForget(HomebandRetrofit.headers(),email).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

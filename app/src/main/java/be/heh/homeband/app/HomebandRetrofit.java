@@ -20,8 +20,8 @@ import be.heh.homeband.entities.Utilisateur;
  */
 
 public class HomebandRetrofit  {
-    public static String API_URL ="http://10.0.2.2/homeband-api/" ;
-    //public static String API_URL ="http://dev.zen-project.be/homeband-api/" ;
+    //public static String API_URL ="http://10.0.2.2/homeband-api/" ;
+    public static String API_URL ="http://dev.zen-project.be/homeband-api/" ;
 
     private static String APP_KEY = "zXcD3WS21G0300mqxNaecHvnmy37W4rw";
     private static String SECRET_KEY = "LcBaMofTEoPqBHPwqOJHHOPQ0n9vP6cGxf2PnpbNQW3gELs";
@@ -30,6 +30,7 @@ public class HomebandRetrofit  {
     private static String HEADER_TS = "X-Homeband-TS";
     private static String HEADER_CK = "X-Homeband-CK";
     private static String HEADER_SIGN = "X-Homeband-SIGN";
+    private static String HEADER_TYPE = "X-Homeband-TYPE";
 
     public HomebandRetrofit() {
 
@@ -47,6 +48,8 @@ public class HomebandRetrofit  {
         String toSign = "";
         String sign = "";
 
+        // Type d'utilisateur
+        headers.put(HEADER_TYPE, "user");
 
         // Vérification de l'utilisateur
         if(user != null){

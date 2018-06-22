@@ -93,7 +93,7 @@ public class SearchEventsResultActivity extends AppCompatActivity {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getEvent(id).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getEvent(HomebandRetrofit.headers(),id).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

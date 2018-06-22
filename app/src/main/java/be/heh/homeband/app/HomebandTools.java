@@ -61,7 +61,7 @@ public abstract class HomebandTools {
             HashMap<String,Object> params = new HashMap<String,Object>();
             params.put("versions", listeVersionsDB);
 
-            serviceApi.getAllVersions(params).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getAllVersions(HomebandRetrofit.headers(),params).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
                     boolean toUpdate=false;
@@ -194,7 +194,7 @@ public abstract class HomebandTools {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getVilles().enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getVilles(HomebandRetrofit.headers()).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
                     boolean toUpdate=false;
@@ -295,7 +295,7 @@ public abstract class HomebandTools {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.getStyles().enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.getStyles(HomebandRetrofit.headers()).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
                     boolean toUpdate=false;

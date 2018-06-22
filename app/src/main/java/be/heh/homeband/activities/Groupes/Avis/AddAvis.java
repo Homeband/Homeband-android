@@ -88,7 +88,7 @@ public class AddAvis extends AppCompatActivity {
             HashMap<String,Object> params = new HashMap<String,Object>();
             params.put("comment", avis);
             // Requête vers l'API
-            serviceApi.postAvis(id,params).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.postAvis(HomebandRetrofit.headers(),id,params).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 
