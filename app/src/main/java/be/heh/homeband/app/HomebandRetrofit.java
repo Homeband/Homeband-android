@@ -65,7 +65,7 @@ public class HomebandRetrofit  {
 
         // Construction de la signature
         toSign = as + "+" + ck + "+" + ts;
-        sign = "$1$" + Hashing.sha256().hashString(toSign, StandardCharsets.ISO_8859_1).toString();
+        sign = "$1$" + Hashing.sha256().hashString(toSign, StandardCharsets.UTF_8).toString();
         headers.put(HEADER_SIGN, sign);
 
         return headers;
