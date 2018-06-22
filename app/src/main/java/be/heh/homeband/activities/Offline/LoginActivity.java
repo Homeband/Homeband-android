@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
             HomebandApiInterface serviceApi = retrofit.create(HomebandApiInterface.class);
 
             // Requête vers l'API
-            serviceApi.connexion(login, password,1).enqueue(new Callback<HomebandApiReponse>() {
+            serviceApi.connexion(HomebandRetrofit.headers(), login, password,1).enqueue(new Callback<HomebandApiReponse>() {
                 @Override
                 public void onResponse(Call<HomebandApiReponse> call, Response<HomebandApiReponse> response) {
 

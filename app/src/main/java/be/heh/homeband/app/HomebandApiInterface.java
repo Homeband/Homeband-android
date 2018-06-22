@@ -5,6 +5,7 @@ package be.heh.homeband.app;
  */
 
 import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -12,6 +13,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -21,7 +23,7 @@ public interface HomebandApiInterface {
 
     @POST("api/sessions")
     @FormUrlEncoded
-    Call<HomebandApiReponse> connexion(@Field("login") String login, @Field("mot_de_passe") String mot_de_passe, @Field("type") int type );
+    Call<HomebandApiReponse> connexion(@HeaderMap Map<String, String> headers, @Field("login") String login, @Field("mot_de_passe") String mot_de_passe, @Field("type") int type );
 
     @GET("api/styles")
     Call<HomebandApiReponse> getStyles() ;

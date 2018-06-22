@@ -16,6 +16,7 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import be.heh.homeband.Dao.AdresseDao;
 import be.heh.homeband.Dao.EvenementDao;
@@ -28,6 +29,7 @@ import be.heh.homeband.DaoImpl.UtilisateurDaoImpl;
 import be.heh.homeband.R;
 import be.heh.homeband.activities.Evenements.Fiche.EventDetailsActivity;
 import be.heh.homeband.activities.Groupes.Fiche.GroupeDetailsActivity;
+import be.heh.homeband.app.HomebandRetrofit;
 import be.heh.homeband.app.RecyclerTouchListener;
 import be.heh.homeband.activities.Evenements.Favoris.FragmentHomeAdapter;
 import be.heh.homeband.entities.Adresse;
@@ -41,8 +43,6 @@ import be.heh.homeband.entities.Utilisateur;
  * Activities that contain this fragment must implement the
  * {@link HomeFrag.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeFrag#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class HomeFrag extends Fragment {
 
@@ -63,25 +63,12 @@ public class HomeFrag extends Fragment {
 
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment HomeFrag.
-     */
-
-    public static HomeFrag newInstance(String param1, String param2) {
-        HomeFrag fragment = new HomeFrag();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 
         }
-
     }
 
     @Override
@@ -201,6 +188,10 @@ public class HomeFrag extends Fragment {
 
     public List<Evenement> getFavouriteEvent(){
         Utilisateur user = utilisateurDao.getConnectedUser();
-        return evenementDao.listByUser(user.getId_utilisateurs());
+        if(user != null) {
+            return evenementDao.listByUser(user.getId_utilisateurs());
+        } else {
+            return new ArrayList<Evenement>();
+        }
     }
 }
