@@ -29,9 +29,7 @@ public class Evenement extends RealmObject implements Serializable {
 	private boolean est_actif;
 	private int id_groupes;
 	private int id_adresses;
-
-
-
+	private String lien_facebook;
 	private String illustration;
 
 	@ParcelPropertyConverter(RealmListParcelConverter.class)
@@ -132,6 +130,14 @@ public class Evenement extends RealmObject implements Serializable {
 
 	public void setIllustration(String illustration) {
 		this.illustration = illustration;
+	}
+
+	public String getLien_facebook() {
+		return lien_facebook;
+	}
+
+	public void setLien_facebook(String lien_facebook) {
+		this.lien_facebook = lien_facebook;
 	}
 
 }

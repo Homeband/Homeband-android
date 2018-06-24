@@ -167,7 +167,9 @@ public class EventDetailsActivity extends AppCompatActivity implements FragmentD
         btnEvents = (Button) findViewById(R.id.btnEvents);
         btnEvents.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                String url = event.getLien_facebook();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
             }
         });
 

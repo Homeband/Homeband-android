@@ -124,7 +124,11 @@ public class HomebandRealmMigration implements RealmMigration {
                     .addField("illustration", String.class);
             oldVersion++;
         }
-
+        if(oldVersion == 9){
+            schema.get("Evenement")
+                    .addField("lien_facebook", String.class);
+            oldVersion++;
+        }
 
     }
 }
